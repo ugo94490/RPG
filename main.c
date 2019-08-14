@@ -29,8 +29,19 @@ game_object *init_choice(char *path)
     return (choice);
 }
 
-int change_scale(game_object *sp, sfClock *clk, sfTime time)
+game_object *init_little(char *path, sfVector2f position)
 {
+    sfIntRect rect = {0, 44, 78, 44};
+    sfVector2f scale = {4.17, 4.17};
+    game_object *choice = create_object(path, position, rect);
+
+    sfSprite_setScale(choice->sprite, scale);
+    return (choice);
+}
+
+int attack(game_object *sp, sfClock *clk, sfRenderWindow *window)
+{
+    sfTime time;
     static int toggle = 0;
     sfVector2f prev = sfSprite_getScale(sp->sprite);
     sfVector2f position = sfSprite_getPosition(sp->sprite);
@@ -56,24 +67,80 @@ int change_scale(game_object *sp, sfClock *clk, sfTime time)
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
+    sfRenderWindow_drawSprite(window, sp->sprite, NULL);
     return (0);
+}
+
+int bag(game_object *sp, sfClock *clk, sfRenderWindow *window)
+{
+    sfTime time;
+    static int toggle = 0;
+    sfVector2f prev = sfSprite_getScale(sp->sprite);
+    sfVector2f position = sfSprite_getPosition(sp->sprite);
+
+    time = sfClock_getElapsedTime(clk);
+    if (prev.x <= 4.1)
+        toggle = 0;
+    if (prev.x >= 4.235)
+        toggle = 1;
+    if (time.microseconds >= 1000000) {
+        if (toggle == 0) {
+            position.x -= 0.2;
+            position.y -= 0.25;
+            prev.x += 0.005;
+            prev.y += 0.005;
+        }
+        if (toggle == 1) {
+            position.x += 0.2;
+            position.y += 0.25;
+            prev.x -= 0.005;
+            prev.y -= 0.005;
+        }
+    }
+    sfSprite_setPosition(sp->sprite, position);
+    sfSprite_setScale(sp->sprite, prev);
+    sfRenderWindow_drawSprite(window, sp->sprite, NULL);
+    return (0);
+}
+
+int mode(sfRenderWindow *window)
+{
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window);
+    static int ret = 0;
+
+    if (vct.x >= 8 && vct.x <= 872 && vct.y >= 96 && vct.y <= 456)
+        ret = 1;
+    if (vct.x >= 4 && vct.x <= 312 && vct.y >= 580 && vct.y <= 760)
+        ret = 2;
+    if (vct.x >= 356 && vct.x <= 664 && vct.y >= 612 && vct.y <= 792)
+        ret = 3;
+    if (vct.x >= 708 && vct.x <= 1016 && vct.y >= 580 && vct.y <= 760)
+        ret = 4;
+    return (ret);
 }
 
 int combat(sfRenderWindow *window)
 {
     game_object *hud = init_hud("attack_hud.png");
     game_object *choice = init_choice("game_menu.png");
+    sfVector2f pos = {0, 585};
+    game_object *little = init_little("menu_selection.png", pos);
     sfClock *clock = sfClock_create();
-    sfTime time;
+    int menu = 0;
 
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_drawSprite(window, hud->sprite, NULL);
-        sfRenderWindow_drawSprite(window, choice->sprite, NULL);
-        change_scale(choice, clock, time);
+        menu = mode(window);
+        if (menu == 1)
+            attack(choice, clock, window);
+        if (menu == 2)
+            bag(little, clock, window);
         sfRenderWindow_display(window);
         event(window);
     }
+    destroy_object(choice);
     destroy_object(hud);
+    sfClock_destroy(clock);
     return (0);
 }
 

@@ -41,6 +41,7 @@ void destroy_object(struct game_object *obj)
 {
     sfSprite_destroy(obj->sprite);
     sfTexture_destroy(obj->texture);
+    free(obj);
 }
 
 void display_pause(sfRenderWindow *window)
