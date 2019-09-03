@@ -1,0 +1,15 @@
+Gerer mouvement par time
+PollEvent programme ne repond pas catch des events mais ne fait rien
+
+
+
+
+
+
+
+
+Récuperer le time, permet mouvement et rencontre aleatoire
+
+Penser que personnage peut passer devant un truc et derriere
+
+Bien organisé son code, listes chainées
