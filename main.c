@@ -12,26 +12,25 @@ game_object *init_hud(char *path, int x, int y)
     sfVector2f position = {x, y};
     sfIntRect rect = {0, 203, 256, 203};
     game_object *hud = create_object(path, position, rect);
-    sfVector2f scale = {2.365, 2.365};
 
-    sfSprite_setScale(hud->sprite, scale);
     return (hud);
 }
 
 game_object *init_choice(char *path)
 {
     sfIntRect rect = {0, 90, 216, 90};
-    sfVector2f scale = {2.76, 3.05};
     sfVector2f position = {340, 537};
+    sfVector2f scale = {2.76, 3.05};
     game_object *choice = create_object(path, position, rect);
 
     sfSprite_setScale(choice->sprite, scale);
     return (choice);
 }
 
-game_object *init_little(char *path, sfVector2f position)
+game_object *init_little(char *path, int x, int y)
 {
     sfIntRect rect = {0, 44, 78, 44};
+    sfVector2f position = {x, y};
     sfVector2f scale = {2.47, 2.47};
     game_object *choice = create_object(path, position, rect);
 
@@ -189,12 +188,17 @@ int mode(sfRenderWindow *window)
     return (ret);
 }
 
-int atk_hud(sfRenderWindow *window)
+int atk_hud(sfRenderWindow *window, game_object *screen, game_object *text_box, game_object *cercle, game_object *o_life, game_object *m_life)
 {
     game_object *atk = init_hud("assets/pp_hud.png", 338, 480);
 
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_drawSprite(window, atk->sprite, NULL);
+        sfRenderWindow_drawSprite(window, screen->sprite, NULL);
+        sfRenderWindow_drawSprite(window, text_box->sprite, NULL);
+        sfRenderWindow_drawSprite(window, cercle->sprite, NULL);
+        sfRenderWindow_drawSprite(window, o_life->sprite, NULL);
+        sfRenderWindow_drawSprite(window, m_life->sprite, NULL);
         sfRenderWindow_display(window);
         event(window);
     }
@@ -211,12 +215,9 @@ int combat(sfRenderWindow *window)
     game_object *cercle = init_hud("assets/cercle.png", 338, 204);
     game_object *o_life = init_hud("assets/opponent_life.png", 338, 123);
     game_object *m_life = init_hud("assets/my_life.png", 659, 263);
-    sfVector2f pos = {336, 825};
-    sfVector2f pos1 = {544, 844};
-    sfVector2f pos2 = {752, 825};
-    game_object *little = init_little("assets/menu_selection.png", pos);
-    game_object *sp_run = init_little("assets/menu_selection.png", pos1);
-    game_object *sp_pkm = init_little("assets/menu_selection.png", pos2);
+    game_object *little = init_little("assets/menu_selection.png", 336, 825);
+    game_object *sp_run = init_little("assets/menu_selection.png", 544, 844);
+    game_object *sp_pkm = init_little("assets/menu_selection.png", 752, 825);
     sfClock *clock = sfClock_create();
     int menu = 0;
 
@@ -240,7 +241,7 @@ int combat(sfRenderWindow *window)
         if (menu == 5)
             sfRenderWindow_close(window);
         if (menu == 6)
-            atk_hud(window);
+            atk_hud(window, screen, text_box, cercle, o_life, m_life);
         sfRenderWindow_display(window);
         event(window);
     }
