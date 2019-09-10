@@ -32,3 +32,4 @@ void destroy_object(struct game_object *obj);
 void display_pause(sfRenderWindow *window);
 void close_window(sfEvent event, sfRenderWindow *window);
 int event(sfRenderWindow *window);
+int combat(sfRenderWindow *window);
