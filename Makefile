@@ -5,8 +5,26 @@
 ## Makefile
 ##
 
-SRC	=	main.c	\
-		useful_fct.c	\
+SRC	=	src/main.c				\
+		src/overworld/read_map.c		\
+		src/overworld/draw_game.c		\
+		src/overworld/game_obj_fcts.c		\
+		src/overworld/collisions.c		\
+		src/overworld/analyse_events.c		\
+		src/overworld/input_react.c		\
+		src/overworld/move_characters.c		\
+		src/overworld/create_overworld.c	\
+		src/overworld/misc.c			\
+		src/overworld/animate.c			\
+		src/basics/my_strlen.c			\
+		src/basics/string_array_fcts.c		\
+		src/basics/my_strdup.c			\
+		lib_CSFML/window_functions.c		\
+		lib_CSFML/clock_functions.c		\
+		lib_CSFML/sound_functions.c		\
+		lib_CSFML/text_functions.c		\
+		lib_CSFML/value_structs.c		\
+		lib_CSFML/sprite_functions.c
 
 SRC_T		=
 
@@ -16,9 +34,9 @@ TESTS_NAME	=	tests_run
 
 CC			=	gcc
 
-CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm
+CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -g3
 
-CPPFLAGS	+=	-Wall -Wextra
+CPPFLAGS	+=
 
 TEST_FLAGS	=	-lcriterion --coverage
 

@@ -7,6 +7,18 @@
 
 #include <stdlib.h>
 
+int my_strlen(char const *str);
+char *my_strdup(char const *src);
+
+void free_word_array(char **words)
+{
+    if (words != NULL) {
+        for (int i = 0; words[i]; i++)
+            free(words[i]);
+        free(words);
+    }
+}
+
 char **copy_words(char **words, int arg)
 {
     int i = 0;
@@ -68,7 +80,6 @@ char **remove_string_array(char **words, int poswords)
 
 char **replace_string_array(char **arr, char *str, int pos)
 {
-    int i = 0;
     char **cpy = copy_words(arr, 0);
 
     free(cpy[pos]);

@@ -7,61 +7,71 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <SFML/Graphics.h>
+#include <SFML/System.h>
+#include "systems.h"
+#include "graphics.h"
 #include "basics.h"
 #include "game_object.h"
+#include "overworld_rects.h"
 
-void put_ground_in_objects(game_object_list_t **list, ground_t ground)
+void setGroundRect(ground_t *ground, ground_info_t info, int rect)
 {
-    game_object_list_t *element = malloc(sizeof(game_object_list_t));
-    if (element == NULL)
-        return;
-
-    element->object = (void *)(&ground);
-    element->type = GROUND;
-    element->next = *list;
-    *list = element;
+    if (info.type == 0)
+        ground->anim.rects = groundRects[rect];
+    if (info.type == 1)
+        ground->anim.rects = objRects[rect];
+    if (info.type == 2)
+        ground->anim.rects = buildRects[rect];
+    if (info.type == 3)
+        ground->anim.rects = heightsRects[rect];
+    if (info.type == 4)
+        ground->anim.rects = solidRects[rect];
 }
 
-ground_t create_col_ground(game_object_list_t **list, int rect, int x, int y)
+ground_t *create_ground(game_object_list_t **list,
+int rect, ground_info_t info)
 {
-    ground_t ground;
+    ground_t *ground = malloc(sizeof(ground_t));
 
-    ground.appearance = rect;
-    ground.solid = 1;
-    ground.pos.x = x*ground_width;
-    ground.pos.y = y*ground_height;
+    if (ground == NULL)
+        return (NULL);
+    ground->type = info.type;
+    ground->anim.nb_rects = 1;
+    ground->anim.actual_rect = 0;
+    ground->anim.time_anim = 0;
+    setGroundRect(ground, info, rect);
+    ground->solid = info.solid;
+    ground->pos = info.pos;
     return (ground);
 }
 
-ground_t create_nocol_ground(game_object_list_t **list, int rect, int x, int y)
+void create_ground_from_char(game_object_list_t **list,
+char c, ground_info_t info)
 {
-    ground_t ground;
-
-    ground.appearance = rect;
-    ground.solid = 0;
-    ground.pos.x = x*ground_width;
-    ground.pos.y = y*ground_height;
-    return (ground);
-}
-
-void create_ground_from_char(game_object_list_t **list, char c, int x, int y)
-{
-    ground_t ground;
+    ground_t *ground = NULL;
+    int nb = 0;
 
     if ((c > 'Z' || c < 'A') && (c > 'z' || c < 'a'))
         return;
-    if (c >= 'A' && c <= 'Z')
-        ground = create_col_ground(list, c-'A', x, y);
     if (c >= 'a' && c <= 'z')
-        ground = create_nocol_ground(list, c-'a'+('Z'-'A'), x, y);
-    put_ground_in_objects(ground);
+        nb = c-'a';
+    if (c >= 'A' && c <= 'Z')
+        nb = c-'a'+26;
+    if (nb <= info.limit);
+    ground = create_ground(list, nb, info);
+    if (ground != NULL)
+        put_object_in_objects(list, (void *)(ground), GROUND, info.height);
 }
 
-void put_map_in_objects(game_object_list_t **list, char **map)
+void put_map_in_grounds(game_object_list_t **list,
+char **map, ground_info_t info)
 {
     for (int y = 0; map[y]; y++) {
         for (int x = 0; map[y][x]; x++) {
-            create_object_from_char(list, map[y][x], x, y);
+            info.pos.x = x * ground_width;
+            info.pos.y = y * ground_height;
+            create_ground_from_char(list, map[y][x], info);
         }
     }
 }
@@ -69,10 +79,10 @@ void put_map_in_objects(game_object_list_t **list, char **map)
 char **read_map(char const *path)
 {
     FILE *file = fopen(path, "r");
-    char **map;
-    char *line;
-    size_t size;
-    ssize_t nread;
+    char **map = NULL;
+    char *line = NULL;
+    size_t size = 0;
+    ssize_t nread = 0;
 
     if (file == NULL)
         return (NULL);
@@ -81,7 +91,7 @@ char **read_map(char const *path)
         return (NULL);
     map[0] = NULL;
     while ((nread = getline(&line, &size, file)) != -1)
-        map = add_str_to_array(maze, my_strdup(line));
+        map = add_str_to_array(map, my_strdup(line));
     if (line != NULL)
         free(line);
     for (int i = 0; map[i]; i++)
@@ -89,4 +99,18 @@ char **read_map(char const *path)
             map[i][my_strlen(map[i]) - 1] = '\0';
     fclose(file);
     return (map);
+}
+
+void load_overworld(game_object_list_t **list)
+{
+    ground_info_t info;
+    char **map = NULL;
+
+    for (int i = 0; i < 5; i++) {
+        map = read_map(mapspaths[i]);
+        info = infos[i];
+        if (map != NULL)
+            put_map_in_grounds(list, map, info);
+        free_word_array(map);
+    }
 }
