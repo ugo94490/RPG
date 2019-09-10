@@ -1,0 +1,13 @@
+20, 365 583, 474
+
+choice = game_menu
+
+scale = 2.76, 3.05 OK
+
+2.76 -> 2.89 = 1 -> 1.13
+
+little = menu_selection
+
+scale = 2.47, 2.47 OK
+
+2.40 -> 2.535 = 1 -> 1.135
