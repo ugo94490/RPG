@@ -39,7 +39,7 @@ pkmn_list_t *fill(int flag)
 
 void add_node(pkmn_list_t *node, int flag)
 {
-    pkmn_list_t *new = malloc(sizeof(*new));
+    pkmn_list_t *new;
     int i = 0;
 
     for (i = 0; node->next != NULL; i++)
@@ -52,9 +52,10 @@ void add_node(pkmn_list_t *node, int flag)
 
 pkmn_list_t *init(void)
 {
-    pkmn_list_t *node = malloc(sizeof(*node));
+    pkmn_list_t *node;
     int flag = 0;
 
+    node = fill(flag);
     node->next = NULL;
     for (int i = 0; i < 6; i++) {
         add_node(node, flag);
@@ -278,9 +279,12 @@ text_t *init_txt(pkmn_list_t *linked)
 {
     text_t *stat = malloc(sizeof(text_t) * 6);
     sfVector2f pos = {0, 0};
+    int size = 25;
 
     for (int i = 0; i < 6; i++) {
-        stat[i] = create_text("init", "font.ttf", 25, pos);
+        if (i == 4)
+            size += 15;
+        stat[i] = create_text("init", "font.ttf", size, pos);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
@@ -291,18 +295,37 @@ void new_pos(text_t text, sfVector2f pos)
     sfText_setPosition(text.text, pos);
 }
 
-text_t *change_pos(pkmn_list_t *linked)
+char *itoa_dup(int nb)
+{
+    char *nbr = malloc(sizeof(char) * (my_int(nb) + 1));
+
+    nbr = my_itoa(nb, nbr);
+    return (nbr);
+}
+
+text_t *change_pos(pkmn_list_t *node)
 {
     sfVector2f pos = {880, 318};
     sfVector2f pos2 = {835, 318};
-    text_t *stat = init_txt(linked);
+    sfVector2f pos3 = {885, 270};
+    sfVector2f pos4 = {535, 131};
+    sfVector2f pos5 = {340, 115};
+    sfVector2f pos6 = {700, 255};
+    text_t *stat = init_txt(node);
 
+    printf("%d\n", node->pokemon.health);
+    change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
+    change_text(itoa_dup(node->pokemon.health), &stat[1]);
+    change_text(itoa_dup(node->pokemon.level), &stat[2]);
+    change_text(itoa_dup(node->pokemon.level), &stat[3]);
+    change_text(itoa_dup(node->pokemon.number), &stat[4]);
+    change_text(itoa_dup(node->pokemon.number), &stat[5]);
     new_pos(stat[0], pos);
     new_pos(stat[1], pos2);
-    new_pos(stat[2], pos);
-    new_pos(stat[3], pos);
-    new_pos(stat[4], pos);
-    new_pos(stat[5], pos);
+    new_pos(stat[2], pos3);
+    new_pos(stat[3], pos4);
+    new_pos(stat[4], pos5);
+    new_pos(stat[5], pos6);
     return (stat);
 }
 
