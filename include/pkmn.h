@@ -20,6 +20,8 @@ typedef struct pkmn_s
 {
     int number;
     int level;
+    int health;
+    int max_health;
     int xp_to_next_lvl;
     int speed;
     int physatq;

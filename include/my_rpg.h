@@ -17,6 +17,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "pkmn.h"
+#include "sounds.h"
+#include "systems.h"
 
 typedef struct game_object
 {
@@ -26,10 +29,13 @@ typedef struct game_object
     sfIntRect rect;
 }game_object;
 
-sfRenderWindow *create_window(int width, int height, char *Name, int full);
 struct game_object *create_object(char *sprite, sfVector2f position, sfIntRect rect1);
 void destroy_object(struct game_object *obj);
 void display_pause(sfRenderWindow *window);
 void close_window(sfEvent event, sfRenderWindow *window);
 int event(sfRenderWindow *window);
-int combat(sfRenderWindow *window);
+int combat(sfRenderWindow *window, pkmn_list_t *linked);
+int my_strlen92(char *str);
+void my_revstr(char *str);
+int my_int(int nb);
+char* my_itoa(int nb, char *nbr);

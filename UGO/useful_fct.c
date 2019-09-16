@@ -7,20 +7,6 @@
 
 #include "my_rpg.h"
 
-sfRenderWindow *create_window(int width, int height, char *Name, int full)
-{
-    sfRenderWindow *window;
-    sfVideoMode video_mode = {width, height, 32};
-
-    if (full == 1)
-        window = sfRenderWindow_create(video_mode, Name, sfFullscreen |
-        sfResize | sfClose, NULL);
-    if (full == 0)
-        window = sfRenderWindow_create(video_mode, Name, sfResize |
-        sfClose, NULL);
-    return (window);
-}
-
 struct game_object *create_object(char *spritesheet, sfVector2f
 position, sfIntRect rect1)
 {

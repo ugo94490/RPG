@@ -18,7 +18,7 @@ window_t create_window(int resx, int resy, int colours, char *title)
     window.window = sfRenderWindow_create(window.mode, title,
     sfResize | sfClose, NULL);
     sfRenderWindow_setFramerateLimit(window.window, 60);
-    sfRenderWindow_setMouseCursorVisible(window.window, sfFalse);
+    sfRenderWindow_setMouseCursorVisible(window.window, sfTrue);
     return (window);
 }
 
