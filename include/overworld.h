@@ -12,6 +12,7 @@ typedef struct game_s
 {
     game_object_list_t *objects;
     sfView *view;
+    int status;
     sprite_t *sprites;
 } game_t;
 

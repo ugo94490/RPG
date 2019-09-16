@@ -13,6 +13,7 @@ static const int ground_width = 32;
 static const int ground_height = 32;
 static const int character_width = 40;
 static const int character_height = 52;
+static const sfIntRect standardColRect = {0, 0, 32, 32};
 
 typedef struct anim_s
 {
@@ -49,6 +50,8 @@ typedef struct game_object_list_s
     void *object;
     struct game_object_list_s *next;
 } game_object_list_t;
+
+
 
 void put_object_in_objects(game_object_list_t **list, void *object,
 int type, int height);

@@ -15,6 +15,7 @@
 
 void get_key_pressed(window_t *window, game_t *game)
 {
+    character_t *character = get_character_in_objects(game->objects);
     if (sfKeyboard_isKeyPressed(sfKeyEscape))
         sfRenderWindow_close(window->window);
     if (sfKeyboard_isKeyPressed(sfKeyRight))
@@ -25,6 +26,8 @@ void get_key_pressed(window_t *window, game_t *game)
         move_down(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyUp))
         move_up(window, game);
+    if (sfKeyboard_isKeyPressed(sfKeyD))
+        printf("%f, %f\n", character->pos.x, character->pos.y);
 }
 
 void analyse_event(window_t *window, game_t *game)

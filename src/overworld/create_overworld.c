@@ -48,6 +48,7 @@ game_t create_game(void)
     game_t game;
 
     game.view = sfView_create();
+    game.status = 0;
     game.objects = NULL;
     game.sprites = create_sprites();
     load_overworld(&(game.objects));

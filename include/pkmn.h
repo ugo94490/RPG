@@ -29,4 +29,10 @@ typedef struct pkmn_s
     atk_t atks[4];
 } pkmn_t;
 
+typedef struct pkmn_list_s
+{
+    pkmn_t pokemon;
+    struct pkmn_list_s *next;
+} pkmn_list_t;
+
 #endif

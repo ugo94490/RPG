@@ -27,8 +27,8 @@ void draw_character(window_t *window, sfVector2f scale,
 sprite_t sprite, character_t *character)
 {
     sfVector2f vector0 = {0, 0};
-    sfVector2f origin = {character_width-ground_width,
-    character_height-ground_height};
+    sfVector2f origin = {(character_width-ground_width)*scale.x/2,
+    (character_height-ground_height)*scale.y};
 
     sfSprite_setOrigin(sprite.sprite, origin);
     sfSprite_setTextureRect(sprite.sprite,
