@@ -26,6 +26,7 @@ void display_buttons_menu_game(menu_t *menu)
         menu->buttons[i].rect);
         sfSprite_setPosition(menu->buttons[i].img.sprite,
         menu->buttons[i].pos_img);
+        sfSprite_setScale(menu->buttons[i].img.sprite, menu->scale);
         sfRenderWindow_drawSprite(menu->window->window,
         menu->buttons[i].img.sprite, NULL);
         sfRenderWindow_drawText(menu->window->window,

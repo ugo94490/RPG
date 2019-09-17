@@ -12,6 +12,12 @@
 #include "game_object.h"
 #include "menu.h"
 
+static void manage_button(menu_t *menu)
+{
+    if (menu->n_button == QUIT)
+        sfRenderWindow_close(menu->window->window);
+}
+
 static void analyse_keyboard_menu_game(menu_t *menu)
 {
     if (sfKeyboard_isKeyPressed(sfKeyEscape))
@@ -24,6 +30,28 @@ static void analyse_keyboard_menu_game(menu_t *menu)
         menu->select.pos_select.y -= 46;
         menu->n_button -= 1;
     }
+    if (sfKeyboard_isKeyPressed(sfKeyReturn))
+        manage_button(menu);
+}
+
+static void analyse_click_menu_game(menu_t *menu)
+{
+    if (menu->n_button == QUIT)
+        sfRenderWindow_close(menu->window->window);
+}
+
+static void analyse_pos_mouse_menu_game(menu_t *menu)
+{
+    sfVector2i posMouse = sfMouse_getPositionRenderWindow(menu->window->window);
+
+    for (int i = 0; i < NBR_BUTTON; i += 1)
+        if ((float)posMouse.x >= menu->buttons[i].pos_img.x &&
+        (float)posMouse.x <= menu->buttons[i].pos_img.x + menu->menu_rect.width &&
+        (float)posMouse.y >= menu->buttons[i].pos_img.y &&
+        (float)posMouse.y <= menu->buttons[i].pos_img.y + menu->menu_rect.width) {
+            menu->n_button = menu->buttons[i].n_button;
+            menu->select.pos_select.y = 8 + (46 * menu->n_button);
+        }
 }
 
 void analyse_menu_game(menu_t *menu)
@@ -33,5 +61,8 @@ void analyse_menu_game(menu_t *menu)
     while (sfRenderWindow_pollEvent(menu->window->window, &event)) {
         if (event.type == sfEvtKeyPressed)
            analyse_keyboard_menu_game(menu);
+        if (event.type == sfEvtMouseButtonPressed)
+            analyse_click_menu_game(menu);
+        analyse_pos_mouse_menu_game(menu);
     }
 }

@@ -13,6 +13,8 @@
 
 static const int NBR_BUTTON = 7;
 
+enum {NONE = -1, POKEDEX, POKEMON, BAG, SAVE, SETTINGS, BADGES, QUIT};
+
 typedef struct button_s {
     sprite_t img;
     sfIntRect rect;

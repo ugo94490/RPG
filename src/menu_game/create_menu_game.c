@@ -77,6 +77,7 @@ menu_t *create_menu_game(window_t *window)
     if (!menu->buttons)
         return (NULL);
     create_select(menu);
-    menu->n_button = 0;
+    menu->n_button = POKEDEX;
+    menu->state = NONE;
     return (menu);
 }

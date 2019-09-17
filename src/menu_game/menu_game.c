@@ -20,7 +20,8 @@ static void menu_game_loop(menu_t *menu)
         analyse_menu_game(menu);
         sfClock_restart(time_loop.clock);
         sfRenderWindow_clear(menu->window->window, sfBlack);
-        display_menu_game(menu);
+        if (menu->state == NONE)
+            display_menu_game(menu);
         sfRenderWindow_display(menu->window->window);
     }
     sfClock_destroy(time_loop.clock);
