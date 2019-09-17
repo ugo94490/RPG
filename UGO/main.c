@@ -222,7 +222,7 @@ int atk_hud(sfRenderWindow *window, game_object **tab)
         }
         sfRenderWindow_clear(window, sfBlack);
         sfRenderWindow_drawSprite(window, atk->sprite, NULL);
-        display_game(tab, window, 5, 1);
+        display_game(tab, window, 7, 1);
         sfRenderWindow_display(window);
         event(window);
     }
@@ -232,19 +232,24 @@ int atk_hud(sfRenderWindow *window, game_object **tab)
 
 game_object **init_object(void)
 {
-    game_object **tab = malloc(sizeof(game_object *) * 11);
+    game_object **tab = malloc(sizeof(game_object *) * 13);
+    sfVector2f pos = {420, 218};
+    sfVector2f pos2 = {720, 85};
+    sfIntRect rect = {0, 0, 0, 0};
 
     tab[0] = init_hud("../assets/attack_hud.png", 338, 480);
-    tab[6] = init_choice("../assets/game_menu.png");
+    tab[8] = init_choice("../assets/game_menu.png");
     tab[1]= init_hud("../assets/combat_screen.png", 338, 0);
     tab[3] = init_hud("../assets/text_combat.png", 338, 374);
     tab[2] = init_hud("../assets/cercle.png", 338, 204);
     tab[5] = init_hud("../assets/opponent_life.png", 338, 123);
     tab[4] = init_hud("../assets/my_life.png", 659, 263);
-    tab[7] = init_little("../assets/m_sel.png", 341, 825);
-    tab[8] = init_little("../assets/m_sel.png", 549, 844);
-    tab[9] = init_little("../assets/m_sel.png", 757, 825);
-    tab[10] = NULL;
+    tab[9] = init_little("../assets/m_sel.png", 341, 825);
+    tab[10] = init_little("../assets/m_sel.png", 549, 844);
+    tab[11] = init_little("../assets/m_sel.png", 757, 825);
+    tab[6] = create_object("../assets/front_pkmn.png", pos2, rect);
+    tab[7] = create_object("../assets/back_pkmn.png", pos, rect);
+    tab[12] = NULL;
     return (tab);
 }
 
@@ -259,13 +264,13 @@ int destroy_tab(game_object **tab)
 int check_flag(game_object **tab, sfClock *clock, int flag, sfRenderWindow *win)
 {
     if (flag == 1)
-        attack(tab[6], clock, win);
+        attack(tab[8], clock, win);
     if (flag == 2)
-        bag(tab[7], clock, win);
-    if (flag == 3)
-        bag(tab[8], clock, win);
-    if (flag == 4)
         bag(tab[9], clock, win);
+    if (flag == 3)
+        bag(tab[10], clock, win);
+    if (flag == 4)
+        bag(tab[11], clock, win);
     if (flag == 5)
         sfRenderWindow_close(win);
     if (flag == 6) {
@@ -313,7 +318,6 @@ text_t *change_pos(pkmn_list_t *node)
     sfVector2f pos6 = {700, 255};
     text_t *stat = init_txt(node);
 
-    printf("%d\n", node->pokemon.health);
     change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
     change_text(itoa_dup(node->pokemon.health), &stat[1]);
     change_text(itoa_dup(node->pokemon.level), &stat[2]);
@@ -333,6 +337,45 @@ int display_stat(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
 {
     for (int i = 0; i < 6; i++)
         sfRenderWindow_drawText(window, stat[i].text, NULL);
+    sfRenderWindow_display(window);
+    return (0);
+}
+
+int animation(sfRenderWindow *window, game_object **tab)
+{
+    sfIntRect rect = {0, 0, 170, 148};
+    sfIntRect rect2 = {0, 0, 47, 109};
+    sfVector2f pos = {380, 226};
+    sfVector2f pos2 = {740, 30};
+    game_object *player = create_object("../assets/back_train.png", pos, rect);
+    game_object *rival = create_object("../assets/rival_two.png", pos2, rect2);
+    sfClock *clock = sfClock_create();
+    sfTime time;
+    int count = 0;
+
+    display_game(tab, window, 5, 0);
+    while (count != 5) {
+        time = sfClock_getElapsedTime(clock);
+        if (time.microseconds >= 400000) {
+            sfRenderWindow_clear(window, sfBlack);
+            rect.left += 173;
+            sfSprite_setTextureRect(player->sprite, rect);
+            display_game(tab, window, 5, 0);
+            sfRenderWindow_drawSprite(window, player->sprite, NULL);
+            sfRenderWindow_drawSprite(window, rival->sprite, NULL);
+            sfRenderWindow_display(window);
+            time = sfClock_restart(clock);
+            count++;
+        }
+    }
+    destroy_object(player);
+    return (0);
+}
+
+int dresseur(sfRenderWindow *window, int menu, game_object **tab)
+{
+    if (menu == -1)
+        return (animation(window, tab));
     return (0);
 }
 
@@ -341,14 +384,15 @@ int combat(sfRenderWindow *window, pkmn_list_t *linked)
     game_object **tab = init_object();
     sfClock *clock = sfClock_create();
     text_t *stat = change_pos(linked);
-    int menu = 0;
+    int menu = -1;
 
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_clear(window, sfBlack);
-        display_game(tab, window, 5, 0);
-        display_stat(window, linked, stat);
+        menu = dresseur(window, menu, tab);
+        display_game(tab, window, 7, 0);
         menu = mode(window, menu);
         menu = check_flag(tab, clock, menu, window);
+        display_stat(window, linked, stat);
         sfRenderWindow_display(window);
         event(window);
     }
