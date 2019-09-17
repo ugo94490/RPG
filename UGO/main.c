@@ -284,12 +284,12 @@ text_t *init_txt(pkmn_list_t *linked)
 {
     text_t *stat = malloc(sizeof(text_t) * 6);
     sfVector2f pos = {0, 0};
-    int size = 25;
+    int size = 15;
 
     for (int i = 0; i < 6; i++) {
         if (i == 4)
             size += 15;
-        stat[i] = create_text("init", "font.ttf", size, pos);
+        stat[i] = create_text("init", "classic.ttf", size, pos);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
@@ -310,12 +310,12 @@ char *itoa_dup(int nb)
 
 text_t *change_pos(pkmn_list_t *node)
 {
-    sfVector2f pos = {880, 318};
-    sfVector2f pos2 = {835, 318};
-    sfVector2f pos3 = {885, 270};
-    sfVector2f pos4 = {535, 131};
-    sfVector2f pos5 = {340, 115};
-    sfVector2f pos6 = {700, 255};
+    sfVector2f pos = {880, 328};
+    sfVector2f pos2 = {815, 328};
+    sfVector2f pos3 = {885, 280};
+    sfVector2f pos4 = {535, 141};
+    sfVector2f pos5 = {340, 125};
+    sfVector2f pos6 = {700, 265};
     text_t *stat = init_txt(node);
 
     change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
