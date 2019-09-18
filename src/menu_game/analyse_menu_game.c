@@ -36,19 +36,25 @@ static void analyse_keyboard_menu_game(menu_t *menu)
 
 static void analyse_click_menu_game(menu_t *menu)
 {
-    if (menu->n_button == QUIT)
-        sfRenderWindow_close(menu->window->window);
+    sfVector2i pMouse = sfMouse_getPositionRenderWindow(menu->window->window);
+
+    if (menu->n_button == QUIT && (float)pMouse.x >=
+        menu->buttons[QUIT].pos_img.x && (float)pMouse.x <=
+        menu->buttons[QUIT].pos_img.x + menu->menu_rect.width
+        && (float)pMouse.y >= menu->buttons[QUIT].pos_img.y && (float)pMouse.y
+        <= menu->buttons[QUIT].pos_img.y + menu->menu_rect.width)
+            sfRenderWindow_close(menu->window->window);
 }
 
 static void analyse_pos_mouse_menu_game(menu_t *menu)
 {
-    sfVector2i posMouse = sfMouse_getPositionRenderWindow(menu->window->window);
+    sfVector2i pMouse = sfMouse_getPositionRenderWindow(menu->window->window);
 
     for (int i = 0; i < NBR_BUTTON; i += 1)
-        if ((float)posMouse.x >= menu->buttons[i].pos_img.x &&
-        (float)posMouse.x <= menu->buttons[i].pos_img.x + menu->menu_rect.width &&
-        (float)posMouse.y >= menu->buttons[i].pos_img.y &&
-        (float)posMouse.y <= menu->buttons[i].pos_img.y + menu->menu_rect.width) {
+        if ((float)pMouse.x >= menu->buttons[i].pos_img.x &&
+        (float)pMouse.x <= menu->buttons[i].pos_img.x + menu->menu_rect.width
+        && (float)pMouse.y >= menu->buttons[i].pos_img.y && (float)pMouse.y
+        <= menu->buttons[i].pos_img.y + menu->menu_rect.width) {
             menu->n_button = menu->buttons[i].n_button;
             menu->select.pos_select.y = 8 + (46 * menu->n_button);
         }
