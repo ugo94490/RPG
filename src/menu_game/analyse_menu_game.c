@@ -16,6 +16,8 @@ static void manage_button(menu_t *menu)
 {
     if (menu->n_button == QUIT)
         sfRenderWindow_close(menu->window->window);
+    if (menu->n_button == POKEMON)
+        menu->state = POKEMON;
 }
 
 static void analyse_keyboard_menu_game(menu_t *menu)
@@ -57,6 +59,7 @@ static void analyse_pos_mouse_menu_game(menu_t *menu)
         <= menu->buttons[i].pos_img.y + menu->menu_rect.width) {
             menu->n_button = menu->buttons[i].n_button;
             menu->select.pos_select.y = 8 + (46 * menu->n_button);
+            break;
         }
 }
 

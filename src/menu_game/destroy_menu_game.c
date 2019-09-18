@@ -17,4 +17,6 @@ void destroy_menu_game(menu_t *menu)
     destroy_sprite(&menu->menu_w);
     for (int i = 0; i < NBR_BUTTON; i += 1)
         destroy_text(&menu->buttons[i].text);
+    free(menu->buttons);
+    free(menu);
 }

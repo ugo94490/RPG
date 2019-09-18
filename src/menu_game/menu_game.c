@@ -22,6 +22,10 @@ static void menu_game_loop(menu_t *menu)
         sfRenderWindow_clear(menu->window->window, sfBlack);
         if (menu->state == NONE)
             display_menu_game(menu);
+        if (menu->state == POKEMON) {
+            menu_pokemon(menu->window);
+            menu->state = NONE;
+        }
         sfRenderWindow_display(menu->window->window);
     }
     sfClock_destroy(time_loop.clock);

@@ -16,9 +16,7 @@ static const int topIcon[] = {0, 70, 128, 190, 240, 320, 380};
 static const float posIconY[] = {9, 62, 100, 140, 172, 235, 284};
 static const float posTextY[] = {22, 70, 115, 161, 207, 252, 297};
 static const char *NAME_EN[] = {"Pokedex", "Pokemon", "Bag",
-"Save", "Settings", "Badges", "Quit"};
-static const char *NAME_FR[] = {"Pokedex", "Pokemon", "Sac",
-"Sauvegarde", "Parametres", "Badges", "Quitter"};
+"Save", "Settings", "Badges", "Resume"};
 
 static void create_select(menu_t *menu)
 {
@@ -48,7 +46,7 @@ static button_t *create_button(menu_t *menu)
         buttons[i].pos_img.y = posIconY[i];
         buttons[i].pos_text.x = 1170;
         buttons[i].pos_text.y = posTextY[i];
-        buttons[i].text = create_text(my_strdup(NAME_EN[i]),
+        buttons[i].text = create_text((char *)NAME_EN[i],
         "assets/Pokemon Solid.ttf", 20, buttons[i].pos_text);
         sfText_setColor(buttons[i].text.text, sfBlack);
     }
