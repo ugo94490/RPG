@@ -81,6 +81,21 @@ static const float POS_Y_SLOT[] = {0, 18, 107, 125, 214, 232};
 //     return (node);
 // }
 
+static void create_slot(pkmn_bag_t *pkmn_bag)
+{
+    pkmn_bag->n_slot = 1;
+    for (int i = 0; i < NBR_PKMN; i += 1) {
+        pkmn_bag->slot[i].img = pkmn_bag->img;
+        pkmn_bag->slot[i].rect.top = SLOT_TOP[i];
+        pkmn_bag->slot[i].rect.left = 258;
+        pkmn_bag->slot[i].rect.width = 258;
+        pkmn_bag->slot[i].rect.height = 110;
+        pkmn_bag->slot[i].pos.x = POS_X_SLOT[i];
+        pkmn_bag->slot[i].pos.y = POS_Y_SLOT[i];
+        pkmn_bag->slot[i].nbr = i + 1;
+    }
+}
+
 pkmn_bag_t *create_pkmn_bag(window_t *window)
 {
     pkmn_bag_t *pkmn_bag = malloc(sizeof(*pkmn_bag));
@@ -96,16 +111,6 @@ pkmn_bag_t *create_pkmn_bag(window_t *window)
     pkmn_bag->slot = malloc(sizeof(*(pkmn_bag->slot)) * NBR_PKMN);
     pkmn_bag->state = OPEN;
     pkmn_bag->n_pkmn = 6;
-    pkmn_bag->n_slot = 1;
-    for (int i = 0; i < NBR_PKMN; i += 1) {
-        pkmn_bag->slot[i].img = pkmn_bag->img;
-        pkmn_bag->slot[i].rect.top = SLOT_TOP[i];
-        pkmn_bag->slot[i].rect.left = 258;
-        pkmn_bag->slot[i].rect.width = 258;
-        pkmn_bag->slot[i].rect.height = 110;
-        pkmn_bag->slot[i].pos.x = POS_X_SLOT[i];
-        pkmn_bag->slot[i].pos.y = POS_Y_SLOT[i];
-        pkmn_bag->slot[i].nbr = i + 1;
-    }
+    create_slot(pkmn_bag);
     return (pkmn_bag);
 }

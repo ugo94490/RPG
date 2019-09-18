@@ -19,9 +19,12 @@ static void display_slot(pkmn_bag_t *pkmn_bag)
             pkmn_bag->slot[i].rect.left = 0;
         else
             pkmn_bag->slot[i].rect.left = 258;
-        sfSprite_setTextureRect(pkmn_bag->slot[i].img.sprite, pkmn_bag->slot[i].rect);
-        sfSprite_setPosition(pkmn_bag->slot[i].img.sprite, pkmn_bag->slot[i].pos);
-        sfRenderWindow_drawSprite(pkmn_bag->window->window, pkmn_bag->slot[i].img.sprite, NULL);
+        sfSprite_setTextureRect(pkmn_bag->slot[i].img.sprite,
+        pkmn_bag->slot[i].rect);
+        sfSprite_setPosition(pkmn_bag->slot[i].img.sprite,
+        pkmn_bag->slot[i].pos);
+        sfRenderWindow_drawSprite(pkmn_bag->window->window,
+        pkmn_bag->slot[i].img.sprite, NULL);
     }
 }
 
@@ -29,6 +32,7 @@ void display_pokemon_bag(pkmn_bag_t *pkmn_bag)
 {
     sfSprite_setTextureRect(pkmn_bag->img.sprite, pkmn_bag->rect);
     sfSprite_setPosition(pkmn_bag->img.sprite, pkmn_bag->pos);
-    sfRenderWindow_drawSprite(pkmn_bag->window->window, pkmn_bag->img.sprite, NULL);
+    sfRenderWindow_drawSprite(pkmn_bag->window->window,
+    pkmn_bag->img.sprite, NULL);
     display_slot(pkmn_bag);
 }

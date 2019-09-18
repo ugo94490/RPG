@@ -16,7 +16,7 @@ static const int topIcon[] = {0, 70, 128, 190, 240, 320, 380};
 static const float posIconY[] = {9, 62, 100, 140, 172, 235, 284};
 static const float posTextY[] = {22, 70, 115, 161, 207, 252, 297};
 static const char *NAME_EN[] = {"Pokedex", "Pokemon", "Bag",
-"Save", "Settings", "Badges", "Resume"};
+    "Save", "Settings", "Badges", "Resume"};
 
 static void create_select(menu_t *menu)
 {
@@ -53,6 +53,21 @@ static button_t *create_button(menu_t *menu)
     return (buttons);
 }
 
+static void create_menu(menu_t *menu)
+{
+    menu->scale.x = 1;
+    menu->scale.y = 1;
+    menu->menu_w = create_sprite("assets/MenuSprite.png");
+    if (!menu->menu_w.sprite)
+        return ;
+    menu->menu_rect.top = 0;
+    menu->menu_rect.left = 294;
+    menu->menu_rect.width = 202;
+    menu->menu_rect.height = 534;
+    menu->pos_menu.x = 1078;
+    menu->pos_menu.y = 0;
+}
+
 menu_t *create_menu_game(window_t *window)
 {
     menu_t *menu = malloc(sizeof(menu_t));
@@ -60,17 +75,9 @@ menu_t *create_menu_game(window_t *window)
     if (!menu)
         return (NULL);
     menu->window = window;
-    menu->scale.x = 1;
-    menu->scale.y = 1;
-    menu->menu_w = create_sprite("assets/MenuSprite.png");
+    create_menu(menu);
     if (!menu->menu_w.sprite)
         return (NULL);
-    menu->menu_rect.top = 0;
-    menu->menu_rect.left = 294;
-    menu->menu_rect.width = 202;
-    menu->menu_rect.height = 534;
-    menu->pos_menu.x = 1078;
-    menu->pos_menu.y = 0;
     menu->buttons = create_button(menu);
     if (!menu->buttons)
         return (NULL);
