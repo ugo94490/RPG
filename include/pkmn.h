@@ -37,4 +37,6 @@ typedef struct pkmn_list_s
     struct pkmn_list_s *next;
 } pkmn_list_t;
 
+static char *name[3] = {"Simiabraz", "Torterra", NULL};
+
 #endif
