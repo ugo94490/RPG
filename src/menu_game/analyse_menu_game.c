@@ -16,6 +16,8 @@ static void manage_button(menu_t *menu)
 {
     if (menu->n_button == QUIT)
         sfRenderWindow_close(menu->window->window);
+    if (menu->n_button == POKEMON)
+        menu->state = POKEMON;
 }
 
 static void analyse_keyboard_menu_game(menu_t *menu)
@@ -43,7 +45,7 @@ static void analyse_click_menu_game(menu_t *menu)
         menu->buttons[QUIT].pos_img.x + menu->menu_rect.width
         && (float)pMouse.y >= menu->buttons[QUIT].pos_img.y && (float)pMouse.y
         <= menu->buttons[QUIT].pos_img.y + menu->menu_rect.width)
-            sfRenderWindow_close(menu->window->window);
+        sfRenderWindow_close(menu->window->window);
 }
 
 static void analyse_pos_mouse_menu_game(menu_t *menu)
@@ -54,9 +56,10 @@ static void analyse_pos_mouse_menu_game(menu_t *menu)
         if ((float)pMouse.x >= menu->buttons[i].pos_img.x &&
         (float)pMouse.x <= menu->buttons[i].pos_img.x + menu->menu_rect.width
         && (float)pMouse.y >= menu->buttons[i].pos_img.y && (float)pMouse.y
-        <= menu->buttons[i].pos_img.y + menu->menu_rect.width) {
+        <= menu->buttons[i].pos_img.y + menu->buttons[i].rect.height) {
             menu->n_button = menu->buttons[i].n_button;
             menu->select.pos_select.y = 8 + (46 * menu->n_button);
+            break;
         }
 }
 
@@ -66,7 +69,7 @@ void analyse_menu_game(menu_t *menu)
 
     while (sfRenderWindow_pollEvent(menu->window->window, &event)) {
         if (event.type == sfEvtKeyPressed)
-           analyse_keyboard_menu_game(menu);
+            analyse_keyboard_menu_game(menu);
         if (event.type == sfEvtMouseButtonPressed)
             analyse_click_menu_game(menu);
         analyse_pos_mouse_menu_game(menu);
