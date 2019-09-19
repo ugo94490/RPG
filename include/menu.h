@@ -25,7 +25,7 @@ enum ITEM {
     POTION = 20,
     S_POTION = 50,
     H_POTION = 200,
-    REVIVE = 50,
+    REVIVE = 30,
 };
 
 enum ACTION {

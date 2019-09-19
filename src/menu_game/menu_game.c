@@ -73,7 +73,7 @@ static void menu_game_loop(menu_t *menu)
     clock_sf time_loop = create_clock();
     param_pkmn_menu_t param;
 
-    param.item = POTION;
+    param.item = H_POTION;
     param.action = HEAL;
     param.list_pkmn = init();
     while (sfRenderWindow_isOpen(menu->window->window)) {
