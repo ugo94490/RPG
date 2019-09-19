@@ -56,7 +56,7 @@ static void analyse_pos_mouse_menu_game(menu_t *menu)
         if ((float)pMouse.x >= menu->buttons[i].pos_img.x &&
         (float)pMouse.x <= menu->buttons[i].pos_img.x + menu->menu_rect.width
         && (float)pMouse.y >= menu->buttons[i].pos_img.y && (float)pMouse.y
-        <= menu->buttons[i].pos_img.y + menu->menu_rect.width) {
+        <= menu->buttons[i].pos_img.y + menu->buttons[i].rect.height) {
             menu->n_button = menu->buttons[i].n_button;
             menu->select.pos_select.y = 8 + (46 * menu->n_button);
             break;

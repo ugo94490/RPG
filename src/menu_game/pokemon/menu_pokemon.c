@@ -26,9 +26,9 @@ static void menu_pkmn_bag_loop(pkmn_bag_t *pkmn_bag)
     sfClock_destroy(time_loop.clock);
 }
 
-void menu_pokemon(window_t *window)
+void menu_pokemon(window_t *window, param_pkmn_menu_t *param)
 {
-    pkmn_bag_t *pkmn_bag = create_pkmn_bag(window);
+    pkmn_bag_t *pkmn_bag = create_pkmn_bag(window, param);
 
     menu_pkmn_bag_loop(pkmn_bag);
     destroy_pokemon_bag(pkmn_bag);

@@ -9,6 +9,7 @@
 #include "systems.h"
 #include "basics.h"
 #include "game_object.h"
+#include "pkmn.h"
 #include "my_rpg.h"
 
 static const int NBR_PKMN = 6;
@@ -19,9 +20,17 @@ static const int WINDOW_HEIGHT = 960;
 static const int OPEN = 1;
 static const int CLOSE = 0;
 
+enum ITEM {
+    NO = -1,
+    POTION = 20,
+    S_POTION = 50,
+    H_POTION = 200,
+    REVIVE = 50,
+};
+
 enum ACTION {
     ORDER,
-    ITEM,
+    HEAL,
     SWITCH,
 };
 
@@ -35,6 +44,12 @@ enum SUB_MENU {
     BADGES,
     QUIT
 };
+
+typedef struct param_pkmn_menu_s {
+    pkmn_list_t *list_pkmn;
+    int action;
+    int item;
+} param_pkmn_menu_t;
 
 typedef struct button_s {
     sprite_t img;
@@ -55,10 +70,13 @@ typedef struct pkmn_slot_s {
     sprite_t img;
     sfIntRect rect;
     sfVector2f pos;
+    text_t pv;
+    text_t m_pv;
     int nbr;
 } pkmn_slot_t;
 
 typedef struct pkmn_bag_s {
+    param_pkmn_menu_t *param;
     window_t *window;
     sprite_t img;
     sfIntRect rect;
@@ -91,8 +109,8 @@ void destroy_menu_game(menu_t *);
 menu_t *create_menu_game(window_t *);
 
 /* Menu Pokemon */
-void menu_pokemon(window_t *);
+void menu_pokemon(window_t *, param_pkmn_menu_t *);
 void display_pokemon_bag(pkmn_bag_t *);
 void analyse_pokemon_bag(pkmn_bag_t *);
 void destroy_pokemon_bag(pkmn_bag_t *);
-pkmn_bag_t *create_pkmn_bag(window_t *);
+pkmn_bag_t *create_pkmn_bag(window_t *, param_pkmn_menu_t *);

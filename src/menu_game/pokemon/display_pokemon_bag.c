@@ -25,6 +25,10 @@ static void display_slot(pkmn_bag_t *pkmn_bag)
         pkmn_bag->slot[i].pos);
         sfRenderWindow_drawSprite(pkmn_bag->window->window,
         pkmn_bag->slot[i].img.sprite, NULL);
+        sfRenderWindow_drawText(pkmn_bag->window->window,
+        pkmn_bag->slot[i].pv.text, NULL);
+        sfRenderWindow_drawText(pkmn_bag->window->window,
+        pkmn_bag->slot[i].m_pv.text, NULL);
     }
 }
 
