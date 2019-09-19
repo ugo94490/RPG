@@ -16,7 +16,7 @@
 #include "overworld.h"
 #include "overworld_rects.h"
 
-void create_character(game_object_list_t **list)
+character_t *create_character(game_object_list_t **list)
 {
     character_t *character = malloc(sizeof(character_t));
 
@@ -31,7 +31,9 @@ void create_character(game_object_list_t **list)
     character->anim.clock = create_clock();
     character->pos.x = 640;
     character->pos.y = 640;
+    character->world = 0;
     put_object_in_objects(list, (void *)(character), PLAYER, 4);
+    return (character);
 }
 
 sprite_t *create_sprites(void)
@@ -48,10 +50,12 @@ game_t create_game(void)
     game_t game;
 
     game.view = sfView_create();
-    game.status = 0;
     game.objects = NULL;
+    game.evts = NULL;
+    game.character = create_character(&(game.objects));
+    game.status = 0;
     game.sprites = create_sprites();
-    load_overworld(&(game.objects));
-    create_character(&(game.objects));
+    load_map(&(game.objects), game.character->world);
+    read_evts("maps/permevts", &(game.evts));
     return (game);
 }

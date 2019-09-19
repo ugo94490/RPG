@@ -1,8 +1,0 @@
--evt
-Type:teleport
-triggertype:onpos
-posx:576
-posy:544
-destmap:2
-destx:576
-desty:544

@@ -17,16 +17,28 @@
 
 void setGroundRect(ground_t *ground, ground_info_t info, int rect)
 {
-    if (info.type == 0)
-        ground->anim.rects = groundRects[rect];
-    if (info.type == 1)
-        ground->anim.rects = objRects[rect];
-    if (info.type == 2)
-        ground->anim.rects = buildRects[rect];
-    if (info.type == 3)
-        ground->anim.rects = heightsRects[rect];
-    if (info.type == 4)
-        ground->anim.rects = solidRects[rect];
+    if (info.type == 0 && info.map == 0)
+        ground->anim.rects = groundRectsOut[rect];
+    if (info.type == 1 && info.map == 0)
+        ground->anim.rects = objRectsOut[rect];
+    if (info.type == 2 && info.map == 0)
+        ground->anim.rects = buildRectsOut[rect];
+    if (info.type == 3 && info.map == 0)
+        ground->anim.rects = heightsRectsOut[rect];
+    if (info.type == 4 && info.map == 0)
+        ground->anim.rects = solidRectsOut[rect];
+    if (info.type == 0 && info.map == 1)
+        ground->anim.rects = groundRectsIn[rect];
+    if (info.type == 5)
+        ground->anim.rects = nocolobjsRects[rect];
+//    if (info.type == 1 && info.map == 0)
+//        ground->anim.rects = objRectsOut[rect];
+    if (info.type == 2 && info.map == 1)
+        ground->anim.rects = WallRectsIn[rect];
+    if (info.type == 3 && info.map == 1)
+        ground->anim.rects = heightsRectsIn[rect];
+//    if (info.type == 4 && info.map == 0)
+//        ground->anim.rects = solidRectsOut[rect];
 }
 
 ground_t *create_ground(game_object_list_t **list,
@@ -36,10 +48,12 @@ int rect, ground_info_t info)
 
     if (ground == NULL)
         return (NULL);
+    ground->animfct = &noAnimGround;
     ground->type = info.type;
     ground->anim.nb_rects = 1;
     ground->anim.actual_rect = 0;
     ground->anim.time_anim = 0;
+    ground->anim.clock.clock = NULL;
     setGroundRect(ground, info, rect);
     ground->solid = info.solid;
     ground->pos = info.pos;
@@ -101,16 +115,21 @@ char **read_map(char const *path)
     return (map);
 }
 
-void load_overworld(game_object_list_t **list)
+void load_map(game_object_list_t **list, int arg)
 {
     ground_info_t info;
     char **map = NULL;
 
-    for (int i = 0; i < 5; i++) {
-        map = read_map(mapspaths[i]);
-        info = infos[i];
+    for (int i = 0; i < 6; i++) {
+        map = read_map(mapspaths[arg][i]);
+        info = infos[i+arg*6];
         if (map != NULL)
             put_map_in_grounds(list, map, info);
+        free_word_array(map);
+    }
+    if (arg == 0) {
+        map = read_map("maps/outdoors/speobjs");
+        put_map_in_grounds_spe(list, map);
         free_word_array(map);
     }
 }

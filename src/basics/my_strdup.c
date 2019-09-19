@@ -14,7 +14,7 @@ char *my_strdup(char const *src)
     char *c = malloc(sizeof(char) * my_strlen(src) + 1);
 
     if (c == NULL)
-        exit(84);
+        return (NULL);
     for (int i = 0; src[i] != '\0'; i = i + 1) {
         c[i] = src[i];
     }

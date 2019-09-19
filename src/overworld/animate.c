@@ -11,6 +11,7 @@
 #include "graphics.h"
 #include "systems.h"
 #include "game_object.h"
+#include "overworld.h"
 
 void animate_player_direction(character_t *character)
 {
@@ -58,11 +59,16 @@ void animate_player(character_t *character)
     sub_animate(&(character->anim));
 }
 
-void animate_objects(game_object_list_t *list)
+void animate_objects(game_t *game)
 {
+    game_object_list_t *list = game->objects;
+
     while (list != NULL) {
         if (list->type == PLAYER)
             animate_player((character_t *)(list->object));
+        if (list->type == GROUND)
+            (((ground_t *)(list->object))->animfct)
+            (game, (ground_t *)(list->object), &list->height);
         list = list->next;
     }
 }

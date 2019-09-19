@@ -43,10 +43,14 @@ void draw_objects(window_t *window, sfVector2f scale, game_t *game, int level)
     game_object_list_t *save = game->objects;
 
     while (game->objects != NULL) {
-        if (game->objects->height == level && game->objects->type == GROUND)
+        while (game->objects->next != NULL && game->objects->height != level)
+            game->objects = game->objects->next;
+        if (game->objects->height != level)
+            break;
+        if (game->objects->type == GROUND)
             draw_ground(window, scale, game->sprites[0],
             (ground_t *)(game->objects->object));
-        if (game->objects->height == level &&game->objects->type == PLAYER)
+        if (game->objects->type == PLAYER)
             draw_character(window, scale, game->sprites[1],
             (character_t *)(game->objects->object));
         game->objects = game->objects->next;

@@ -22,7 +22,7 @@ void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
     while (sfRenderWindow_isOpen(window->window)) {
         clock.time = sfClock_getElapsedTime(clock.clock);
         sfClock_restart(clock.clock);
-        animate_objects(game->objects);
+        animate_objects(game);
         move_objects(game->objects, clock.time);
         analyse_event(window, game);
         set_view_params(window, game, *scale);

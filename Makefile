@@ -6,7 +6,9 @@
 ##
 
 SRC	=	src/main.c				\
+		src/overworld/read_evt.c		\
 		src/overworld/read_map.c		\
+		src/overworld/put_special_grounds.c	\
 		src/overworld/draw_game.c		\
 		src/overworld/game_obj_fcts.c		\
 		src/overworld/collisions.c		\
@@ -16,9 +18,15 @@ SRC	=	src/main.c				\
 		src/overworld/create_overworld.c	\
 		src/overworld/misc.c			\
 		src/overworld/animate.c			\
+		src/overworld/unload_map.c		\
+		src/overworld/animate_ground.c		\
 		src/basics/my_strlen.c			\
 		src/basics/string_array_fcts.c		\
 		src/basics/my_strdup.c			\
+		src/basics/my_strcmp.c			\
+		src/basics/my_str_to_word_array.c	\
+		src/basics/my_getnbr.c			\
+		src/basics/word_array_fcts.c		\
 		lib_CSFML/window_functions.c		\
 		lib_CSFML/clock_functions.c		\
 		lib_CSFML/sound_functions.c		\

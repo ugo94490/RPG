@@ -8,9 +8,32 @@
 #ifndef OVERWORLD_H
 #define OVERWORLD_H
 
+typedef struct evt_s
+{
+    int type;
+    sfVector2f pos;
+    int locmap;
+    int trigger;
+    sfVector2f dest;
+    int destmap;
+    int direction;
+    int proba;
+    int item;
+    int quantity;
+} evt_t;
+
+typedef struct evt_list_s
+{
+    int perm;
+    evt_t event;
+    struct evt_list_s *next;
+} evt_list_t;
+
 typedef struct game_s
 {
-    game_object_list_t *objects;
+    struct game_object_list_s *objects;
+    struct evt_list_s *evts;
+    struct character_s *character;
     sfView *view;
     int status;
     sprite_t *sprites;
@@ -19,6 +42,10 @@ typedef struct game_s
 void set_view_params(window_t *window, game_t *game, sfVector2f scale);
 void draw_game(window_t *window, sfVector2f scale, game_t *game);
 void analyse_event(window_t *window, game_t *game);
+void read_evts(char *path, evt_list_t **list);
+int check_col_event(struct character_s *character, evt_t event);
 game_t create_game(void);
+void unload_map(struct game_object_list_s **objects);
+void animate_objects(game_t *game);
 
 #endif

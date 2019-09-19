@@ -8,10 +8,13 @@
 #ifndef OVERWORLD_RECTS_H
 #define OVERWORLD_RECTS_H
 
-static const char *mapspaths[5] = {"maps/ground",
-"maps/objects", "maps/buildings",
-"maps/heights", "maps/solid"};
-
+static const char *mapspathsOut[6] = {"maps/outdoors/ground",
+"maps/outdoors/objects", "maps/outdoors/buildings",
+"maps/outdoors/heights", "maps/outdoors/solid", "maps/outdoors/nocolobjs"};
+static const char *mapspathsIn[6] = {"maps/interior/ground",
+"maps/interior/objects", "maps/interior/walls",
+"maps/interior/heights", "maps/interior/solid", "maps/interior/nocolobjs"};
+static const char **mapspaths[2] = {mapspathsOut, mapspathsIn};
 static const sfIntRect girl_rects[32] =
 {
     {42, 0, 40, 52},
@@ -48,7 +51,7 @@ static const sfIntRect girl_rects[32] =
     {462, 54, 40, 52}
 };
 
-static const sfIntRect buildRects[31][1] =
+static const sfIntRect buildRectsOut[31][1] =
 {
     {{0, 170, 32, 32}},
     {{34, 170, 32, 32}},
@@ -81,7 +84,7 @@ static const sfIntRect buildRects[31][1] =
     {{952, 170, 32, 32}}
 };
 
-static const sfIntRect heightsRects[19][1] =
+static const sfIntRect heightsRectsOut[19][1] =
 {
     {{0, 136, 32, 32}},
     {{34, 136, 32, 32}},
@@ -104,7 +107,34 @@ static const sfIntRect heightsRects[19][1] =
     {{612, 136, 32, 32}}
 };
 
-static const sfIntRect solidRects[8][1] =
+static const sfIntRect nocolobjsRects[1][1] =
+{
+    {{204, 34, 32, 32}}
+};
+
+static const sfIntRect flowerRects[4] =
+{
+    {0, 34, 32, 32},
+    {34, 34, 32, 32}
+};
+
+static const sfIntRect speHerbRects[4] =
+{
+    {68, 34, 32, 32},
+    {102, 34, 32, 32},
+    {136, 34, 32, 32},
+    {170, 34, 32, 32}
+};
+
+static const sfIntRect doorRects[4] =
+{
+    {238, 34, 32, 32},
+    {272, 34, 32, 32},
+    {306, 34, 32, 32},
+    {340, 34, 32, 32}
+};
+
+static const sfIntRect solidRectsOut[8][1] =
 {
     {{0, 102, 32, 32}},
     {{34, 102, 32, 32}},
@@ -116,7 +146,7 @@ static const sfIntRect solidRects[8][1] =
     {{238, 102, 32, 32}}
 };
 
-static const sfIntRect objRects[31][1] =
+static const sfIntRect objRectsOut[31][1] =
 {
     {{0, 0, 32, 32}},
     {{34, 0, 32, 32}},
@@ -149,7 +179,7 @@ static const sfIntRect objRects[31][1] =
     {{952, 0, 32, 32}}
 };
 
-static const sfIntRect groundRects[18][1] =
+static const sfIntRect groundRectsOut[18][1] =
 {
     {{0, 68, 32, 32}},
     {{34, 68, 32, 32}},
@@ -160,15 +190,53 @@ static const sfIntRect groundRects[18][1] =
     {{204, 68, 32, 32}},
     {{238, 68, 32, 32}},
     {{272, 68, 32, 32}},
-    {{304, 68, 32, 32}},
-    {{338, 68, 32, 32}},
-    {{372, 68, 32, 32}},
-    {{406, 68, 32, 32}},
-    {{450, 68, 32, 32}},
-    {{484, 68, 32, 32}},
-    {{518, 68, 32, 32}},
-    {{552, 68, 32, 32}},
-    {{586, 68, 32, 32}}
+    {{306, 68, 32, 32}},
+    {{340, 68, 32, 32}},
+    {{374, 68, 32, 32}},
+    {{408, 68, 32, 32}},
+    {{442, 68, 32, 32}},
+    {{476, 68, 32, 32}},
+    {{510, 68, 32, 32}},
+    {{544, 68, 32, 32}},
+    {{578, 68, 32, 32}}
+};
+
+static const sfIntRect WallRectsIn[18][1] =
+{
+    {{0, 238, 32, 32}},
+    {{34, 238, 32, 32}},
+    {{68, 238, 32, 32}},
+    {{102, 238, 32, 32}},
+    {{136, 238, 32, 32}},
+    {{170, 238, 32, 32}},
+    {{204, 238, 32, 32}},
+    {{238, 238, 32, 32}},
+    {{272, 238, 32, 32}},
+    {{306, 238, 32, 32}},
+    {{340, 238, 32, 32}},
+    {{374, 238, 32, 32}},
+    {{408, 238, 32, 32}},
+    {{442, 238, 32, 32}},
+    {{476, 238, 32, 32}},
+    {{510, 238, 32, 32}},
+    {{544, 238, 32, 32}},
+    {{578, 238, 32, 32}}
+};
+
+static const sfIntRect groundRectsIn[6][1] =
+{
+    {{0, 204, 32, 32}},
+    {{34, 204, 32, 32}},
+    {{68, 204, 32, 32}},
+    {{102, 204, 32, 32}},
+    {{136, 204, 32, 32}},
+    {{170, 204, 32, 32}},
+};
+
+static const sfIntRect heightsRectsIn[2][1] =
+{
+    {{0, 272, 32, 32}},
+    {{34, 272, 32, 32}},
 };
 
 typedef struct ground_info_s
@@ -177,16 +245,24 @@ typedef struct ground_info_s
     int solid;
     int height;
     int limit;
+    int map;
     sfVector2f pos;
 } ground_info_t;
 
-static const ground_info_t infos[5] =
+static const ground_info_t infos[12] =
 {
-    {0, 0, 0, 18},
-    {1, 1, 3, 31},
-    {2, 1, 2, 31},
-    {3, 0, 5, 19},
-    {4, 1, 1, 8}
+    {0, 0, 0, 17, 0},
+    {1, 1, 3, 31, 0},
+    {2, 1, 2, 31, 0},
+    {3, 0, 5, 19, 0},
+    {4, 1, 1, 8, 0},
+    {5, 0, 3, 1, 0},
+    {0, 0, 0, 6, 1},
+    {1, 1, 3, 0, 1},
+    {2, 1, 2, 18, 1},
+    {3, 0, 5, 2, 1},
+    {4, 1, 1, 0, 1},
+    {5, 0, 3, 1, 1}
 };
 
 #endif

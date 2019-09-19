@@ -28,12 +28,12 @@ char **copy_words(char **words, int arg)
     for (; words[i] != NULL; i++);
     copy = malloc(sizeof(char*) * (i+1+arg));
     if (copy == NULL)
-        exit(84);
+        return (NULL);
     copy[i] = NULL;
     for (i = 0; words[i] != NULL; i++) {
         copy[i] = malloc(sizeof(char)* (my_strlen(words[i])+1));
         if (copy[i] == NULL)
-            exit(84);
+            return (NULL);
     }
     for (i = 0; words[i] != NULL; i++) {
         for (j = 0; words[i][j] != '\0'; j++)
@@ -64,7 +64,7 @@ char **remove_string_array(char **words, int poswords)
     for (; words[i] != NULL; i++);
     copy = malloc(sizeof(char*) * (i));
     if (copy == NULL)
-        exit(84);
+        return (NULL);
     i = 0;
     while (words[i] != NULL) {
         if (i != poswords) {
