@@ -73,10 +73,10 @@ int check_event(sfEvent event, int flag, sfRenderWindow *window)
 
 static void display(sfText *text, char *str, sfRenderWindow *window)
 {
-    sfRenderWindow_clear(window, sfWhite);
+//    sfRenderWindow_clear(window, sfWhite);
     sfText_setString(text, str);
     sfRenderWindow_drawText(window, text, NULL);
-    sfRenderWindow_display(window);
+//    sfRenderWindow_display(window);
 }
 
 static char *get_all(char *str, char *tmp, int where)
