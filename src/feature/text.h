@@ -24,4 +24,11 @@ typedef struct text_s {
     sfClock *clock;
 } text_t;
 
+typedef struct setting_s {
+    int size;
+    sfVector2f pos;
+    sfSprite *sprite;
+    sfRenderWindow *window;
+} setting_t;
+
 #endif

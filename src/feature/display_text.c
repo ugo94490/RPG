@@ -71,12 +71,12 @@ int check_event(sfEvent event, int flag, sfRenderWindow *window)
     return flag;
 }
 
-static void display(sfText *text, char *str, sfRenderWindow *window)
+static void display(sfText *text, char *str, sfRenderWindow *window, sfSprite *sprite)
 {
-//    sfRenderWindow_clear(window, sfWhite);
     sfText_setString(text, str);
+    sfRenderWindow_drawSprite(window, sprite, NULL);
     sfRenderWindow_drawText(window, text, NULL);
-//    sfRenderWindow_display(window);
+    sfRenderWindow_display(window);
 }
 
 static char *get_all(char *str, char *tmp, int where)
@@ -153,11 +153,11 @@ static int wait_event(text_t *text, sfRenderWindow *window)
     return 0;
 }
 
-static char *draw_all(text_t *text, char *tmp, sfRenderWindow *window, int cpt)
+static char *draw_all(text_t *text, char *tmp, setting_t set, int cpt)
 {
     text->flag = 2;
     tmp = get_all(text->str, tmp, cpt);
-    display(text->text, tmp, window);
+    display(text->text, tmp, set.window, set.sprite);
     return tmp;
 }
 
@@ -170,7 +170,7 @@ static text_t set_text(text_t *text, int size, sfVector2f pos, char *base)
         return (*text);
     text->clock = sfClock_create();
     text->flag = 0;
-    text->font = sfFont_createFromFile("./assets/font.ttf");
+    text->font = sfFont_createFromFile("assets/pokemon.ttf");
     text->text = sfText_create();
     text->str = strcpy(text->str, base);
     text->str = change_str(text->str);
@@ -181,7 +181,7 @@ static text_t set_text(text_t *text, int size, sfVector2f pos, char *base)
     return (*text);
 }
 
-static int check_cpt(text_t *text, int cpt, sfRenderWindow *window)
+static int check_cpt(text_t *text, int cpt, sfRenderWindow *window, sfSprite *sprite)
 {
     text->seconds = get_seconds(text->clock);
     if (text->seconds > 0.03) {
@@ -189,13 +189,13 @@ static int check_cpt(text_t *text, int cpt, sfRenderWindow *window)
         text->tmp = my_strappend(text->tmp, text->str[cpt]);
         if (text->str[cpt] == '\n')
             text->flag++;
-        display(text->text, text->tmp, window);
+        display(text->text, text->tmp, window, sprite);
         cpt++;
     }
     return cpt;
 }
 
-static char *set_save(char *save, text_t *text, sfRenderWindow *window)
+static char *set_save(char *save, text_t *text, sfRenderWindow *window, sfSprite *sprite)
 {
     if (save == NULL) {
         save = malloc(sizeof(char));
@@ -207,7 +207,7 @@ static char *set_save(char *save, text_t *text, sfRenderWindow *window)
         return NULL;
     if (save[0] != '\0') {
         text->flag = 1;
-        display(text->text, save, window);
+        display(text->text, save, window, sprite);
     }
     text->tmp = my_strdup(save);
     return save;
@@ -223,19 +223,19 @@ static int update_cpt(text_t *text, int cpt, int flag, int dif)
     return cpt;
 }
 
-static int loop(text_t *text, sfRenderWindow *window, int cpt)
+static int loop(text_t *text, setting_t set, int cpt)
 {
     while (text->flag < 3) {
-        text->flag = check_event(text->event, text->flag, window);
+        text->flag = check_event(text->event, text->flag, set.window);
         if (text->flag == -1)
             return -1;
         if (text->flag < 2 && text->str[cpt] != '\0')
-            cpt = check_cpt(text, cpt, window);
+            cpt = check_cpt(text, cpt, set.window, set.sprite);
         else
-            text->tmp = draw_all(text, text->tmp, window, cpt);
-        if (text->flag == 2)
-            while (wait_event(text, window) == 0);
-        if (sfRenderWindow_isOpen(window) == 0)
+            text->tmp = draw_all(text, text->tmp, set, cpt);
+        if (text->flag == 2 || text->str[cpt] == '\0')
+            while (wait_event(text, set.window) == 0);
+        if (sfRenderWindow_isOpen(set.window) == 0)
             return -1;
     }
     return cpt;
@@ -251,19 +251,19 @@ static char *destroy_free(text_t *text, char *save)
     return save;
 }
 
-int display_text(char *base, sfVector2f pos, int size, sfRenderWindow *window)
+static int do_text(char *base, setting_t set, sfRenderWindow *window, sfSprite *sprite)
 {
     static int cpt = 0;
     static char *save = NULL;
     int dif = cpt;
-    text_t text = set_text(&text, size, pos, base);
+    text_t text = set_text(&text, set.size, set.pos, base);
     int flag = 0;
 
-    save = set_save(save, &text, window);
+    save = set_save(save, &text, window, sprite);
     flag = text.flag;
     if (save == NULL || text.str == NULL || save == NULL)
         return -1;
-    cpt = loop(&text, window, cpt);
+    cpt = loop(&text, set, cpt);
     if (cpt == -1)
         return -1;
     cpt = update_cpt(&text, cpt, flag, dif);
@@ -275,33 +275,31 @@ int display_text(char *base, sfVector2f pos, int size, sfRenderWindow *window)
     return 1;
 }
 
-int main(void)
+static setting_t set_setting(sfVector2f pos, int size, sfRenderWindow *window, sfSprite *sprite)
 {
-    sfEvent event;
-    int flag = 0;
-    sfRenderWindow *window;
-    sfVideoMode video_mode = {1280, 960, 32};
-    sfVector2f pos;
-    sfTexture *texture = sfTexture_createFromFile("text_box.png", NULL);
-    sfSprite *sprite = sfSprite_create();
+    setting_t set;
 
-    pos.x = 20;
-    pos.y = 25;
-    window = sfRenderWindow_create(video_mode, "coucou", sfResize | sfClose, NULL);
-    sfSprite_setTexture(sprite, texture, sfTrue);
-    while (sfRenderWindow_isOpen(window)) {
-        sfRenderWindow_clear(window, sfWhite);
-        while (flag == 0)
-            flag = display_text("Waouh! Le Professeur Sorbier t'as demande une chose aussi importante! Je suis impressione que ca marche car je ne l'ai pas gerer cette merde!", pos, 17, window);
-        while (sfRenderWindow_pollEvent(window, &event)) {
-            if ((event.type == sfEvtKeyPressed &&
-            event.key.code == sfKeyEscape))
-		sfRenderWindow_close(window);
-            if ((event.type == sfEvtKeyPressed &&
-                 event.key.code == sfKeyReturn))
-                flag = 0;
-        }
+    set.size = size;
+    set.pos.x = pos.x + 20;
+    set.pos.y = pos.y + 25;
+    set.window = window;
+    set.sprite = sprite;
+    return set;
+}
+
+int display_text(char *base, sfVector2f pos, sfRenderWindow *window, sfSprite *sprite)
+{
+    setting_t set;
+    int flag = 0;
+
+    set = set_setting(pos, 17, window, sprite);
+    while (sfRenderWindow_isOpen(window) == 1 && flag != 1) {
+        sfSprite_setPosition(sprite, pos);
         sfRenderWindow_drawSprite(window, sprite, NULL);
+        if (flag == 0)
+            flag = do_text(base, set, window, sprite);
+        if (flag == -1)
+            sfRenderWindow_close(window);
         sfRenderWindow_display(window);
     }
     return 0;
