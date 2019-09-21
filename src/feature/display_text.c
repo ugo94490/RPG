@@ -7,6 +7,7 @@
 
 #include "text.h"
 #include "basics.h"
+#include "my_rpg.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -170,7 +171,7 @@ static text_t set_text(text_t *text, int size, sfVector2f pos, char *base)
         return (*text);
     text->clock = sfClock_create();
     text->flag = 0;
-    text->font = sfFont_createFromFile("assets/pokemon.ttf");
+    text->font = sfFont_createFromFile("../UGO/classic.ttf");
     text->text = sfText_create();
     text->str = strcpy(text->str, base);
     text->str = change_str(text->str);
@@ -287,20 +288,23 @@ static setting_t set_setting(sfVector2f pos, int size, sfRenderWindow *window, s
     return set;
 }
 
-int display_text(char *base, sfVector2f pos, sfRenderWindow *window, sfSprite *sprite)
+int display_text(char *base, sfVector2f pos, sfRenderWindow *window)
 {
     setting_t set;
     int flag = 0;
+    sfIntRect rec = {0, 0, 0, 0};
+    game_object *spr = create_object("../assets/text_combat.png", pos, rec);
 
-    set = set_setting(pos, 17, window, sprite);
+    set = set_setting(pos, 17, window, spr->sprite);
     while (sfRenderWindow_isOpen(window) == 1 && flag != 1) {
-        sfSprite_setPosition(sprite, pos);
-        sfRenderWindow_drawSprite(window, sprite, NULL);
+        sfSprite_setPosition(spr->sprite, pos);
+        sfRenderWindow_drawSprite(window, spr->sprite, NULL);
         if (flag == 0)
-            flag = do_text(base, set, window, sprite);
+            flag = do_text(base, set, window, spr->sprite);
         if (flag == -1)
-            sfRenderWindow_close(window);
+            break;
         sfRenderWindow_display(window);
     }
+    destroy_object(spr);
     return 0;
 }

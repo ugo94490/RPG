@@ -7,14 +7,27 @@
 
 #include "my_rpg.h"
 #include "graphics.h"
+#include "basics.h"
+
+int pause_time(float sec)
+{
+    sfTime time = sfTime_Zero;
+    sfClock *clock = sfClock_create();
+
+    while (1) {
+        time = sfClock_getElapsedTime(clock);
+        if ((time.microseconds / 1000000.0) > sec)
+            break;
+    }
+    sfClock_destroy(clock);
+    return (0);
+}
 
 pkmn_list_t *fill_atk(pkmn_list_t *node)
 {
     for (int i = 0; i < 4; i++) {
         node->pokemon.atks[i].number = i;
-        node->pokemon.atks[i].power = i * 10 + 20;
-        node->pokemon.atks[i].type = 0;
-        node->pokemon.atks[i].spetype = 1;
+        node->pokemon.atks[i].power = i * 10 + 10;
     }
     return (node);
 }
@@ -28,11 +41,8 @@ pkmn_list_t *fill(int flag)
     node->pokemon.health = 100;
     node->pokemon.max_health = 100;
     node->pokemon.xp_to_next_lvl = 3532;
-    node->pokemon.speed = 5;
-    node->pokemon.physatq = 100;
-    node->pokemon.physdef = 75;
-    node->pokemon.speatq = 10;
-    node->pokemon.spedef = 15;
+    node->pokemon.atq = 10;
+    node->pokemon.def = 15;
     node = fill_atk(node);
     return (node);
 }
@@ -174,30 +184,47 @@ int mode(sfRenderWindow *window, int flag)
     ret = 0;
     if (vct.x >= 343 && vct.x <= 936 && vct.y >= 537 && vct.y <= 812) {
         ret = 1;
-        if (sfMouse_isButtonPressed(sfMouseLeft))
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+            pause_time(0.3);
             ret = 6;
+        }
     }
     if (vct.x >= 340 && vct.x <= 522 && vct.y >= 823 && vct.y <= 929)
         ret = 2;
     if (vct.x >= 548 && vct.x <= 730 && vct.y >= 842 && vct.y <= 948) {
         ret = 3;
-        if (sfMouse_isButtonPressed(sfMouseLeft) && flag != 6)
+        if (sfMouse_isButtonPressed(sfMouseLeft) && flag != 6) {
+            pause_time(0.3);
             ret = 5;
+        }
     }
     if (vct.x >= 756 && vct.x <= 938 && vct.y >= 823 && vct.y <= 929)
         ret = 4;
     return (ret);
 }
 
+int destroy_font(text_t *stat, int lim)
+{
+    for (int i = 0; i < lim; i++) {
+        sfText_destroy(stat[i].text);
+        sfFont_destroy(stat[i].font);
+    }
+    free(stat);
+    return (0);
+}
+
 int cancel(sfRenderWindow *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window);
     int ret = 2;
+    sfEvent event;
 
     if (vct.x >= 358 && vct.x <= 921 && vct.y >= 845 && vct.y <= 954) {
         ret = 0;
-        if (sfMouse_isButtonPressed(sfMouseLeft))
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
             ret = 1;
+            pause_time(0.3);
+        }
     }
     return (ret);
 }
@@ -209,25 +236,116 @@ int display_game(game_object **tab, sfRenderWindow *window, int pos, int start)
     return (0);
 }
 
-int launch(game_object **tab, sfRenderWindow *window, pkmn_list_t *linked)
+int attack_box(pkmn_list_t *linked, sfRenderWindow *window, int nb)
 {
-    int nb = rand() % 3;
+    char *str = NULL;
+    sfVector2f pos = {338, 374};
 
-    if (sfKeyboard_isKeyPressed(sfKeyNum1)) {
+    str = malloc(sizeof(char));
+    str[0] = '\0';
+    str = my_strcat(str, name[linked->pokemon.number]);
+    str = my_strcat(str, phr[0]);
+    str = my_strcat(str, atk_name[nb]);
+    str = my_strcat(str, phr[1]);
+    pause_time(0.1);
+    display_text(str, pos, window);
+    free(str);
+    return (0);
+}
+
+int get_atk(pkmn_list_t *linked, int nb)
+{
+    int ret = -1;
+
+    for (int i = 0; atk[i]; i++)
+        if (strcmp(atk[i], atk_name[linked->pokemon.atks[nb].number])
+        == 0)
+            ret = i;
+    return (ret);
+}
+
+int display_stat(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat, int lim)
+{
+    for (int i = 0; i < lim; i++)
+        sfRenderWindow_drawText(window, stat[i].text, NULL);
+    return (0);
+}
+
+int attack_anim(game_object **tab, sfRenderWindow *window, pkmn_list_t *linked,
+int nb, text_t *stat)
+{
+    sfIntRect rect = {0, 0, 605, 340};
+    sfVector2f pos = {340, 30};
+    int nb_atk = get_atk(linked, nb);
+    game_object *sprite;
+    sfClock *clock;
+    sfTime time;
+
+    if (nb_atk == -1)
+        return (0);
+    sprite = create_object(asset_atk[nb_atk], pos, rect);
+    clock = sfClock_create();
+    sfSprite_setTextureRect(sprite->sprite, rect);
+    while (sfRenderWindow_isOpen(window)) {
+        time = sfClock_getElapsedTime(clock);
+        if (time.microseconds >= 400000) {
+            sfRenderWindow_clear(window, sfBlack);
+            display_game(tab, window, 3, 0);
+            display_game(tab, window, 7, 6);
+            rect.top += 340;
+            if (rect.top >= 2382)
+                rect.left += 605;
+            if (rect.left >= 1210)
+                break;
+            sfSprite_setTextureRect(sprite->sprite, rect);
+            sfRenderWindow_drawSprite(window, sprite->sprite, NULL);
+            display_game(tab, window, 5, 4);
+            display_game(tab, window, 8, 8);
+            display_stat(window, linked, stat, 6);
+            time = sfClock_restart(clock);
+        }
+        sfRenderWindow_display(window);
+    }
+    destroy_object(sprite);
+    sfClock_destroy(clock);
+}
+
+int launch(game_object **tab, sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
+{
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window);
+    sfEvent event;
+
+    if (linked->pokemon.atks[0].number != -1 && atk_pos[0].x <= vct.x &&
+    atk_pos[0].x + 293 >= vct.x && atk_pos[0].y <= vct.y && atk_pos[0].y
+    + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[0].power;
-        linked->pokemon.health -= linked->next->pokemon.atks[nb].power;
+        attack_box(linked, window, 0);
+        attack_anim(tab, window, linked, 0, stat);
+        return (1);
     }
-    if (sfKeyboard_isKeyPressed(sfKeyNum2)) {
+    if (linked->pokemon.atks[1].number != -1 && atk_pos[1].x <= vct.x &&
+    atk_pos[1].x + 293 >= vct.x && atk_pos[1].y <= vct.y && atk_pos[1].y
+    + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[1].power;
-        linked->pokemon.health -= linked->next->pokemon.atks[nb].power;
+        attack_box(linked, window, 1);
+        attack_anim(tab, window, linked, 1, stat);
+        return (1);
     }
-    if (sfKeyboard_isKeyPressed(sfKeyNum3)) {
+    if (linked->pokemon.atks[2].number != -1 && atk_pos[2].x <= vct.x &&
+    atk_pos[2].x + 293 >= vct.x && atk_pos[2].y <= vct.y && atk_pos[2].y
+    + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[2].power;
-        linked->pokemon.health -= linked->next->pokemon.atks[nb].power;
+        attack_box(linked, window, 2);
+        attack_anim(tab, window, linked, 2, stat);
+        return (1);
     }
-    if (sfKeyboard_isKeyPressed(sfKeyNum4)) {
+    if (linked->pokemon.atks[3].number != -1 && atk_pos[3].x <= vct.x &&
+    atk_pos[3].x + 293 >= vct.x && atk_pos[3].y <= vct.y && atk_pos[3].y
+    + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[3].power;
-        linked->pokemon.health -= linked->next->pokemon.atks[nb].power;
+        attack_box(linked, window, 3);
+        attack_anim(tab, window, linked, 3, stat);
+        return (1);
     }
     return (0);
 }
@@ -240,17 +358,68 @@ char *itoa_dup(int nb)
     return (nbr);
 }
 
-int display_stat(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
+game_object **init_box(pkmn_list_t *linked)
 {
-    for (int i = 0; i < 6; i++)
-        sfRenderWindow_drawText(window, stat[i].text, NULL);
-    sfRenderWindow_display(window);
+    game_object **tab = malloc(sizeof(game_object *) * 5);
+    sfIntRect rect = {0, 0, 0, 0};
+
+    for (int i = 0; i < 4; i++) {
+        if (linked->pokemon.atks[i].number != -1)
+            tab[i] = create_object("../assets/attack.png", atk_pos[i], rect);
+        else
+            tab[i] = create_object("../assets/vide.png", atk_pos[i], rect);
+    }
+    tab[4] = NULL;
+    return (tab);
+}
+
+int destroy_tab(game_object **tab)
+{
+    for (int i = 0; tab[i]; i++)
+        destroy_object(tab[i]);
+    free(tab);
     return (0);
 }
 
-int atk_hud(sfRenderWindow *window, game_object **tab, pkmn_list_t *linked, text_t *stat)
+int display_box(game_object **box, sfRenderWindow *window)
+{
+    for (int i = 0; box[i]; i++)
+        sfRenderWindow_drawSprite(window, box[i]->sprite, NULL);
+    return (0);
+}
+
+int misc_atk(game_object **tab, game_object **box, sfRenderWindow *window)
+{
+    display_game(tab, window, 7, 1);
+    display_box(box, window);
+    event(window);
+    return (0);
+}
+
+text_t *init_name(pkmn_list_t *linked)
+{
+    text_t *stat = malloc(sizeof(text_t) * 9);
+    int size = 15;
+
+    for (int i = 0; i < 9; i++) {
+        if (i < 4)
+            stat[i] = create_text(atk_name[i], "classic.ttf", size, atk_txt[i]);
+        else
+            stat[i] = create_text(itoa_dup(linked->pokemon.atks[i - 4].power),
+            "classic.ttf", size, atk_txt[i]);
+        sfText_setFillColor(stat[i].text, sfBlack);
+    }
+    return (stat);
+}
+
+int atk_hud(sfRenderWindow *window, game_object **tab,
+pkmn_list_t *linked, text_t *stat)
 {
     game_object *atk = init_hud("../assets/pp_hud.png", 338, 480);
+    game_object **box = init_box(linked);
+    text_t *name_pow = init_name(linked);
+    int ret = 0;
+
     static int mode = 0;
 
     while (sfRenderWindow_isOpen(window)) {
@@ -261,17 +430,19 @@ int atk_hud(sfRenderWindow *window, game_object **tab, pkmn_list_t *linked, text
         }
         sfRenderWindow_clear(window, sfBlack);
         sfRenderWindow_drawSprite(window, atk->sprite, NULL);
-        display_game(tab, window, 7, 1);
-        display_stat(window, linked, stat);
-        launch(tab, window, linked);
-        event(window);
-        change_text(itoa_dup(linked->pokemon.health), &stat[1]);
-        if (linked->pokemon.health <= 0 || linked->next->pokemon.health <= 0)
+        misc_atk(tab, box, window);
+        display_stat(window, linked, stat, 6);
+        display_stat(window, linked, name_pow, 9);
+        if (launch(tab, window, linked, stat) == 1) {
+            ret = 12;
             break;
+        }
         sfRenderWindow_display(window);
     }
+    destroy_font(name_pow, 9);
+    destroy_tab(box);
     destroy_object(atk);
-    return (0);
+    return (ret);
 }
 
 game_object **init_object(void)
@@ -297,14 +468,6 @@ game_object **init_object(void)
     return (tab);
 }
 
-int destroy_tab(game_object **tab)
-{
-    for (int i = 0; tab[i]; i++)
-        destroy_object(tab[i]);
-    free(tab);
-    return (0);
-}
-
 int check_flag(game_object **tab, sfClock *clock, int flag, sfRenderWindow *win, pkmn_list_t *linked, text_t *stat)
 {
     if (flag == 1)
@@ -318,8 +481,7 @@ int check_flag(game_object **tab, sfClock *clock, int flag, sfRenderWindow *win,
     if (flag == 5)
         sfRenderWindow_close(win);
     if (flag == 6) {
-        atk_hud(win, tab, linked, stat);
-        return (1);
+        return (atk_hud(win, tab, linked, stat));
     }
     return (flag);
 }
@@ -327,29 +489,17 @@ int check_flag(game_object **tab, sfClock *clock, int flag, sfRenderWindow *win,
 text_t *init_txt(pkmn_list_t *linked)
 {
     text_t *stat = malloc(sizeof(text_t) * 6);
-    sfVector2f pos = {0, 0};
     int size = 15;
 
     for (int i = 0; i < 6; i++) {
-        stat[i] = create_text("init", "classic.ttf", size, pos);
+        stat[i] = create_text("init", "classic.ttf", size, pos_txt[i]);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
 }
 
-void new_pos(text_t text, sfVector2f pos)
-{
-    sfText_setPosition(text.text, pos);
-}
-
 text_t *change_pos(pkmn_list_t *node)
 {
-    sfVector2f pos = {880, 328};
-    sfVector2f pos2 = {815, 328};
-    sfVector2f pos3 = {885, 280};
-    sfVector2f pos4 = {535, 141};
-    sfVector2f pos5 = {340, 135};
-    sfVector2f pos6 = {700, 275};
     text_t *stat = init_txt(node);
 
     change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
@@ -358,12 +508,6 @@ text_t *change_pos(pkmn_list_t *node)
     change_text(itoa_dup(node->pokemon.level), &stat[3]);
     change_text(name[node->next->pokemon.number], &stat[4]);
     change_text(name[node->pokemon.number], &stat[5]);
-    new_pos(stat[0], pos);
-    new_pos(stat[1], pos2);
-    new_pos(stat[2], pos3);
-    new_pos(stat[3], pos4);
-    new_pos(stat[4], pos5);
-    new_pos(stat[5], pos6);
     return (stat);
 }
 
@@ -407,13 +551,22 @@ int dresseur(sfRenderWindow *window, int menu, game_object **tab)
     return (0);
 }
 
-int destroy_font(text_t *stat)
+int riposte(pkmn_list_t *linked, sfRenderWindow *window)
 {
-    for (int i = 0; i < 6; i++) {
-        sfText_destroy(stat[i].text);
-        sfFont_destroy(stat[i].font);
-    }
-    free(stat);
+    int nb = rand() % 3;
+    char *str = NULL;
+    sfVector2f pos = {338, 374};
+
+    str = malloc(sizeof(char));
+    str[0] = '\0';
+    str = my_strcat(str, name[linked->next->pokemon.number]);
+    str = my_strcat(str, phr[0]);
+    str = my_strcat(str, atk_name[nb]);
+    str = my_strcat(str, phr[1]);
+    linked->pokemon.health -= linked->next->pokemon.atks[nb].power;
+    pause_time(0.3);
+    display_text(str, pos, window);
+    free(str);
     return (0);
 }
 
@@ -430,14 +583,20 @@ int combat(sfRenderWindow *window, pkmn_list_t *linked)
         display_game(tab, window, 7, 0);
         menu = mode(window, menu);
         menu = check_flag(tab, clock, menu, window, linked, stat);
-        display_stat(window, linked, stat);
-        sfRenderWindow_display(window);
         event(window);
+        if (menu == 12) {
+            display_game(tab, window, 7, 0);
+            display_stat(window, linked, stat, 6);
+            riposte(linked, window);
+        }
+        change_text(itoa_dup(linked->pokemon.health), &stat[1]);
+        display_stat(window, linked, stat, 6);
+        sfRenderWindow_display(window);
         if (linked->pokemon.health <= 0 || linked->next->pokemon.health <= 0)
             sfRenderWindow_close(window);
     }
     destroy_tab(tab);
-    destroy_font(stat);
+    destroy_font(stat, 6);
     sfClock_destroy(clock);
     return (0);
 }
