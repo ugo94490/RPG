@@ -179,15 +179,12 @@ int bag(game_object *sp, sfClock *clk, sfRenderWindow *window)
 int mode(sfRenderWindow *window, int flag)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window);
-    static int ret = 0;
+    int ret = 0;
 
-    ret = 0;
     if (vct.x >= 343 && vct.x <= 936 && vct.y >= 537 && vct.y <= 812) {
         ret = 1;
-        if (sfMouse_isButtonPressed(sfMouseLeft)) {
-            pause_time(0.3);
-            ret = 6;
-        }
+        if (sfMouse_isButtonPressed(sfMouseLeft))
+            pause_time(0.3) == 0 ? ret = 6 : 0;
     }
     if (vct.x >= 340 && vct.x <= 522 && vct.y >= 823 && vct.y <= 929)
         ret = 2;
@@ -264,7 +261,8 @@ int get_atk(pkmn_list_t *linked, int nb)
     return (ret);
 }
 
-int display_stat(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat, int lim)
+int display_stat(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat,
+int lim)
 {
     for (int i = 0; i < lim; i++)
         sfRenderWindow_drawText(window, stat[i].text, NULL);
@@ -288,29 +286,31 @@ int nb, text_t *stat)
     sfSprite_setTextureRect(sprite->sprite, rect);
     while (sfRenderWindow_isOpen(window)) {
         time = sfClock_getElapsedTime(clock);
+        if (rect.left >= 1210)
+            break;
+        sfRenderWindow_display(window);
         if (time.microseconds >= 400000) {
             sfRenderWindow_clear(window, sfBlack);
             display_game(tab, window, 3, 0);
             display_game(tab, window, 7, 6);
-            rect.top += 340;
-            if (rect.top >= 2382)
-                rect.left += 605;
-            if (rect.left >= 1210)
-                break;
             sfSprite_setTextureRect(sprite->sprite, rect);
             sfRenderWindow_drawSprite(window, sprite->sprite, NULL);
             display_game(tab, window, 5, 4);
             display_game(tab, window, 8, 8);
             display_stat(window, linked, stat, 6);
+            rect.top += 340;
+            rect.top >= 2382 ? rect.left += 605 : 0;
             time = sfClock_restart(clock);
         }
-        sfRenderWindow_display(window);
     }
+    display_game(tab, window, 8, 0);
+    display_stat(window, linked, stat, 6);
     destroy_object(sprite);
     sfClock_destroy(clock);
 }
 
-int launch(game_object **tab, sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
+int launch(game_object **tab, sfRenderWindow *window,
+pkmn_list_t *linked, text_t *stat)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window);
     sfEvent event;
@@ -388,8 +388,11 @@ int display_box(game_object **box, sfRenderWindow *window)
     return (0);
 }
 
-int misc_atk(game_object **tab, game_object **box, sfRenderWindow *window)
+int misc_atk(game_object **tab, game_object **box, sfRenderWindow *window,
+game_object *atk)
 {
+    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_drawSprite(window, atk->sprite, NULL);
     display_game(tab, window, 7, 1);
     display_box(box, window);
     event(window);
@@ -412,6 +415,23 @@ text_t *init_name(pkmn_list_t *linked)
     return (stat);
 }
 
+int destroy_atkhud(text_t *name_pow, game_object **box, game_object *atk,
+int flag)
+{
+    destroy_font(name_pow, 9);
+    destroy_tab(box);
+    destroy_object(atk);
+    return (flag);
+}
+
+int disp_txt(sfRenderWindow *window, pkmn_list_t *linked,
+text_t *stat, text_t *name_pow)
+{
+    display_stat(window, linked, stat, 6);
+    display_stat(window, linked, name_pow, 9);
+    return (0);
+}
+
 int atk_hud(sfRenderWindow *window, game_object **tab,
 pkmn_list_t *linked, text_t *stat)
 {
@@ -419,30 +439,22 @@ pkmn_list_t *linked, text_t *stat)
     game_object **box = init_box(linked);
     text_t *name_pow = init_name(linked);
     int ret = 0;
-
     static int mode = 0;
-
     while (sfRenderWindow_isOpen(window)) {
         mode = cancel(window);
         if (mode == 1) {
             mode = 0;
             break;
         }
-        sfRenderWindow_clear(window, sfBlack);
-        sfRenderWindow_drawSprite(window, atk->sprite, NULL);
-        misc_atk(tab, box, window);
-        display_stat(window, linked, stat, 6);
-        display_stat(window, linked, name_pow, 9);
+        misc_atk(tab, box, window, atk);
+        disp_txt(window, linked, stat, name_pow);
         if (launch(tab, window, linked, stat) == 1) {
             ret = 12;
             break;
         }
         sfRenderWindow_display(window);
     }
-    destroy_font(name_pow, 9);
-    destroy_tab(box);
-    destroy_object(atk);
-    return (ret);
+    return (destroy_atkhud(name_pow, box, atk, ret));
 }
 
 game_object **init_object(void)
@@ -468,7 +480,8 @@ game_object **init_object(void)
     return (tab);
 }
 
-int check_flag(game_object **tab, sfClock *clock, int flag, sfRenderWindow *win, pkmn_list_t *linked, text_t *stat)
+int check_flag(game_object **tab, sfClock *clock,
+int flag, sfRenderWindow *win, pkmn_list_t *linked, text_t *stat)
 {
     if (flag == 1)
         attack(tab[8], clock, win);
@@ -511,14 +524,40 @@ text_t *change_pos(pkmn_list_t *node)
     return (stat);
 }
 
-int animation(sfRenderWindow *window, game_object **tab)
+game_object **init_player(void)
 {
+    game_object **tmp = malloc(sizeof(game_object *) * 2);
     sfIntRect rect = {0, 0, 170, 148};
     sfIntRect rect2 = {0, 0, 47, 109};
     sfVector2f pos = {380, 226};
     sfVector2f pos2 = {740, 30};
-    game_object *player = create_object("../assets/back_train.png", pos, rect);
-    game_object *rival = create_object("../assets/rival_two.png", pos2, rect2);
+
+    tmp[0] = create_object("../assets/back_train.png", pos, rect);
+    tmp[1] = create_object("../assets/rival_two.png", pos2, rect2);
+    return (tmp);
+}
+
+int disp_sprite(game_object **tab, sfRenderWindow *window,
+game_object **character)
+{
+    display_game(tab, window, 5, 0);
+    sfRenderWindow_drawSprite(window, character[0]->sprite, NULL);
+    sfRenderWindow_drawSprite(window, character[1]->sprite, NULL);
+    sfRenderWindow_display(window);
+    return (0);
+}
+
+int free_character(game_object **character)
+{
+    destroy_object(character[0]);
+    destroy_object(character[1]);
+    free(character);
+    return (0);
+}
+
+int animation(sfRenderWindow *window, game_object **tab)
+{
+    game_object **character = init_player();
     sfClock *clock = sfClock_create();
     sfTime time;
     int count = 0;
@@ -528,18 +567,14 @@ int animation(sfRenderWindow *window, game_object **tab)
         time = sfClock_getElapsedTime(clock);
         if (time.microseconds >= 400000) {
             sfRenderWindow_clear(window, sfBlack);
-            rect.left += 173;
-            sfSprite_setTextureRect(player->sprite, rect);
-            display_game(tab, window, 5, 0);
-            sfRenderWindow_drawSprite(window, player->sprite, NULL);
-            sfRenderWindow_drawSprite(window, rival->sprite, NULL);
-            sfRenderWindow_display(window);
+            character[0]->rect.left += 173;
+            sfSprite_setTextureRect(character[0]->sprite, character[0]->rect);
+            disp_sprite(tab, window, character);
             time = sfClock_restart(clock);
             count++;
         }
     }
-    destroy_object(rival);
-    destroy_object(player);
+    free_character(character);
     sfClock_destroy(clock);
     return (0);
 }
@@ -570,6 +605,31 @@ int riposte(pkmn_list_t *linked, sfRenderWindow *window)
     return (0);
 }
 
+int disp_atk_mod(sfRenderWindow *window, pkmn_list_t *linked,
+game_object **tab, text_t *stat)
+{
+    display_game(tab, window, 7, 0);
+    display_stat(window, linked, stat, 6);
+    riposte(linked, window);
+    return (0);
+}
+
+int disp_txt_atk(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
+{
+    change_text(itoa_dup(linked->pokemon.health), &stat[1]);
+    display_stat(window, linked, stat, 6);
+    sfRenderWindow_display(window);
+    return (0);
+}
+
+int check_menu(sfRenderWindow *window, int menu, game_object **tab)
+{
+    menu = dresseur(window, menu, tab);
+    display_game(tab, window, 7, 0);
+    menu = mode(window, menu);
+    return (menu);
+}
+
 int combat(sfRenderWindow *window, pkmn_list_t *linked)
 {
     game_object **tab = init_object();
@@ -579,19 +639,12 @@ int combat(sfRenderWindow *window, pkmn_list_t *linked)
 
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_clear(window, sfBlack);
-        menu = dresseur(window, menu, tab);
-        display_game(tab, window, 7, 0);
-        menu = mode(window, menu);
+        menu = check_menu(window, menu, tab);
         menu = check_flag(tab, clock, menu, window, linked, stat);
         event(window);
-        if (menu == 12) {
-            display_game(tab, window, 7, 0);
-            display_stat(window, linked, stat, 6);
-            riposte(linked, window);
-        }
-        change_text(itoa_dup(linked->pokemon.health), &stat[1]);
-        display_stat(window, linked, stat, 6);
-        sfRenderWindow_display(window);
+        if (menu == 12)
+            disp_atk_mod(window, linked, tab, stat);
+        disp_txt_atk(window, linked, stat);
         if (linked->pokemon.health <= 0 || linked->next->pokemon.health <= 0)
             sfRenderWindow_close(window);
     }
