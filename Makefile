@@ -24,6 +24,9 @@ SRC	=	src/main.c				\
 		src/overworld/animate_characters.c	\
 		src/overworld/check_can_go.c		\
 		src/overworld/npc_move_fcts.c		\
+		src/overworld/load_npc.c		\
+		src/overworld/destroy_game.c		\
+		src/overworld/sub_destroy_game.c	\
 		src/basics/my_strlen.c			\
 		src/basics/string_array_fcts.c		\
 		src/basics/my_strdup.c			\

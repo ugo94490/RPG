@@ -1,7 +1,4 @@
-:appearance
-1
-:pos
-x;10
-y;10
-:badges
-0
+appearance:1
+posx:640
+posy:640
+world:0

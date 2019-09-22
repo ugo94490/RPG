@@ -57,8 +57,10 @@ typedef struct npc_s
     sfVector2f objective;
     anim_t anim;
     sfVector2f pos;
-    struct pkmn_list_t *pkmns;
-    void (*interact)(struct game_s *, struct npc_s *);
+    char *diag1;
+    char *diag2;
+    struct pkmn_list_s *pkmns;
+    int interact;
 } npc_t;
 
 typedef struct ground_s
@@ -100,5 +102,9 @@ int box_box_col(sfVector2f box1pos, sfIntRect box1rect,
 sfVector2f box2pos, sfIntRect box2rect);
 void animate_player(character_t *character);
 void animate_npc(npc_t *npc);
+void destroy_npc(npc_t *npc);
+void destroy_ground(ground_t *ground);
+void destroy_character(character_t *character);
+void destroy_object(game_object_list_t *object);
 
 #endif

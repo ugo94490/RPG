@@ -48,5 +48,7 @@ int check_col_event(sfVector2f pos, int locmap, evt_t event);
 game_t create_game(void);
 void unload_map(struct game_object_list_s **objects);
 void animate_objects(game_t *game);
+void load_npcs(struct game_object_list_s **list);
+void destroy_game(game_t *game);
 
 #endif

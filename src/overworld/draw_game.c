@@ -39,12 +39,14 @@ sprite_t sprite, character_t *character)
 }
 
 void draw_npc(window_t *window,
-sprite_t sprite, npc_t *npc)
+sprite_t sprite, npc_t *npc, int world)
 {
     sfVector2f vector0 = {0, 0};
     sfVector2f origin = {(16)*window->scale.x,
     (32)*window->scale.y};
 
+    if (npc->world != world)
+        return;
     sfSprite_setOrigin(sprite.sprite, origin);
     sfSprite_setTextureRect(sprite.sprite,
     npc->anim.rects[npc->anim.actual_rect]);
@@ -70,7 +72,7 @@ void draw_objects(window_t *window, game_t *game, int level)
             (character_t *)(game->objects->object));
         if (game->objects->type == NPC)
             draw_npc(window, game->sprites[2],
-            (npc_t *)(game->objects->object));
+            (npc_t *)(game->objects->object), game->character->world);
         game->objects = game->objects->next;
     }
     game->objects = save;
