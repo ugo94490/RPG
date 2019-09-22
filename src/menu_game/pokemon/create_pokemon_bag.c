@@ -48,7 +48,7 @@ static char *my_score(int nb)
     return (str);
 }
 
-static void set_slot_position(pkmn_bag_t *pkmn_bag, int i)
+static void set_slot_position(pkmn_bag_t *pkmn_bag, int i, sfVector2f *pos_txt)
 {
     pkmn_bag->slot[i].img = pkmn_bag->img;
     pkmn_bag->slot[i].rect.top = SLOT_TOP[i];
@@ -57,8 +57,8 @@ static void set_slot_position(pkmn_bag_t *pkmn_bag, int i)
     pkmn_bag->slot[i].rect.height = 110;
     pkmn_bag->slot[i].pos.x = POS_X_SLOT[i];
     pkmn_bag->slot[i].pos.y = POS_Y_SLOT[i];
-    pos_txt.x = POS_X_SLOT[i] + 135;
-    pos_txt.y = POS_Y_SLOT[i] + 75;
+    pos_txt->x = POS_X_SLOT[i] + 135;
+    pos_txt->y = POS_Y_SLOT[i] + 75;
     pkmn_bag->slot[i].nbr = i + 1;
 }
 
@@ -69,7 +69,7 @@ static void create_slot(pkmn_bag_t *pkmn_bag)
 
     pkmn_bag->n_slot = 1;
     for (int i = 0; i < pkmn_bag->n_pkmn; i += 1) {
-        set_slot_position(pkmn_bag, i);
+        set_slot_position(pkmn_bag, i, &pos_txt);
         tmp = my_score(pkmn_bag->param->list_pkmn->pokemon.health);
         pkmn_bag->slot[i].pv = create_text(tmp, "assets/Pokemon Solid.ttf",
         15, pos_txt);
@@ -103,7 +103,8 @@ pkmn_bag_t *create_pkmn_bag(window_t *window, param_pkmn_menu_t *param)
     pkmn_bag->slot = malloc(sizeof(*(pkmn_bag->slot)) * NBR_PKMN);
     pkmn_bag->state = OPEN;
     pkmn_bag->n_pkmn = my_linklen(param->list_pkmn);
-    pkmn_bag->param->list_pkmn->pokemon.health = 50;
+    pkmn_bag->param->list_pkmn->pokemon.health = 5;
+    pkmn_bag->param->list_pkmn->next->pokemon.health = 50;
     tmp = pkmn_bag->param->list_pkmn;
     create_slot(pkmn_bag);
     pkmn_bag->param->list_pkmn = tmp;

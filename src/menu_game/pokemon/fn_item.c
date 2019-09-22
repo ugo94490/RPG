@@ -35,18 +35,55 @@ static char *my_score(int nb)
     return (str);
 }
 
-void fn_item(pkmn_bag_t *pkmn_bag)
+static void heal(pkmn_bag_t *pkmn_bag, int stuff)
 {
+    pkmn_list_t *tmp = NULL;
     char *buff = NULL;
 
-    if (pkmn_bag->param->item == POTION &&
-    pkmn_bag->param->list_pkmn->pokemon.health <
+    printf("Here\n");
+    tmp = pkmn_bag->param->list_pkmn;
+    for (int i = 1; i < pkmn_bag->n_slot; i += 1)
+        pkmn_bag->param->list_pkmn = pkmn_bag->param->list_pkmn->next;
+    if (pkmn_bag->param->list_pkmn->pokemon.health ==
     pkmn_bag->param->list_pkmn->pokemon.max_health) {
-        for (int i = 0; i < POTION &&
-            pkmn_bag->param->list_pkmn->pokemon.health <
-            pkmn_bag->param->list_pkmn->pokemon.max_health; i += 1)
-            pkmn_bag->param->list_pkmn->pokemon.health += 1;
+        pkmn_bag->param->list_pkmn = tmp;
+        return ;
+    }
+    for (int i = 0; i < stuff &&
+        pkmn_bag->param->list_pkmn->pokemon.health <
+        pkmn_bag->param->list_pkmn->pokemon.max_health; i += 1)
+        pkmn_bag->param->list_pkmn->pokemon.health += 1;
+    buff = my_score(pkmn_bag->param->list_pkmn->pokemon.health);
+    change_text(buff, &pkmn_bag->slot[pkmn_bag->n_slot - 1].pv);
+    pkmn_bag->param->list_pkmn = tmp;
+}
+
+static void revive(pkmn_bag_t *pkmn_bag)
+{
+    pkmn_list_t *tmp = NULL;
+    char *buff = NULL;
+
+    tmp = pkmn_bag->param->list_pkmn;
+    for (int i = 1; i < pkmn_bag->n_slot; i += 1)
+        pkmn_bag->param->list_pkmn = pkmn_bag->param->list_pkmn->next;
+    if (pkmn_bag->param->list_pkmn->pokemon.health ==
+    pkmn_bag->param->list_pkmn->pokemon.max_health) {
+        pkmn_bag->param->list_pkmn = tmp;
+        return ;
+    }
+    if (pkmn_bag->param->list_pkmn->pokemon.health == 0) {
+        pkmn_bag->param->list_pkmn->pokemon.health = 50;
         buff = my_score(pkmn_bag->param->list_pkmn->pokemon.health);
         change_text(buff, &pkmn_bag->slot[pkmn_bag->n_slot - 1].pv);
     }
+    pkmn_bag->param->list_pkmn = tmp;
+}
+
+void fn_item(pkmn_bag_t *pkmn_bag)
+{
+    if (pkmn_bag->param->item == POTION || pkmn_bag->param->item == S_POTION
+        || pkmn_bag->param->item == H_POTION)
+        heal(pkmn_bag, pkmn_bag->param->item);
+    if (pkmn_bag->param->item == REVIVE)
+        revive(pkmn_bag);
 }

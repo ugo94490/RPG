@@ -17,6 +17,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "string.h"
 #include "pkmn.h"
 #include "sounds.h"
 #include "systems.h"
@@ -39,3 +40,5 @@ int my_strlen92(char *str);
 void my_revstr(char *str);
 int my_int(int nb);
 char* my_itoa(int nb, char *nbr);
+int display_text(char *base, sfVector2f pos, sfRenderWindow *window);
+int my_strlen(char const *str);
