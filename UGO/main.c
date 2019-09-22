@@ -233,7 +233,8 @@ int display_game(game_object **tab, sfRenderWindow *window, int pos, int start)
     return (0);
 }
 
-int attack_box(pkmn_list_t *linked, sfRenderWindow *window, int nb)
+int attack_box(pkmn_list_t *linked, sfRenderWindow *window,
+int nb, game_object **tab)
 {
     char *str = NULL;
     sfVector2f pos = {338, 374};
@@ -246,6 +247,8 @@ int attack_box(pkmn_list_t *linked, sfRenderWindow *window, int nb)
     str = my_strcat(str, phr[1]);
     pause_time(0.1);
     display_text(str, pos, window);
+    sfRenderWindow_clear(window, sfBlack);
+    display_game(tab, window, 8, 0);
     free(str);
     return (0);
 }
@@ -256,7 +259,7 @@ int get_atk(pkmn_list_t *linked, int nb)
 
     for (int i = 0; atk[i]; i++)
         if (strcmp(atk[i], atk_name[linked->pokemon.atks[nb].number])
-        == 0)
+            == 0)
             ret = i;
     return (ret);
 }
@@ -319,7 +322,7 @@ pkmn_list_t *linked, text_t *stat)
     atk_pos[0].x + 293 >= vct.x && atk_pos[0].y <= vct.y && atk_pos[0].y
     + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[0].power;
-        attack_box(linked, window, 0);
+        attack_box(linked, window, 0, tab);
         attack_anim(tab, window, linked, 0, stat);
         return (1);
     }
@@ -327,7 +330,7 @@ pkmn_list_t *linked, text_t *stat)
     atk_pos[1].x + 293 >= vct.x && atk_pos[1].y <= vct.y && atk_pos[1].y
     + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[1].power;
-        attack_box(linked, window, 1);
+        attack_box(linked, window, 1, tab);
         attack_anim(tab, window, linked, 1, stat);
         return (1);
     }
@@ -335,7 +338,7 @@ pkmn_list_t *linked, text_t *stat)
     atk_pos[2].x + 293 >= vct.x && atk_pos[2].y <= vct.y && atk_pos[2].y
     + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[2].power;
-        attack_box(linked, window, 2);
+        attack_box(linked, window, 2, tab);
         attack_anim(tab, window, linked, 2, stat);
         return (1);
     }
@@ -343,7 +346,7 @@ pkmn_list_t *linked, text_t *stat)
     atk_pos[3].x + 293 >= vct.x && atk_pos[3].y <= vct.y && atk_pos[3].y
     + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft)) {
         linked->next->pokemon.health -= linked->pokemon.atks[3].power;
-        attack_box(linked, window, 3);
+        attack_box(linked, window, 3, tab);
         attack_anim(tab, window, linked, 3, stat);
         return (1);
     }
@@ -574,15 +577,9 @@ int animation(sfRenderWindow *window, game_object **tab)
             count++;
         }
     }
+    sfRenderWindow_clear(window, sfBlack);
     free_character(character);
     sfClock_destroy(clock);
-    return (0);
-}
-
-int dresseur(sfRenderWindow *window, int menu, game_object **tab)
-{
-    if (menu == -1)
-        return (animation(window, tab));
     return (0);
 }
 
@@ -608,6 +605,7 @@ int riposte(pkmn_list_t *linked, sfRenderWindow *window)
 int disp_atk_mod(sfRenderWindow *window, pkmn_list_t *linked,
 game_object **tab, text_t *stat)
 {
+    sfRenderWindow_clear(window, sfBlack);
     display_game(tab, window, 7, 0);
     display_stat(window, linked, stat, 6);
     riposte(linked, window);
@@ -624,7 +622,6 @@ int disp_txt_atk(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
 
 int check_menu(sfRenderWindow *window, int menu, game_object **tab)
 {
-    menu = dresseur(window, menu, tab);
     display_game(tab, window, 7, 0);
     menu = mode(window, menu);
     return (menu);
@@ -635,8 +632,9 @@ int combat(sfRenderWindow *window, pkmn_list_t *linked)
     game_object **tab = init_object();
     sfClock *clock = sfClock_create();
     text_t *stat = change_pos(linked);
-    int menu = -1;
+    int menu = 0;
 
+    animation(window, tab);
     while (sfRenderWindow_isOpen(window)) {
         sfRenderWindow_clear(window, sfBlack);
         menu = check_menu(window, menu, tab);
