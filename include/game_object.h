@@ -8,7 +8,7 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
-enum {GROUND = 0, PLAYER};
+enum {GROUND = 0, PLAYER, NPC};
 static const int ground_width = 32;
 static const int ground_height = 32;
 static const int character_width = 40;
@@ -36,6 +36,7 @@ typedef struct item_list_s
 
 typedef struct character_s
 {
+    int type;
     int status;
     int world;
     int direction;
@@ -45,6 +46,20 @@ typedef struct character_s
     struct pkmn_list_s *pkmns;
     struct item_list_s *items;
 } character_t;
+
+typedef struct npc_s
+{
+    int type;
+    int aggro;
+    int status;
+    int world;
+    int direction;
+    sfVector2f objective;
+    anim_t anim;
+    sfVector2f pos;
+    struct pkmn_list_t *pkmns;
+    void (*interact)(struct game_s *, struct npc_s *);
+} npc_t;
 
 typedef struct ground_s
 {
@@ -66,11 +81,14 @@ typedef struct game_object_list_s
 void put_object_in_objects(game_object_list_t **list, void *object,
 int type, int height);
 void move_objects(game_object_list_t *objects, sfTime time);
+void move_npc(npc_t *npc, sfTime time);
 character_t *create_character(game_object_list_t **list);
 void update_character_status(character_t *character, int status, int direction);
+void update_npc_status(npc_t *npc, int status, int direction);
 character_t *get_character_in_objects(game_object_list_t *objects);
 int check_can_go(character_t *character,
 game_object_list_t *list, sfVector2f objective);
+int check_can_go_np(npc_t *npc, game_object_list_t *list, sfVector2f objective);
 void load_map(game_object_list_t **list, int arg);
 void noAnimGround(struct game_s *game, ground_t *ground, int *height);
 void anim_flower(struct game_s *game, ground_t *ground, int *height);
@@ -80,5 +98,7 @@ void put_map_in_grounds_spe(game_object_list_t **list, char **map);
 void sub_animate(anim_t *anim);
 int box_box_col(sfVector2f box1pos, sfIntRect box1rect,
 sfVector2f box2pos, sfIntRect box2rect);
+void animate_player(character_t *character);
+void animate_npc(npc_t *npc);
 
 #endif

@@ -60,6 +60,8 @@ void move_objects(game_object_list_t *objects, sfTime time)
     while (objects != NULL) {
         if (objects->type == PLAYER)
             move_character((character_t *)(objects->object), time);
+        if (objects->type == NPC)
+            move_npc((npc_t *)(objects->object), time);
         objects = objects->next;
     }
 }

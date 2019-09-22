@@ -30,22 +30,30 @@ void activate_event(game_t *game, evt_t event)
         teleport(game, event);
 }
 
-void check_evt_trigger(game_t *game)
+void check_evt_trigger(game_t *game, sfVector2f pos, int locmap)
 {
     evt_list_t *save = game->evts;
 
     while (game->evts != NULL) {
-        if (check_col_event(game->character, game->evts->event) == 1)
+        if (check_col_event(pos, locmap, game->evts->event) == 1)
             activate_event(game, game->evts->event);
         game->evts = game->evts->next;
     }
     game->evts = save;
 }
 
+npc_t *get_first_npc(game_object_list_t *list)
+{
+    while (list != NULL) {
+        if (list->type == NPC)
+            return ((npc_t *)(list->object));
+        list = list->next;
+    }
+    return (NULL);
+}
+
 void get_key_pressed(window_t *window, game_t *game)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyEscape))
-        sfRenderWindow_close(window->window);
     if (sfKeyboard_isKeyPressed(sfKeyRight))
         move_right(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyLeft))
@@ -54,18 +62,30 @@ void get_key_pressed(window_t *window, game_t *game)
         move_down(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyUp))
         move_up(window, game);
-    if (sfKeyboard_isKeyPressed(sfKeyD))
+    if (sfKeyboard_isKeyPressed(sfKeyP))
         printf("%f, %f\n", game->character->pos.x, game->character->pos.y);
+    if (sfKeyboard_isKeyPressed(sfKeyD))
+        move_npc_right(window, game, get_first_npc(game->objects));
+    if (sfKeyboard_isKeyPressed(sfKeyQ))
+        move_npc_left(window, game, get_first_npc(game->objects));
+    if (sfKeyboard_isKeyPressed(sfKeyS))
+        move_npc_down(window, game, get_first_npc(game->objects));
+    if (sfKeyboard_isKeyPressed(sfKeyZ))
+        move_npc_up(window, game, get_first_npc(game->objects));
 }
 
 void analyse_event(window_t *window, game_t *game)
 {
     sfEvent event;
 
-    check_evt_trigger(game);
     while (sfRenderWindow_pollEvent(window->window, &event)) {
         if (event.type == sfEvtClosed)
             sfRenderWindow_close(window->window);
     }
-    get_key_pressed(window, game);
+    if (sfKeyboard_isKeyPressed(sfKeyEscape))
+        sfRenderWindow_close(window->window);
+    if (sfRenderWindow_isOpen(window->window))
+        check_evt_trigger(game, game->character->pos, game->character->world);
+    if (sfRenderWindow_isOpen(window->window) && game->character->status == 0)
+        get_key_pressed(window, game);
 }

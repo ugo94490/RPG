@@ -15,11 +15,15 @@ SRC	=	src/main.c				\
 		src/overworld/analyse_events.c		\
 		src/overworld/input_react.c		\
 		src/overworld/move_characters.c		\
+		src/overworld/move_npc.c		\
 		src/overworld/create_overworld.c	\
 		src/overworld/misc.c			\
 		src/overworld/animate.c			\
 		src/overworld/unload_map.c		\
 		src/overworld/animate_ground.c		\
+		src/overworld/animate_characters.c	\
+		src/overworld/check_can_go.c		\
+		src/overworld/npc_move_fcts.c		\
 		src/basics/my_strlen.c			\
 		src/basics/string_array_fcts.c		\
 		src/basics/my_strdup.c			\

@@ -14,7 +14,7 @@
 #include "game_object.h"
 #include "overworld.h"
 
-void draw_ground(window_t *window, sfVector2f scale,
+void draw_ground(window_t *window,
 sprite_t sprite, ground_t *ground)
 {
     sfSprite_setTextureRect(sprite.sprite,
@@ -23,12 +23,12 @@ sprite_t sprite, ground_t *ground)
     sfRenderWindow_drawSprite(window->window, sprite.sprite, NULL);
 }
 
-void draw_character(window_t *window, sfVector2f scale,
+void draw_character(window_t *window,
 sprite_t sprite, character_t *character)
 {
     sfVector2f vector0 = {0, 0};
-    sfVector2f origin = {(character_width-ground_width)*scale.x/2,
-    (character_height-ground_height)*scale.y};
+    sfVector2f origin = {(character_width-ground_width)*window->scale.x/2,
+    (character_height-ground_height)*window->scale.y};
 
     sfSprite_setOrigin(sprite.sprite, origin);
     sfSprite_setTextureRect(sprite.sprite,
@@ -38,7 +38,22 @@ sprite_t sprite, character_t *character)
     sfSprite_setOrigin(sprite.sprite, vector0);
 }
 
-void draw_objects(window_t *window, sfVector2f scale, game_t *game, int level)
+void draw_npc(window_t *window,
+sprite_t sprite, npc_t *npc)
+{
+    sfVector2f vector0 = {0, 0};
+    sfVector2f origin = {(16)*window->scale.x,
+    (32)*window->scale.y};
+
+    sfSprite_setOrigin(sprite.sprite, origin);
+    sfSprite_setTextureRect(sprite.sprite,
+    npc->anim.rects[npc->anim.actual_rect]);
+    sfSprite_setPosition(sprite.sprite, npc->pos);
+    sfRenderWindow_drawSprite(window->window, sprite.sprite, NULL);
+    sfSprite_setOrigin(sprite.sprite, vector0);
+}
+
+void draw_objects(window_t *window, game_t *game, int level)
 {
     game_object_list_t *save = game->objects;
 
@@ -48,20 +63,23 @@ void draw_objects(window_t *window, sfVector2f scale, game_t *game, int level)
         if (game->objects->height != level)
             break;
         if (game->objects->type == GROUND)
-            draw_ground(window, scale, game->sprites[0],
+            draw_ground(window, game->sprites[0],
             (ground_t *)(game->objects->object));
         if (game->objects->type == PLAYER)
-            draw_character(window, scale, game->sprites[1],
+            draw_character(window, game->sprites[1],
             (character_t *)(game->objects->object));
+        if (game->objects->type == NPC)
+            draw_npc(window, game->sprites[2],
+            (npc_t *)(game->objects->object));
         game->objects = game->objects->next;
     }
     game->objects = save;
 }
 
-void draw_game(window_t *window, sfVector2f scale, game_t *game)
+void draw_game(window_t *window, game_t *game)
 {
     sfRenderWindow_clear(window->window, sfBlack);
     for (int i = 0; i <= 5; i++)
-        draw_objects(window, scale, game, i);
+        draw_objects(window, game, i);
     sfRenderWindow_display(window->window);
 }

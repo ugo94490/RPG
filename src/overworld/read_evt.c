@@ -15,15 +15,16 @@
 evt_t create_basic_event(void)
 {
     evt_t event;
+    sfIntRect baserect = {0, 0, 0, 0};
+    sfVector2f basevector = {0, 0};
 
     event.type = 0;
-    event.pos.x = 0;
-    event.pos.y = 0;
+    event.pos = basevector;
+    event.colrect = baserect;
     event.locmap = 0;
     event.trigger = 0;
     event.destmap = 0;
-    event.dest.x = 0;
-    event.dest.y = 0;
+    event.dest = basevector;
     event.direction = 0;
     event.proba = 0;
     event.item = 0;
@@ -61,6 +62,10 @@ void analyse_line(char *line, evt_t *evt)
     evt->destmap = my_getnbr(words[1]) : 0 ;
     my_strcmp(words[0], "direction") == 1 ?
     evt->direction = my_getnbr(words[1]) : 0 ;
+    my_strcmp(words[0], "height") == 1 ?
+    evt->colrect.height = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "width") == 1 ?
+    evt->colrect.width = my_getnbr(words[1]) : 0;
     free_word_array(words);
 }
 

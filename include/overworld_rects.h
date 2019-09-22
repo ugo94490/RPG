@@ -15,6 +15,48 @@ static const char *mapspathsIn[6] = {"maps/interior/ground",
 "maps/interior/objects", "maps/interior/walls",
 "maps/interior/heights", "maps/interior/solid", "maps/interior/nocolobjs"};
 static const char **mapspaths[2] = {mapspathsOut, mapspathsIn};
+
+static const sfIntRect barry_rects[16] =
+{
+    {128, 64, 64, 64},
+    {128, 192, 64, 64},
+    {128, 64, 64, 64},
+    {128, 128, 64, 64},
+    {64, 0, 64, 64},
+    {64, 128, 64, 64},
+    {64, 0, 64, 64},
+    {64, 64, 64, 64},
+    {0, 0, 64, 64},
+    {128, 0, 64, 64},
+    {0, 0, 64, 64},
+    {64, 192, 64, 64},
+    {0, 128, 64, 64},
+    {0, 64, 64, 64},
+    {0, 128, 64, 64},
+    {0, 192, 64, 64}
+
+};
+
+static const sfIntRect pnjRects[16][16] =
+{
+    {{128, 64, 64, 64},
+    {128, 192, 64, 64},
+    {128, 64, 64, 64},
+    {128, 128, 64, 64},
+    {64, 0, 64, 64},
+    {64, 128, 64, 64},
+    {64, 0, 64, 64},
+    {64, 64, 64, 64},
+    {0, 0, 64, 64},
+    {128, 0, 64, 64},
+    {0, 0, 64, 64},
+    {64, 192, 64, 64},
+    {0, 128, 64, 64},
+    {0, 64, 64, 64},
+    {0, 128, 64, 64},
+     {0, 192, 64, 64}}
+};
+
 static const sfIntRect girl_rects[32] =
 {
     {42, 0, 40, 52},

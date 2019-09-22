@@ -31,6 +31,13 @@ void update_character_status(character_t *character, int status, int direction)
     character->status = status;
 }
 
+void update_npc_status(npc_t *npc, int status, int direction)
+{
+    if (direction != 0)
+        npc->direction = direction;
+    npc->status = status;
+}
+
 void set_view_params(window_t *window, game_t *game, sfVector2f scale)
 {
     sfVector2f viewSize = {1280*scale.x/2, 960*scale.y/2};

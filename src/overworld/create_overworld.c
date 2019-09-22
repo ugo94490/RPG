@@ -24,7 +24,7 @@ character_t *create_character(game_object_list_t **list)
     character->direction = 1;
     character->anim.rects = girl_rects;
     character->anim.nb_rects = 30;
-    character->anim.baserect = 1;
+    character->anim.baserect = 0;
     character->anim.actual_rect = 0;
     character->anim.endrect = 0;
     character->anim.time_anim = 0;
@@ -38,11 +38,35 @@ character_t *create_character(game_object_list_t **list)
 
 sprite_t *create_sprites(void)
 {
-    sprite_t *sprites = malloc(sizeof(sprite_t) * 2);
+    sprite_t *sprites = malloc(sizeof(sprite_t) * 3);
 
     sprites[0] = create_sprite("assets/outdoors.png");
-    sprites[1] = create_sprite("assets/girl.png");
+    sprites[1] = create_sprite("assets/characters.png");
+    sprites[2] = create_sprite("assets/npcs.png");
     return (sprites);
+}
+
+void create_barry(game_object_list_t **list)
+{
+    npc_t *barry = malloc(sizeof(npc_t));
+
+    barry->type = 0;
+    barry->aggro = 0;
+    barry->status = 0;
+    barry->world = 0;
+    barry->direction = 0;
+    barry->pos.x = 608;
+    barry->pos.y = 576;
+    barry->objective.x = 608;
+    barry->objective.y = 576;
+    barry->anim.rects = barry_rects;
+    barry->anim.nb_rects = 16;
+    barry->anim.baserect = 0;
+    barry->anim.actual_rect = 0;
+    barry->anim.endrect = 0;
+    barry->anim.time_anim = 0;
+    barry->anim.clock = create_clock();
+    put_object_in_objects(list, (void *)(barry), NPC, 4);
 }
 
 game_t create_game(void)
@@ -53,6 +77,7 @@ game_t create_game(void)
     game.objects = NULL;
     game.evts = NULL;
     game.character = create_character(&(game.objects));
+    create_barry(&(game.objects));
     game.status = 0;
     game.sprites = create_sprites();
     load_map(&(game.objects), game.character->world);

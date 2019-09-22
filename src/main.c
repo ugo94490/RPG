@@ -26,7 +26,7 @@ void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
         move_objects(game->objects, clock.time);
         analyse_event(window, game);
         set_view_params(window, game, *scale);
-        draw_game(window, *scale, game);
+        draw_game(window, game);
     }
 }
 

@@ -3,6 +3,8 @@ type:1
 trigger:1
 posx:576
 posy:544
+width:0
+height:0
 locmap:0
 destmap:1
 destx:224
@@ -13,6 +15,8 @@ type:1
 trigger:1
 posx:192
 posy:256
+width:0
+height:0
 locmap:1
 destmap:0
 destx:576
@@ -23,6 +27,8 @@ type:1
 trigger:1
 posx:224
 posy:256
+width:0
+height:0
 locmap:1
 destmap:0
 destx:576
@@ -30,11 +36,13 @@ desty:576
 direction:1
 -evt
 type:1
-trigger:1
+trigger:2
 posx:640
 posy:736
+width:100
+height:100
 locmap:0
 destmap:0
-destx:1600
+destx:1280
 desty:736
 direction:2
