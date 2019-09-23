@@ -22,7 +22,7 @@ sprite_t *create_sprites(void)
 
     if (sprites == NULL)
         return (NULL);
-    sprites[0] = create_sprite("assets/outdoors.png");
+    sprites[0] = create_sprite("assets/overworld.png");
     sprites[1] = create_sprite("assets/characters.png");
     sprites[2] = create_sprite("assets/npcs.png");
     return (sprites);

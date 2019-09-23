@@ -17,23 +17,30 @@
 void draw_ground(window_t *window,
 sprite_t sprite, ground_t *ground)
 {
+    sfVector2f temppos = {ground->pos.x * window->scale.x,
+    ground->pos.y * window->scale.y};
+
+    sfSprite_setScale(sprite.sprite, window->scale);
     sfSprite_setTextureRect(sprite.sprite,
     ground->anim.rects[ground->anim.actual_rect]);
-    sfSprite_setPosition(sprite.sprite, ground->pos);
+    sfSprite_setPosition(sprite.sprite, temppos);
     sfRenderWindow_drawSprite(window->window, sprite.sprite, NULL);
 }
 
 void draw_character(window_t *window,
 sprite_t sprite, character_t *character)
 {
+    sfVector2f temppos = {character->pos.x * window->scale.x,
+    character->pos.y * window->scale.y};
     sfVector2f vector0 = {0, 0};
-    sfVector2f origin = {(character_width-ground_width)*window->scale.x/2,
-    (character_height-ground_height)*window->scale.y};
+    sfVector2f origin = {(character_width-ground_width)/2,
+    (character_height-ground_height)};
 
     sfSprite_setOrigin(sprite.sprite, origin);
+    sfSprite_setScale(sprite.sprite, window->scale);
     sfSprite_setTextureRect(sprite.sprite,
     character->anim.rects[character->anim.actual_rect]);
-    sfSprite_setPosition(sprite.sprite, character->pos);
+    sfSprite_setPosition(sprite.sprite, temppos);
     sfRenderWindow_drawSprite(window->window, sprite.sprite, NULL);
     sfSprite_setOrigin(sprite.sprite, vector0);
 }
@@ -41,18 +48,38 @@ sprite_t sprite, character_t *character)
 void draw_npc(window_t *window,
 sprite_t sprite, npc_t *npc, int world)
 {
+    sfVector2f temppos = {npc->pos.x * window->scale.x,
+    npc->pos.y * window->scale.y};
     sfVector2f vector0 = {0, 0};
-    sfVector2f origin = {(16)*window->scale.x,
-    (32)*window->scale.y};
+    sfVector2f origin = {16, 32};
 
     if (npc->world != world)
         return;
     sfSprite_setOrigin(sprite.sprite, origin);
+    sfSprite_setScale(sprite.sprite, window->scale);
     sfSprite_setTextureRect(sprite.sprite,
     npc->anim.rects[npc->anim.actual_rect]);
-    sfSprite_setPosition(sprite.sprite, npc->pos);
+    sfSprite_setPosition(sprite.sprite, temppos);
     sfRenderWindow_drawSprite(window->window, sprite.sprite, NULL);
     sfSprite_setOrigin(sprite.sprite, vector0);
+}
+
+int check_if_draw(game_object_list_t *object, character_t *character, int level)
+{
+    sfVector2f pos;
+
+    if (object->height != level)
+        return (0);
+    if (object->type == GROUND)
+        pos = (((ground_t *)(object->object))->pos);
+    if (object->type == NPC)
+        pos = (((npc_t *)(object->object))->pos);
+    if (object->type == PLAYER)
+        return (1);
+    if (pos.x > character->pos.x + 400 || pos.x < character->pos.x - 400 ||
+    pos.y > character->pos.y + 300 || pos.y < character->pos.y - 300)
+        return (0);
+    return (1);
 }
 
 void draw_objects(window_t *window, game_t *game, int level)
@@ -60,7 +87,8 @@ void draw_objects(window_t *window, game_t *game, int level)
     game_object_list_t *save = game->objects;
 
     while (game->objects != NULL) {
-        while (game->objects->next != NULL && game->objects->height != level)
+        while (game->objects->next != NULL && check_if_draw(game->objects,
+        game->character, level) == 0)
             game->objects = game->objects->next;
         if (game->objects->height != level)
             break;
