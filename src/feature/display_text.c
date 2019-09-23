@@ -137,7 +137,7 @@ static char *last_line(char *tmp)
     return new;
 }
 
-static int wait_event(text_t *text, sfRenderWindow *window)
+static int wait_event(txt_t *text, sfRenderWindow *window)
 {
     while (sfRenderWindow_pollEvent(window, &text->event)) {
         if ((text->event.type == sfEvtKeyPressed &&
@@ -154,7 +154,7 @@ static int wait_event(text_t *text, sfRenderWindow *window)
     return 0;
 }
 
-static char *draw_all(text_t *text, char *tmp, setting_t set, int cpt)
+static char *draw_all(txt_t *text, char *tmp, setting_t set, int cpt)
 {
     text->flag = 2;
     tmp = get_all(text->str, tmp, cpt);
@@ -162,7 +162,7 @@ static char *draw_all(text_t *text, char *tmp, setting_t set, int cpt)
     return tmp;
 }
 
-static text_t set_text(text_t *text, int size, sfVector2f pos, char *base)
+static txt_t set_text(txt_t *text, int size, sfVector2f pos, char *base)
 {
     text->tmp = NULL;
     text->tmp = set_tmp(text->tmp);
@@ -182,7 +182,7 @@ static text_t set_text(text_t *text, int size, sfVector2f pos, char *base)
     return (*text);
 }
 
-static int check_cpt(text_t *text, int cpt, sfRenderWindow *window, sfSprite *sprite)
+static int check_cpt(txt_t *text, int cpt, sfRenderWindow *window, sfSprite *sprite)
 {
     text->seconds = get_seconds(text->clock);
     if (text->seconds > 0.03) {
@@ -196,7 +196,7 @@ static int check_cpt(text_t *text, int cpt, sfRenderWindow *window, sfSprite *sp
     return cpt;
 }
 
-static char *set_save(char *save, text_t *text, sfRenderWindow *window, sfSprite *sprite)
+static char *set_save(char *save, txt_t *text, sfRenderWindow *window, sfSprite *sprite)
 {
     if (save == NULL) {
         save = malloc(sizeof(char));
@@ -214,7 +214,7 @@ static char *set_save(char *save, text_t *text, sfRenderWindow *window, sfSprite
     return save;
 }
 
-static int update_cpt(text_t *text, int cpt, int flag, int dif)
+static int update_cpt(txt_t *text, int cpt, int flag, int dif)
 {
     if (flag != 1)
         cpt = dif + my_strlen(text->tmp);
@@ -224,7 +224,7 @@ static int update_cpt(text_t *text, int cpt, int flag, int dif)
     return cpt;
 }
 
-static int loop(text_t *text, setting_t set, int cpt)
+static int loop(txt_t *text, setting_t set, int cpt)
 {
     while (text->flag < 3) {
         text->flag = check_event(text->event, text->flag, set.window);
@@ -242,7 +242,7 @@ static int loop(text_t *text, setting_t set, int cpt)
     return cpt;
 }
 
-static char *destroy_free(text_t *text, char *save)
+static char *destroy_free(txt_t *text, char *save)
 {
     save = my_strdup(text->tmp);
     free(text->tmp);
@@ -257,7 +257,7 @@ static int do_text(char *base, setting_t set, sfRenderWindow *window, sfSprite *
     static int cpt = 0;
     static char *save = NULL;
     int dif = cpt;
-    text_t text = set_text(&text, set.size, set.pos, base);
+    txt_t text = set_text(&text, set.size, set.pos, base);
     int flag = 0;
 
     save = set_save(save, &text, window, sprite);

@@ -8,6 +8,8 @@
 #ifndef PKMN_H
 #define PKMN_H
 
+#include "graphics.h"
+
 typedef struct atk_s
 {
     int number;
@@ -57,10 +59,11 @@ static char *atk_name[4] =
     "OmegaLOL"
 };
 
-static char *phr[2] =
+static char *phr[3] =
 {
     " attaque ",
-    " !"
+    " !",
+    " est K.O !"
 };
 
 static const sfVector2f atk_pos[4] =
