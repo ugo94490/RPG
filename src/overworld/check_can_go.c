@@ -45,7 +45,7 @@ game_object_list_t *list, sfVector2f objective)
     int is_blocked = 0;
 
     while (list != NULL && is_blocked == 0) {
-        if (list->type == GROUND && list->height < 3)
+        if (list->type == GROUND && list->height <= 3)
             check_can_go_ground(objective,
             (ground_t *)(list->object), &is_ground, &is_blocked);
         if (list->type == NPC &&
@@ -65,7 +65,7 @@ game_object_list_t *list, sfVector2f objective)
     int is_blocked = 0;
 
     while (list != NULL && is_blocked == 0) {
-        if (list->type == GROUND && list->height < 3)
+        if (list->type == GROUND && list->height <= 3)
             check_can_go_ground(objective,
             (ground_t *)(list->object), &is_ground, &is_blocked);
         if (list->type == NPC)

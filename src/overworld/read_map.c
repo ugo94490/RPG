@@ -31,14 +31,14 @@ void setGroundRect(ground_t *ground, ground_info_t info, int rect)
         ground->anim.rects = groundRectsIn[rect];
     if (info.type == 5)
         ground->anim.rects = nocolobjsRects[rect];
-//    if (info.type == 1 && info.map == 0)
-//        ground->anim.rects = objRectsOut[rect];
+    if (info.type == 1 && info.map == 1)
+        ground->anim.rects = objRectsIn[rect];
     if (info.type == 2 && info.map == 1)
         ground->anim.rects = WallRectsIn[rect];
     if (info.type == 3 && info.map == 1)
         ground->anim.rects = heightsRectsIn[rect];
-//    if (info.type == 4 && info.map == 0)
-//        ground->anim.rects = solidRectsOut[rect];
+//    if (info.type == 4 && info.map == 1)
+//        ground->anim.rects = solidRectsIn[rect];
 }
 
 ground_t *create_ground(game_object_list_t **list,
@@ -71,7 +71,7 @@ char c, ground_info_t info)
     if (c >= 'a' && c <= 'z')
         nb = c-'a';
     if (c >= 'A' && c <= 'Z')
-        nb = c-'a'+26;
+        nb = c-'A'+26;
     if (nb <= info.limit);
     ground = create_ground(list, nb, info);
     if (ground != NULL)

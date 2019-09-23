@@ -34,10 +34,11 @@ void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
 
 void init_game()
 {
-    window_t window = create_window(1280, 960, 32, "poukiman");
-    sfVector2f scale = {1.0, 1.0};
+    window_t window = create_window(1280*1, 960*1, 32, "poukiman");
+    sfVector2f scale = {1, 1};
     game_t game = create_game();
 
+    window.scale = scale;
     temp_loop(&window, &scale, &game);
     destroy_game(&game);
     sfRenderWindow_destroy(window.window);
