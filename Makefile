@@ -24,6 +24,11 @@ SRC	=	src/main.c				\
 		src/overworld/animate_characters.c	\
 		src/overworld/check_can_go.c		\
 		src/overworld/npc_move_fcts.c		\
+		src/overworld/load_npc.c		\
+		src/overworld/destroy_game.c		\
+		src/overworld/sub_destroy_game.c	\
+		src/overworld/load_character.c		\
+		src/overworld/load_pkmns.c		\
 		src/basics/my_strlen.c			\
 		src/basics/string_array_fcts.c		\
 		src/basics/my_strdup.c			\
@@ -31,12 +36,16 @@ SRC	=	src/main.c				\
 		src/basics/my_str_to_word_array.c	\
 		src/basics/my_getnbr.c			\
 		src/basics/word_array_fcts.c		\
+		UGO/useful_fct.c			\
+		UGO/main_cbt.c				\
+		UGO/tools_two.c				\
 		lib_CSFML/window_functions.c		\
 		lib_CSFML/clock_functions.c		\
 		lib_CSFML/sound_functions.c		\
 		lib_CSFML/text_functions.c		\
 		lib_CSFML/value_structs.c		\
-		lib_CSFML/sprite_functions.c
+		lib_CSFML/sprite_functions.c		\
+		src/feature/display_text.c
 
 SRC_T		=
 
@@ -46,7 +55,7 @@ TESTS_NAME	=	tests_run
 
 CC			=	gcc
 
-CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -g3
+CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I./src/feature -g3
 
 CPPFLAGS	+=
 

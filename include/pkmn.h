@@ -16,6 +16,14 @@ typedef struct atk_s
     int power;
 } atk_t;
 
+static const atk_t atks[4] =
+{
+    {0, 0},
+    {1, 100},
+    {2, 50},
+    {3, 70}
+};
+
 typedef struct pkmn_s
 {
     int number;
@@ -41,14 +49,17 @@ static char *name[3] =
     NULL
 };
 
-static char *atk[1] =
+static char *atk[3] =
 {
-    "Hydrocanon"
+    "Hydrocanon",
+    "Ultralaser",
+    NULL
 };
 
-static char *asset_atk[1] =
+static char *asset_atk[2] =
 {
-    "../assets/hydrocanon.png"
+    "assets/hydrocanon.png",
+    "assets/ultralaser.png"
 };
 
 static char *atk_name[4] =
@@ -95,5 +106,8 @@ static const sfVector2f atk_txt[8] =
     {827, 622},
     {827, 769}
 };
+
+void load_pkmn(FILE *file, char *line, ssize_t *nread,
+struct pkmn_list_s **list);
 
 #endif

@@ -48,7 +48,8 @@ game_object_list_t *list, sfVector2f objective)
         if (list->type == GROUND && list->height < 3)
             check_can_go_ground(objective,
             (ground_t *)(list->object), &is_ground, &is_blocked);
-        if (list->type == NPC)
+        if (list->type == NPC &&
+        ((npc_t *)(list->object))->world == character->world)
             check_can_go_npc(objective, (npc_t *)(list->object), &is_blocked);
         list = list->next;
     }

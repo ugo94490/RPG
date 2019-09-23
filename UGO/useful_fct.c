@@ -23,7 +23,7 @@ position, sfIntRect rect1)
     return (assets);
 }
 
-void destroy_object(struct game_object *obj)
+void destroy_obj(struct game_object *obj)
 {
     sfSprite_destroy(obj->sprite);
     sfTexture_destroy(obj->texture);

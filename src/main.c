@@ -9,6 +9,7 @@
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <SFML/Audio.h>
+#include <time.h>
 #include "graphics.h"
 #include "systems.h"
 #include "game_object.h"
@@ -28,6 +29,7 @@ void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
         set_view_params(window, game, *scale);
         draw_game(window, game);
     }
+    destroy_clock(&clock);
 }
 
 void init_game()
@@ -37,12 +39,15 @@ void init_game()
     game_t game = create_game();
 
     temp_loop(&window, &scale, &game);
+    destroy_game(&game);
+    sfRenderWindow_destroy(window.window);
 }
 
 int main(int ac, char **av, char **env)
 {
     if (env == NULL || env[0] == NULL)
         return (84);
+    srand(time(0));
     init_game();
     return (0);
 }
