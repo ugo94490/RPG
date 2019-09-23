@@ -54,6 +54,11 @@ npc_t *get_first_npc(game_object_list_t *list)
 
 void get_key_pressed(window_t *window, game_t *game)
 {
+    sfVector2f temppos = {(game->character->pos.x+character_width/2-640/2),
+                          (game->character->pos.y+character_height/6)-480/2};
+
+    if (sfKeyboard_isKeyPressed(sfKeyT))
+        display_text("ceci est un dialogue", temppos, window->window);
     if (sfKeyboard_isKeyPressed(sfKeyRight))
         move_right(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyLeft))
@@ -84,8 +89,8 @@ void analyse_event(window_t *window, game_t *game)
     }
     if (sfKeyboard_isKeyPressed(sfKeyEscape))
         sfRenderWindow_close(window->window);
-    if (sfRenderWindow_isOpen(window->window))
+    if (sfRenderWindow_isOpen(window->window) && game->character->status == 0) {
         check_evt_trigger(game, game->character->pos, game->character->world);
-    if (sfRenderWindow_isOpen(window->window) && game->character->status == 0)
         get_key_pressed(window, game);
+    }
 }

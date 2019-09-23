@@ -106,5 +106,6 @@ void destroy_npc(npc_t *npc);
 void destroy_ground(ground_t *ground);
 void destroy_character(character_t *character);
 void destroy_object(game_object_list_t *object);
+character_t *load_character(char *path, game_object_list_t **list);
 
 #endif

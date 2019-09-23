@@ -14,6 +14,14 @@ typedef struct atk_s
     int power;
 } atk_t;
 
+static const atk_t atks[4] =
+{
+    {0, 0},
+    {1, 100},
+    {2, 50},
+    {3, 70}
+};
+
 typedef struct pkmn_s
 {
     int number;
@@ -92,5 +100,8 @@ static const sfVector2f atk_txt[8] =
     {827, 622},
     {827, 769}
 };
+
+void load_pkmn(FILE *file, char *line, ssize_t *nread,
+struct pkmn_list_s **list);
 
 #endif

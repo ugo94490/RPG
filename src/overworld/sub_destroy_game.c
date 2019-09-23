@@ -18,7 +18,7 @@
 void free_pkmn_list(pkmn_list_t *list)
 {
     if (list && list->next)
-        free_pkmn_list(list);
+        free_pkmn_list(list->next);
     if (list)
         free(list);
 }

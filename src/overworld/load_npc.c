@@ -34,7 +34,6 @@ npc_t *create_base_npc(void)
     npc->world = 0;
     npc->anim = baseanim;
     npc->anim.rects = barry_rects;
-    npc->anim.nb_rects = 16;
     npc->anim.clock = create_clock();
     npc->pkmns = NULL;
     npc->interact = 0;
