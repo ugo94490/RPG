@@ -37,6 +37,8 @@ SRC	=	src/main.c				\
 		src/basics/my_getnbr.c			\
 		src/basics/word_array_fcts.c		\
 		UGO/useful_fct.c			\
+		UGO/main_cbt.c				\
+		UGO/tools_two.c				\
 		lib_CSFML/window_functions.c		\
 		lib_CSFML/clock_functions.c		\
 		lib_CSFML/sound_functions.c		\

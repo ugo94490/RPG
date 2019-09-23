@@ -54,7 +54,7 @@ static char *atk[1] =
 
 static char *asset_atk[1] =
 {
-    "../assets/hydrocanon.png"
+    "assets/hydrocanon.png"
 };
 
 static char *atk_name[4] =

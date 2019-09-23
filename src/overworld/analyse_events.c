@@ -12,6 +12,7 @@
 #include "game_object.h"
 #include "overworld.h"
 #include "overworld_evt.h"
+#include "my_rpg.h"
 
 void teleport(game_t *game, evt_t event)
 {
@@ -57,6 +58,8 @@ void get_key_pressed(window_t *window, game_t *game)
     sfVector2f temppos = {(game->character->pos.x+character_width/2-640/2),
                           (game->character->pos.y+character_height/6)-480/2};
 
+    if (sfKeyboard_isKeyPressed(sfKeyC))
+        main_cbt(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyT))
         display_text("ceci est un dialogue", temppos, window->window);
     if (sfKeyboard_isKeyPressed(sfKeyRight))

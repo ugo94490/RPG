@@ -15,6 +15,7 @@
 #include "overworld.h"
 #include "overworld_rects.h"
 #include "basics.h"
+#include "pkmn.h"
 
 npc_t *create_base_npc(void)
 {
@@ -72,6 +73,8 @@ void load_npc(FILE *file, char *line, game_object_list_t **list, ssize_t *nread)
         if (*nread == -1)
             break;
         line[*nread-1] = '\0';
+        if (my_strcmp(line, "-pkmn") == 1)
+            load_pkmn(file, line, nread, &(npc->pkmns));
         analyse_line_npc(line, npc);
     } while (*nread != -1 && my_strcmp(line, "-npc") != 1);
     npc->anim.rects = pnjRects[npc->type];
@@ -96,7 +99,7 @@ void load_npcs(game_object_list_t **list)
             break;
         else if (nread > 0)
             line[nread-1] = '\0';
-        while (nread > 0 && my_strcmp(line, "-npc") == 1)
+         while (nread > 0 && my_strcmp(line, "-npc") == 1)
             load_npc(file, line, list, &nread);
     } while (nread != -1);
     if (line != NULL)

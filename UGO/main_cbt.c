@@ -7,6 +7,8 @@
 
 #include "my_rpg.h"
 #include "graphics.h"
+#include "game_object.h"
+#include "overworld.h"
 #include "basics.h"
 
 int pause_time(float sec)
@@ -308,7 +310,7 @@ int nb, text_t *stat)
     }
     display_game(tab, window, 8, 0);
     display_stat(window, linked, stat, 6);
-    destroy_object(sprite);
+    destroy_obj(sprite);
     sfClock_destroy(clock);
 }
 
@@ -368,9 +370,9 @@ game_object **init_box(pkmn_list_t *linked)
 
     for (int i = 0; i < 4; i++) {
         if (linked->pokemon.atks[i].number != -1)
-            tab[i] = create_object("../assets/attack.png", atk_pos[i], rect);
+            tab[i] = create_object("assets/attack.png", atk_pos[i], rect);
         else
-            tab[i] = create_object("../assets/vide.png", atk_pos[i], rect);
+            tab[i] = create_object("assets/vide.png", atk_pos[i], rect);
     }
     tab[4] = NULL;
     return (tab);
@@ -379,7 +381,7 @@ game_object **init_box(pkmn_list_t *linked)
 int destroy_tab(game_object **tab)
 {
     for (int i = 0; tab[i]; i++)
-        destroy_object(tab[i]);
+        destroy_obj(tab[i]);
     free(tab);
     return (0);
 }
@@ -409,10 +411,10 @@ text_t *init_name(pkmn_list_t *linked)
 
     for (int i = 0; i < 9; i++) {
         if (i < 4)
-            stat[i] = create_text(atk_name[i], "classic.ttf", size, atk_txt[i]);
+            stat[i] = create_text(atk_name[i], "assets/classic.ttf", size, atk_txt[i]);
         else
             stat[i] = create_text(itoa_dup(linked->pokemon.atks[i - 4].power),
-            "classic.ttf", size, atk_txt[i]);
+            "assets/classic.ttf", size, atk_txt[i]);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
@@ -423,7 +425,7 @@ int flag)
 {
     destroy_font(name_pow, 9);
     destroy_tab(box);
-    destroy_object(atk);
+    destroy_obj(atk);
     return (flag);
 }
 
@@ -438,7 +440,7 @@ text_t *stat, text_t *name_pow)
 int atk_hud(sfRenderWindow *window, game_object **tab,
 pkmn_list_t *linked, text_t *stat)
 {
-    game_object *atk = init_hud("../assets/pp_hud.png", 338, 480);
+    game_object *atk = init_hud("assets/pp_hud.png", 338, 480);
     game_object **box = init_box(linked);
     text_t *name_pow = init_name(linked);
     int ret = 0;
@@ -467,18 +469,18 @@ game_object **init_object(void)
     sfVector2f pos2 = {720, 85};
     sfIntRect rect = {0, 0, 0, 0};
 
-    tab[0] = init_hud("../assets/attack_hud.png", 338, 480);
-    tab[8] = init_choice("../assets/game_menu.png");
-    tab[1]= init_hud("../assets/combat_screen.png", 338, 0);
-    tab[3] = init_hud("../assets/text_combat.png", 338, 374);
-    tab[2] = init_hud("../assets/cercle.png", 338, 204);
-    tab[5] = init_hud("../assets/opponent_life.png", 338, 123);
-    tab[4] = init_hud("../assets/my_life.png", 659, 263);
-    tab[9] = init_little("../assets/m_sel.png", 341, 825);
-    tab[10] = init_little("../assets/m_sel.png", 549, 844);
-    tab[11] = init_little("../assets/m_sel.png", 757, 825);
-    tab[6] = create_object("../assets/front_pkmn.png", pos2, rect);
-    tab[7] = create_object("../assets/back_pkmn.png", pos, rect);
+    tab[0] = init_hud("assets/attack_hud.png", 338, 480);
+    tab[8] = init_choice("assets/game_menu.png");
+    tab[1]= init_hud("assets/combat_screen.png", 338, 0);
+    tab[3] = init_hud("assets/text_combat.png", 338, 374);
+    tab[2] = init_hud("assets/cercle.png", 338, 204);
+    tab[5] = init_hud("assets/opponent_life.png", 338, 123);
+    tab[4] = init_hud("assets/my_life.png", 659, 263);
+    tab[9] = init_little("assets/m_sel.png", 341, 825);
+    tab[10] = init_little("assets/m_sel.png", 549, 844);
+    tab[11] = init_little("assets/m_sel.png", 757, 825);
+    tab[6] = create_object("assets/front_pkmn.png", pos2, rect);
+    tab[7] = create_object("assets/back_pkmn.png", pos, rect);
     tab[12] = NULL;
     return (tab);
 }
@@ -508,7 +510,7 @@ text_t *init_txt(pkmn_list_t *linked)
     int size = 15;
 
     for (int i = 0; i < 6; i++) {
-        stat[i] = create_text("init", "classic.ttf", size, pos_txt[i]);
+        stat[i] = create_text("init", "assets/classic.ttf", size, pos_txt[i]);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
@@ -535,8 +537,8 @@ game_object **init_player(void)
     sfVector2f pos = {380, 226};
     sfVector2f pos2 = {740, 30};
 
-    tmp[0] = create_object("../assets/back_train.png", pos, rect);
-    tmp[1] = create_object("../assets/rival_two.png", pos2, rect2);
+    tmp[0] = create_object("assets/back_train.png", pos, rect);
+    tmp[1] = create_object("assets/rival_two.png", pos2, rect2);
     return (tmp);
 }
 
@@ -552,8 +554,8 @@ game_object **character)
 
 int free_character(game_object **character)
 {
-    destroy_object(character[0]);
-    destroy_object(character[1]);
+    destroy_obj(character[0]);
+    destroy_obj(character[1]);
     free(character);
     return (0);
 }
@@ -675,15 +677,12 @@ void free_linked(pkmn_list_t **linked, pkmn_list_t *tmp)
     (*linked) = NULL;
 }
 
-int main(void)
+void main_cbt(window_t *window, game_t *game)
 {
-    pkmn_list_t *linked = init();
-    pkmn_list_t *tmp = linked;
-    window_t window = create_window(1280, 960, 32, "COMBAT RPG");
+    const sfView *default_view = sfRenderWindow_getDefaultView(window->window);
 
-    srand(time(0));
-    sfRenderWindow_setFramerateLimit(window.window, 60);
-    combat(window.window, linked);
-    sfRenderWindow_destroy(window.window);
-    return (0);
+    sfRenderWindow_setView(window->window, default_view);
+    combat(window->window, game->character->pkmns);
+    sfRenderWindow_setView(window->window, game->view);
 }
+

@@ -9,6 +9,7 @@
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
 #include <SFML/Audio.h>
+#include <time.h>
 #include "graphics.h"
 #include "systems.h"
 #include "game_object.h"
@@ -46,6 +47,7 @@ int main(int ac, char **av, char **env)
 {
     if (env == NULL || env[0] == NULL)
         return (84);
+    srand(time(0));
     init_game();
     return (0);
 }

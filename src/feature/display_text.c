@@ -171,7 +171,7 @@ static text_t set_text(text_t *text, int size, sfVector2f pos, char *base)
         return (*text);
     text->clock = sfClock_create();
     text->flag = 0;
-    text->font = sfFont_createFromFile("../UGO/classic.ttf");
+    text->font = sfFont_createFromFile("assets/classic.ttf");
     text->text = sfText_create();
     text->str = strcpy(text->str, base);
     text->str = change_str(text->str);
@@ -293,7 +293,7 @@ int display_text(char *base, sfVector2f pos, sfRenderWindow *window)
     setting_t set;
     int flag = 0;
     sfIntRect rec = {0, 0, 0, 0};
-    game_object *spr = create_object("../assets/text_combat.png", pos, rec);
+    game_object *spr = create_object("assets/text_combat.png", pos, rec);
 
     set = set_setting(pos, 17, window, spr->sprite);
     while (sfRenderWindow_isOpen(window) == 1 && flag != 1) {
@@ -305,6 +305,6 @@ int display_text(char *base, sfVector2f pos, sfRenderWindow *window)
             break;
         sfRenderWindow_display(window);
     }
-    destroy_object(spr);
+    destroy_obj(spr);
     return 0;
 }
