@@ -8,6 +8,8 @@
 #ifndef PKMN_H
 #define PKMN_H
 
+#include "graphics.h"
+
 typedef struct atk_s
 {
     int number;
@@ -47,14 +49,17 @@ static char *name[3] =
     NULL
 };
 
-static char *atk[1] =
+static char *atk[3] =
 {
-    "Hydrocanon"
+    "Hydrocanon",
+    "Ultralaser",
+    NULL
 };
 
-static char *asset_atk[1] =
+static char *asset_atk[2] =
 {
-    "assets/hydrocanon.png"
+    "assets/hydrocanon.png",
+    "assets/ultralaser.png"
 };
 
 static char *atk_name[4] =
@@ -65,10 +70,11 @@ static char *atk_name[4] =
     "OmegaLOL"
 };
 
-static char *phr[2] =
+static char *phr[3] =
 {
     " attaque ",
-    " !"
+    " !",
+    " est K.O !"
 };
 
 static const sfVector2f atk_pos[4] =

@@ -13,7 +13,7 @@
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
 
-typedef struct text_s {
+typedef struct txt_s {
     int flag;
     char *str;
     char *tmp;
@@ -22,7 +22,7 @@ typedef struct text_s {
     sfEvent event;
     float seconds;
     sfClock *clock;
-} text_t;
+} txt_t;
 
 typedef struct setting_s {
     int size;
