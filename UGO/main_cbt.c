@@ -653,7 +653,6 @@ game_object **tab, text_t *stat)
 
 int disp_txt_atk(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
 {
-    change_text(itoa_dup(linked->pokemon.health), &stat[1]);
     display_stat(window, linked, stat, 6);
     sfRenderWindow_display(window);
     return (0);
@@ -713,6 +712,7 @@ int combat(sfRenderWindow *window, pkmn_list_t *linked)
         menu = check_menu(window, menu, misc->tab);
         menu = check_flag(misc, menu, window, linked);
         event(window);
+        change_text(itoa_dup(linked->pokemon.health), &misc->stat[1]);
         if (menu == 84)
             break;
         if (linked->pokemon.health <= 0 || linked->next->pokemon.health <= 0)
