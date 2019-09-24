@@ -35,7 +35,7 @@ game_t create_game(void)
     game.view = sfView_create();
     game.objects = NULL;
     game.evts = NULL;
-    load_npcs(&(game.objects));
+    load_npcs("save/actualsave/npcs", &(game.objects));
     game.status = 0;
     game.sprites = create_sprites();
     game.character = load_character("save/actualsave/characterInfo",

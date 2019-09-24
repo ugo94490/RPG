@@ -107,5 +107,9 @@ void destroy_ground(ground_t *ground);
 void destroy_character(character_t *character);
 void destroy_object(game_object_list_t *object);
 character_t *load_character(char *path, game_object_list_t **list);
+void save_character(char *path, character_t *character);
+void save_pkmns(void *file, struct pkmn_list_s *pkmns);
+void load_npcs(char *path, struct game_object_list_s **list);
+void save_npcs(char *path, game_object_list_t *list);
 
 #endif

@@ -84,9 +84,9 @@ void load_npc(FILE *file, char *line, game_object_list_t **list, ssize_t *nread)
         free(line);
 }
 
-void load_npcs(game_object_list_t **list)
+void load_npcs(char *path, game_object_list_t **list)
 {
-    FILE *file = fopen("save/actualsave/npcs", "r");
+    FILE *file = fopen(path, "r");
     char *line = NULL;
     size_t size = 0;
     ssize_t nread = 0;
