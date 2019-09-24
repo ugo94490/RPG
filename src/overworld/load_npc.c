@@ -43,7 +43,7 @@ npc_t *create_base_npc(void)
 
 void analyse_line_npc(char *line, npc_t *npc)
 {
-    char **words = my_str_to_word_array(line, ": \n");
+    char **words = my_str_to_word_array(line, ":\n");
 
     if (get_nb_words(words) < 2)
         return (free_word_array(words));

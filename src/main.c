@@ -38,7 +38,11 @@ void init_game()
     sfVector2f scale = {1, 1};
     game_t game = create_game();
 
+    if (game.view == NULL || game.objects == NULL ||
+    game.sprites == NULL || game.character == NULL)
+        return;
     window.scale = scale;
+    game.window = &window;
     temp_loop(&window, &scale, &game);
     save_game(&game);
     destroy_game(&game);

@@ -35,12 +35,12 @@ game_t create_game(void)
     game.view = sfView_create();
     game.objects = NULL;
     game.evts = NULL;
-    load_npcs("save/actualsave/npcs", &(game.objects));
     game.status = 0;
     game.sprites = create_sprites();
+    read_evts("maps/permevts", &(game.evts), 1);
+    load_npcs("save/actualsave/npcs", &(game.objects));
     game.character = load_character("save/actualsave/characterInfo",
     &(game.objects));
     load_map(&(game.objects), game.character->world);
-    read_evts("maps/permevts", &(game.evts));
     return (game);
 }

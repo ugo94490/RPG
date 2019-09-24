@@ -1,9 +1,10 @@
 -npc
 type:0
-posx:576
+posx:768
 posy:608
 world:0
-direction:0
+direction:1
 aggro:0
+diag1:Yo frer ca va ?
 interact:0
 

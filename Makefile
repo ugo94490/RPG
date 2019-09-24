@@ -33,6 +33,7 @@ SRC	=	src/main.c				\
 		src/overworld/save_pkmn.c		\
 		src/overworld/save_npc.c		\
 		src/overworld/save_game.c		\
+		src/overworld/interact.c		\
 		src/basics/my_strlen.c			\
 		src/basics/string_array_fcts.c		\
 		src/basics/my_strdup.c			\

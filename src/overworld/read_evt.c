@@ -31,13 +31,14 @@ evt_t create_basic_event(void)
     return (event);
 }
 
-void put_event_in_list(evt_list_t **list, evt_t event)
+void put_event_in_list(evt_list_t **list, evt_t event, int perm)
 {
     evt_list_t *element = malloc(sizeof(evt_list_t));
 
     if (element == NULL)
         return;
     element->event = event;
+    element->perm = perm;
     element->next = *list;
     *list = element;
 }
@@ -69,25 +70,27 @@ void analyse_line_evt(char *line, evt_t *evt)
     free_word_array(words);
 }
 
-void read_evt(FILE *file, char *line, evt_list_t **list, ssize_t *nread)
+int read_evt(FILE *file, char *line, evt_list_t **list, int arg)
 {
     evt_t event = create_basic_event();
     size_t size = 0;
+    ssize_t nread = 0;
 
     do {
-        *nread = getline(&line, &size, file);
-        if (*nread == -1)
+        nread = getline(&line, &size, file);
+        if (nread == -1)
             break;
-        line[*nread-1] = '\0';
+        line[nread-1] = '\0';
         analyse_line_evt(line, &event);
-    } while (*nread != -1 && my_strcmp(line, "-evt") != 1);
+    } while (nread != -1 && my_strcmp(line, "-evt") != 1);
     if (event.type != 0)
-        put_event_in_list(list, event);
+        put_event_in_list(list, event, arg);
     if (line != NULL)
         free(line);
+    return (nread);
 }
 
-void read_evts(char *path, evt_list_t **list)
+void read_evts(char *path, evt_list_t **list, int arg)
 {
     FILE *file = fopen(path, "r");
     char *line = NULL;
@@ -103,7 +106,7 @@ void read_evts(char *path, evt_list_t **list)
         else if (nread > 0)
             line[nread-1] = '\0';
         while (nread > 0 && my_strcmp(line, "-evt") == 1)
-            read_evt(file, line, list, &nread);
+            nread = read_evt(file, line, list, arg);
     } while (nread != -1);
     if (line != NULL)
         free(line);
