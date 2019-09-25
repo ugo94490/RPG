@@ -8,6 +8,7 @@
 #include "text.h"
 #include "basics.h"
 #include "my_rpg.h"
+#include "graphics.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -162,7 +163,7 @@ static char *draw_all(txt_t *text, char *tmp, setting_t set, int cpt)
     return tmp;
 }
 
-static txt_t set_text(txt_t *text, int size, sfVector2f pos, char *base)
+static txt_t set_text(txt_t *text, setting_t set, char *base, int opt)
 {
     text->tmp = NULL;
     text->tmp = set_tmp(text->tmp);
@@ -176,9 +177,9 @@ static txt_t set_text(txt_t *text, int size, sfVector2f pos, char *base)
     text->str = strcpy(text->str, base);
     text->str = change_str(text->str);
     sfText_setFont(text->text, text->font);
-    sfText_setPosition(text->text, pos);
+    sfText_setPosition(text->text, set.pos);
     sfText_setColor(text->text, sfBlack);
-    sfText_setCharacterSize(text->text, size);
+    sfText_setCharacterSize(text->text, set.size);
     return (*text);
 }
 
@@ -252,15 +253,15 @@ static char *destroy_free(txt_t *text, char *save)
     return save;
 }
 
-static int do_text(char *base, setting_t set, sfRenderWindow *window, sfSprite *sprite)
+static int do_text(char *base, setting_t set, window_t *window, int opt)
 {
     static int cpt = 0;
     static char *save = NULL;
     int dif = cpt;
-    txt_t text = set_text(&text, set.size, set.pos, base);
+    txt_t text = set_text(&text, set, base, opt);
     int flag = 0;
 
-    save = set_save(save, &text, window, sprite);
+    save = set_save(save, &text, window->window, set.sprite);
     flag = text.flag;
     if (save == NULL || text.str == NULL || save == NULL)
         return -1;
@@ -276,34 +277,42 @@ static int do_text(char *base, setting_t set, sfRenderWindow *window, sfSprite *
     return 1;
 }
 
-static setting_t set_setting(sfVector2f pos, int size, sfRenderWindow *window, sfSprite *sprite)
+static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window, int opt)
 {
     setting_t set;
 
-    set.size = size;
-    set.pos.x = pos.x + 20;
-    set.pos.y = pos.y + 25;
-    set.window = window;
-    set.sprite = sprite;
+    if (opt == 1) {
+        set.size = 17 * (0.55 * window->scale.x);
+        set.pos.x = pos.x + 20 * (0.5 * window->scale.x);
+        set.pos.y = pos.y + 25 * (0.5 * window->scale.y);
+    } else {
+        set.size = 17;
+        set.pos.x = pos.x + 20;
+        set.pos.y = pos.y + 25;
+    }
+    set.window = window->window;
     return set;
 }
 
-int display_text(char *base, sfVector2f pos, sfRenderWindow *window)
+int display_text(char *base, sfVector2f pos, window_t *window, int opt)
 {
-    setting_t set;
     int flag = 0;
     sfIntRect rec = {0, 0, 0, 0};
+    sfVector2f scale = {0.50 * window->scale.x, 0.50 * window->scale.y};
     game_object *spr = create_object("assets/text_combat.png", pos, rec);
+    setting_t set = set_setting(pos, scale, window, opt);
 
-    set = set_setting(pos, 17, window, spr->sprite);
-    while (sfRenderWindow_isOpen(window) == 1 && flag != 1) {
+    set.sprite = spr->sprite;
+    if (opt == 1)
+        sfSprite_setScale(spr->sprite, scale);
+    while (sfRenderWindow_isOpen(window->window) == 1 && flag != 1) {
         sfSprite_setPosition(spr->sprite, pos);
-        sfRenderWindow_drawSprite(window, spr->sprite, NULL);
+        sfRenderWindow_drawSprite(window->window, spr->sprite, NULL);
         if (flag == 0)
-            flag = do_text(base, set, window, spr->sprite);
+            flag = do_text(base, set, window, opt);
         if (flag == -1)
             break;
-        sfRenderWindow_display(window);
+        sfRenderWindow_display(window->window);
     }
     destroy_obj(spr);
     return 0;
