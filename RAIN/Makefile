@@ -26,7 +26,7 @@ CC			=	gcc
 
 CFLAGS		=	-I../include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -g3 -I../lib_CSFML/include
 
-CPPFLAGS	+=	-Wall -Wextra
+CPPFLAGS	+=
 
 TEST_FLAGS	=	-lcriterion --coverage
 
