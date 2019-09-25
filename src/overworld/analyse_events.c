@@ -62,10 +62,8 @@ void display_text_overworld(window_t *window, char *text, game_t *game)
     sfVector2f temppos = {(game->character->pos.x+character_width/2)
     *window->scale.x, (game->character->pos.y+
     character_height/6)*window->scale.y};
-    sfVector2f boxpos = {temppos.x - 1280*window->scale.x/4 + 338/2,
-    temppos.y - 960*window->scale.y/4 + 374/2};
-
-    display_text(text, boxpos, window->window);
+    sfVector2f textpos = {temppos.x - 148 * window->scale.x, temppos.y + 187 * (window->scale.y)};
+    display_text("Police a la con pourquoi tu deviens flou quand ta putain de size est petite, tu me casse les couilles encule!!", textpos, window, 1);
 }
 
 void get_key_pressed(window_t *window, game_t *game)

@@ -52,7 +52,7 @@ game_t create_game(void);
 void unload_map(struct game_object_list_s **objects);
 void animate_objects(game_t *game);
 void destroy_game(game_t *game);
-int display_text(char *base, sfVector2f pos, sfRenderWindow *window, int opt);
+int display_text(char *base, sfVector2f pos, window_t *window, int opt);
 void main_cbt(window_t *window, game_t *game);
 void save_game(game_t *game);
 void interact(game_t *game);

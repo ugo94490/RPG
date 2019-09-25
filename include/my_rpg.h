@@ -39,13 +39,13 @@ typedef struct misc_s
 
 struct game_object *create_object(char *sprite, sfVector2f position, sfIntRect rect1);
 void destroy_obj(struct game_object *obj);
-void display_pause(sfRenderWindow *window);
-void close_window(sfEvent event, sfRenderWindow *window);
-int event(sfRenderWindow *window);
-int combat(sfRenderWindow *window, pkmn_list_t *linked);
+void display_pause(window_t *window);
+void close_window(sfEvent event, window_t *window);
+int event(window_t *window);
+int combat(window_t *window, pkmn_list_t *linked);
 int my_strlen92(char *str);
 void my_revstr(char *str);
 int my_int(int nb);
 char* my_itoa(int nb, char *nbr);
-int display_text(char *base, sfVector2f pos, sfRenderWindow *window, int opt);
+int display_text(char *base, sfVector2f pos, window_t *window, int opt);
 int my_strlen(char const *str);
