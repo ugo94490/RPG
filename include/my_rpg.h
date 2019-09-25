@@ -47,5 +47,5 @@ int my_strlen92(char *str);
 void my_revstr(char *str);
 int my_int(int nb);
 char* my_itoa(int nb, char *nbr);
-int display_text(char *base, sfVector2f pos, sfRenderWindow *window);
+int display_text(char *base, sfVector2f pos, sfRenderWindow *window, int opt);
 int my_strlen(char const *str);
