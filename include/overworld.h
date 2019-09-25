@@ -40,19 +40,23 @@ typedef struct game_s
     sfView *view;
     int status;
     sprite_t *sprites;
+    window_t *window;
 } game_t;
 
 void set_view_params(window_t *window, game_t *game, sfVector2f scale);
 void draw_game(window_t *window, game_t *game);
 void analyse_event(window_t *window, game_t *game);
-void read_evts(char *path, evt_list_t **list);
+void read_evts(char *path, evt_list_t **list, int arg);
 int check_col_event(sfVector2f pos, int locmap, evt_t event);
 game_t create_game(void);
 void unload_map(struct game_object_list_s **objects);
 void animate_objects(game_t *game);
-void load_npcs(struct game_object_list_s **list);
 void destroy_game(game_t *game);
 int display_text(char *base, sfVector2f pos, sfRenderWindow *window);
 void main_cbt(window_t *window, game_t *game);
+void save_game(game_t *game);
+void interact(game_t *game);
+void activate_event(game_t *game, evt_list_t *evt);
+void display_text_overworld(window_t *window, char *text, game_t *game);
 
 #endif
