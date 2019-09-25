@@ -30,7 +30,7 @@ void destroy_obj(struct game_object *obj)
     free(obj);
 }
 
-void display_pause(sfRenderWindow *window)
+void display_pause(window_t *window)
 {
     sfSprite *menu = sfSprite_create();
     sfTexture *menu_tex = sfTexture_createFromFile("./img/pause.png", NULL);
@@ -38,21 +38,21 @@ void display_pause(sfRenderWindow *window)
 
     sfSprite_setTexture(menu, menu_tex, sfTrue);
     sfSprite_setPosition(menu, position);
-    sfRenderWindow_drawSprite(window, menu, NULL);
-    sfRenderWindow_display(window);
+    sfRenderWindow_drawSprite(window->window, menu, NULL);
+    sfRenderWindow_display(window->window);
 }
 
-int event(sfRenderWindow *window)
+int event(window_t *window)
 {
     sfEvent event;
 
-    while (sfRenderWindow_pollEvent(window, &event))
+    while (sfRenderWindow_pollEvent(window->window, &event))
         close_window(event, window);
     return (0);
 }
 
-void close_window(sfEvent event, sfRenderWindow *window)
+void close_window(sfEvent event, window_t *window)
 {
     if (event.type == sfEvtClosed || sfKeyboard_isKeyPressed(sfKeyEscape))
-        sfRenderWindow_close(window);
+        sfRenderWindow_close(window->window);
 }

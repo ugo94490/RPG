@@ -135,7 +135,7 @@ void add_bag(sfVector2f *prev, sfVector2f *position, int flag)
     }
 }
 
-int attack(game_object *sp, sfClock *clk, sfRenderWindow *window)
+int attack(game_object *sp, sfClock *clk, window_t *window)
 {
     sfTime time;
     static int toggle = 0;
@@ -153,11 +153,11 @@ int attack(game_object *sp, sfClock *clk, sfRenderWindow *window)
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
-    sfRenderWindow_drawSprite(window, sp->sprite, NULL);
+    sfRenderWindow_drawSprite(window->window, sp->sprite, NULL);
     return (0);
 }
 
-int bag(game_object *sp, sfClock *clk, sfRenderWindow *window)
+int bag(game_object *sp, sfClock *clk, window_t *window)
 {
     sfTime time = sfClock_getElapsedTime(clk);
     static int toggle = 0;
@@ -174,13 +174,13 @@ int bag(game_object *sp, sfClock *clk, sfRenderWindow *window)
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
-    sfRenderWindow_drawSprite(window, sp->sprite, NULL);
+    sfRenderWindow_drawSprite(window->window, sp->sprite, NULL);
     return (0);
 }
 
-int mode(sfRenderWindow *window, int flag)
+int mode(window_t *window, int flag)
 {
-    sfVector2i vct = sfMouse_getPositionRenderWindow(window);
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     int ret = 0;
 
     if (vct.x >= 343 && vct.x <= 936 && vct.y >= 537 && vct.y <= 812) {
@@ -212,9 +212,9 @@ int destroy_font(text_t *stat, int lim)
     return (0);
 }
 
-int cancel(sfRenderWindow *window)
+int cancel(window_t *window)
 {
-    sfVector2i vct = sfMouse_getPositionRenderWindow(window);
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     int ret = 2;
 
     if (vct.x >= 358 && vct.x <= 921 && vct.y >= 845 && vct.y <= 954) {
@@ -227,14 +227,14 @@ int cancel(sfRenderWindow *window)
     return (ret);
 }
 
-int display_game(game_object **tab, sfRenderWindow *window, int pos, int start)
+int display_game(game_object **tab, window_t *window, int pos, int start)
 {
     for (int i = start; i < pos + 1; i++)
-        sfRenderWindow_drawSprite(window, tab[i]->sprite, NULL);
+        sfRenderWindow_drawSprite(window->window, tab[i]->sprite, NULL);
     return (0);
 }
 
-int attack_box(pkmn_list_t *linked, sfRenderWindow *window,
+int attack_box(pkmn_list_t *linked, window_t *window,
 int nb, game_object **tab)
 {
     char *str = malloc(sizeof(char));
@@ -246,8 +246,8 @@ int nb, game_object **tab)
     str = my_strcat(str, atk_name[nb]);
     str = my_strcat(str, phr[1]);
     pause_time(0.1);
-    display_text(str, pos, window);
-    sfRenderWindow_clear(window, sfBlack);
+    display_text(str, pos, window, 0);
+    sfRenderWindow_clear(window->window, sfBlack);
     display_game(tab, window, 8, 0);
     free(str);
     return (0);
@@ -264,14 +264,14 @@ int get_atk(pkmn_list_t *linked, int nb)
     return (ret);
 }
 
-int display_stat(sfRenderWindow *window, text_t *stat, int lim)
+int display_stat(window_t *window, text_t *stat, int lim)
 {
     for (int i = 0; i < lim; i++)
-        sfRenderWindow_drawText(window, stat[i].text, NULL);
+        sfRenderWindow_drawText(window->window, stat[i].text, NULL);
     return (0);
 }
 
-int attack_anim(misc_t *misc, sfRenderWindow *window, pkmn_list_t *linked,
+int attack_anim(misc_t *misc, window_t *window, pkmn_list_t *linked,
 int nb)
 {
     sfIntRect rect = {0, 0, 605, 340};
@@ -288,16 +288,16 @@ int nb)
     sprite = create_object(asset_atk[nb_atk], pos, rect);
     clock = sfClock_create();
     sfSprite_setTextureRect(sprite->sprite, rect);
-    while (sfRenderWindow_isOpen(window)) {
+    while (sfRenderWindow_isOpen(window->window)) {
         time = sfClock_getElapsedTime(clock);
         if (rect.left >= 1210)
             break;
         if (time.microseconds >= 400000) {
-            sfRenderWindow_clear(window, sfBlack);
+            sfRenderWindow_clear(window->window, sfBlack);
             display_game(misc->tab, window, 3, 0);
             display_game(misc->tab, window, 7, 6);
             sfSprite_setTextureRect(sprite->sprite, rect);
-            sfRenderWindow_drawSprite(window, sprite->sprite, NULL);
+            sfRenderWindow_drawSprite(window->window, sprite->sprite, NULL);
             display_game(misc->tab, window, 5, 4);
             display_game(misc->tab, window, 8, 8);
             display_stat(window, misc->stat, 6);
@@ -305,7 +305,7 @@ int nb)
             rect.top >= 2382 ? rect.left += 605 : 0;
             time = sfClock_restart(clock);
         }
-        sfRenderWindow_display(window);
+        sfRenderWindow_display(window->window);
     }
     display_game(misc->tab, window, 8, 0);
     display_stat(window, misc->stat, 6);
@@ -323,7 +323,7 @@ misc_t init_atk(game_object **tab, text_t *stat)
     return (misc);
 }
 
-int attack_one(game_object **tab, sfRenderWindow *window,
+int attack_one(game_object **tab, window_t *window,
 pkmn_list_t *linked, text_t *stat)
 {
     misc_t misc = init_atk(tab, stat);
@@ -334,7 +334,7 @@ pkmn_list_t *linked, text_t *stat)
     return (1);
 }
 
-int attack_two(game_object **tab, sfRenderWindow *window,
+int attack_two(game_object **tab, window_t *window,
 pkmn_list_t *linked, text_t *stat)
 {
     misc_t misc = init_atk(tab, stat);
@@ -345,7 +345,7 @@ pkmn_list_t *linked, text_t *stat)
     return (1);
 }
 
-int attack_three(game_object **tab, sfRenderWindow *window,
+int attack_three(game_object **tab, window_t *window,
 pkmn_list_t *linked, text_t *stat)
 {
     misc_t misc = init_atk(tab, stat);
@@ -356,7 +356,7 @@ pkmn_list_t *linked, text_t *stat)
     return (1);
 }
 
-int attack_four(game_object **tab, sfRenderWindow *window,
+int attack_four(game_object **tab, window_t *window,
 pkmn_list_t *linked, text_t *stat)
 {
     misc_t misc = init_atk(tab, stat);
@@ -367,10 +367,10 @@ pkmn_list_t *linked, text_t *stat)
     return (1);
 }
 
-int launch(game_object **tab, sfRenderWindow *window,
+int launch(game_object **tab, window_t *window,
 pkmn_list_t *linked, text_t *stat)
 {
-    sfVector2i vct = sfMouse_getPositionRenderWindow(window);
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
 
     if (linked->pokemon.atks[0].number != -1 && atk_pos[0].x <= vct.x &&
         atk_pos[0].x + 293 >= vct.x && atk_pos[0].y <= vct.y && atk_pos[0].y
@@ -422,18 +422,18 @@ int destroy_tab(game_object **tab)
     return (0);
 }
 
-int display_box(game_object **box, sfRenderWindow *window)
+int display_box(game_object **box, window_t *window)
 {
     for (int i = 0; box[i]; i++)
-        sfRenderWindow_drawSprite(window, box[i]->sprite, NULL);
+        sfRenderWindow_drawSprite(window->window, box[i]->sprite, NULL);
     return (0);
 }
 
-int misc_atk(game_object **tab, game_object **box, sfRenderWindow *window,
+int misc_atk(game_object **tab, game_object **box, window_t *window,
 game_object *atk)
 {
-    sfRenderWindow_clear(window, sfBlack);
-    sfRenderWindow_drawSprite(window, atk->sprite, NULL);
+    sfRenderWindow_clear(window->window, sfBlack);
+    sfRenderWindow_drawSprite(window->window, atk->sprite, NULL);
     display_game(tab, window, 7, 1);
     display_box(box, window);
     event(window);
@@ -466,14 +466,14 @@ int flag)
     return (flag);
 }
 
-int disp_txt(sfRenderWindow *window, text_t *stat, text_t *name_pow)
+int disp_txt(window_t *window, text_t *stat, text_t *name_pow)
 {
     display_stat(window, stat, 6);
     display_stat(window, name_pow, 9);
     return (0);
 }
 
-int atk_hud(sfRenderWindow *window, game_object **tab,
+int atk_hud(window_t *window, game_object **tab,
 pkmn_list_t *linked, text_t *stat)
 {
     game_object *atk = init_hud("assets/pp_hud.png", 338, 480);
@@ -481,7 +481,7 @@ pkmn_list_t *linked, text_t *stat)
     text_t *name_pow = init_name(linked);
     int ret = 0;
     static int mode = 0;
-    while (sfRenderWindow_isOpen(window)) {
+    while (sfRenderWindow_isOpen(window->window)) {
         mode = cancel(window);
         if (mode == 1) {
             mode = 0;
@@ -493,7 +493,7 @@ pkmn_list_t *linked, text_t *stat)
             ret = 12;
             break;
         }
-        sfRenderWindow_display(window);
+        sfRenderWindow_display(window->window);
     }
     return (destroy_atkhud(name_pow, box, atk, ret));
 }
@@ -521,7 +521,7 @@ game_object **init_object(void)
     return (tab);
 }
 
-int check_flag(misc_t *misc, int flag, sfRenderWindow *win, pkmn_list_t *linked)
+int check_flag(misc_t *misc, int flag, window_t *win, pkmn_list_t *linked)
 {
     if (flag == 1)
         attack(misc->tab[8], misc->clock, win);
@@ -577,13 +577,13 @@ game_object **init_player(void)
     return (tmp);
 }
 
-int disp_sprite(game_object **tab, sfRenderWindow *window,
+int disp_sprite(game_object **tab, window_t *window,
 game_object **character)
 {
     display_game(tab, window, 5, 0);
-    sfRenderWindow_drawSprite(window, character[0]->sprite, NULL);
-    sfRenderWindow_drawSprite(window, character[1]->sprite, NULL);
-    sfRenderWindow_display(window);
+    sfRenderWindow_drawSprite(window->window, character[0]->sprite, NULL);
+    sfRenderWindow_drawSprite(window->window, character[1]->sprite, NULL);
+    sfRenderWindow_display(window->window);
     return (0);
 }
 
@@ -595,7 +595,7 @@ int free_character(game_object **character)
     return (0);
 }
 
-int animation(sfRenderWindow *window, game_object **tab)
+int animation(window_t *window, game_object **tab)
 {
     game_object **character = init_player();
     sfClock *clock = sfClock_create();
@@ -606,7 +606,7 @@ int animation(sfRenderWindow *window, game_object **tab)
     while (count != 5) {
         time = sfClock_getElapsedTime(clock);
         if (time.microseconds >= 400000) {
-            sfRenderWindow_clear(window, sfBlack);
+            sfRenderWindow_clear(window->window, sfBlack);
             character[0]->rect.left += 173;
             sfSprite_setTextureRect(character[0]->sprite, character[0]->rect);
             disp_sprite(tab, window, character);
@@ -614,13 +614,13 @@ int animation(sfRenderWindow *window, game_object **tab)
             count++;
         }
     }
-    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_clear(window->window, sfBlack);
     free_character(character);
     sfClock_destroy(clock);
     return (0);
 }
 
-int riposte(pkmn_list_t *linked, sfRenderWindow *window)
+int riposte(pkmn_list_t *linked, window_t *window)
 {
     int nb = rand() % 3;
     char *str = NULL;
@@ -634,29 +634,29 @@ int riposte(pkmn_list_t *linked, sfRenderWindow *window)
     str = my_strcat(str, phr[1]);
     linked->pokemon.health -= linked->next->pokemon.atks[nb].power;
     pause_time(0.3);
-    display_text(str, pos, window);
+    display_text(str, pos, window, 0);
     free(str);
     return (0);
 }
 
-int disp_atk_mod(sfRenderWindow *window, pkmn_list_t *linked,
+int disp_atk_mod(window_t *window, pkmn_list_t *linked,
 game_object **tab, text_t *stat)
 {
-    sfRenderWindow_clear(window, sfBlack);
+    sfRenderWindow_clear(window->window, sfBlack);
     display_game(tab, window, 7, 0);
     display_stat(window, stat, 6);
     riposte(linked, window);
     return (0);
 }
 
-int disp_txt_atk(sfRenderWindow *window, text_t *stat)
+int disp_txt_atk(window_t *window, text_t *stat)
 {
     display_stat(window, stat, 6);
-    sfRenderWindow_display(window);
+    sfRenderWindow_display(window->window);
     return (0);
 }
 
-int check_menu(sfRenderWindow *window, int menu, game_object **tab)
+int check_menu(window_t *window, int menu, game_object **tab)
 {
     display_game(tab, window, 7, 0);
     menu = mode(window, menu);
@@ -682,7 +682,7 @@ misc_t *init_misc(pkmn_list_t *linked)
     return (misc);
 }
 
-int death(pkmn_list_t *linked, sfRenderWindow *window, misc_t *misc)
+int death(pkmn_list_t *linked, window_t *window, misc_t *misc)
 {
     sfVector2f pos = {338, 374};
     char *str = malloc(sizeof(char));
@@ -694,19 +694,19 @@ int death(pkmn_list_t *linked, sfRenderWindow *window, misc_t *misc)
     else if (linked->next->pokemon.health <= 0)
         str = my_strcat(str, name[linked->next->pokemon.number]);
     str = my_strcat(str, phr[2]);
-    display_text(str, pos, window);
+    display_text(str, pos, window, 0);
     free(str);
     return (destroy_all(misc));
 }
 
-int combat(sfRenderWindow *window, pkmn_list_t *linked)
+int combat(window_t *window, pkmn_list_t *linked)
 {
     misc_t *misc = init_misc(linked);
     int menu = 0;
 
     animation(window, misc->tab);
-    while (sfRenderWindow_isOpen(window)) {
-        sfRenderWindow_clear(window, sfBlack);
+    while (sfRenderWindow_isOpen(window->window)) {
+        sfRenderWindow_clear(window->window, sfBlack);
         menu = check_menu(window, menu, misc->tab);
         menu = check_flag(misc, menu, window, linked);
         event(window);
@@ -751,6 +751,6 @@ void main_cbt(window_t *window, game_t *game)
     const sfView *default_view = sfRenderWindow_getDefaultView(window->window);
 
     sfRenderWindow_setView(window->window, default_view);
-    combat(window->window, game->character->pkmns);
+    combat(window, game->character->pkmns);
     sfRenderWindow_setView(window->window, game->view);
 }
