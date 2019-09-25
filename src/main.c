@@ -48,6 +48,8 @@ int main(int ac, char **av, char **env)
 {
     if (env == NULL || env[0] == NULL)
         return (84);
+    (void) ac;
+    (void) av;
     srand(time(0));
     init_game();
     return (0);

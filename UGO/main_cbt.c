@@ -216,7 +216,6 @@ int cancel(sfRenderWindow *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window);
     int ret = 2;
-    sfEvent event;
 
     if (vct.x >= 358 && vct.x <= 921 && vct.y >= 845 && vct.y <= 954) {
         ret = 0;
@@ -265,8 +264,7 @@ int get_atk(pkmn_list_t *linked, int nb)
     return (ret);
 }
 
-int display_stat(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat,
-int lim)
+int display_stat(sfRenderWindow *window, text_t *stat, int lim)
 {
     for (int i = 0; i < lim; i++)
         sfRenderWindow_drawText(window, stat[i].text, NULL);
@@ -286,7 +284,7 @@ int nb)
     if (nb_atk == -1)
         return (0);
     display_game(misc->tab, window, 8, 0);
-    display_stat(window, linked, misc->stat, 6);
+    display_stat(window, misc->stat, 6);
     sprite = create_object(asset_atk[nb_atk], pos, rect);
     clock = sfClock_create();
     sfSprite_setTextureRect(sprite->sprite, rect);
@@ -302,7 +300,7 @@ int nb)
             sfRenderWindow_drawSprite(window, sprite->sprite, NULL);
             display_game(misc->tab, window, 5, 4);
             display_game(misc->tab, window, 8, 8);
-            display_stat(window, linked, misc->stat, 6);
+            display_stat(window, misc->stat, 6);
             rect.top += 340;
             rect.top >= 2382 ? rect.left += 605 : 0;
             time = sfClock_restart(clock);
@@ -310,9 +308,10 @@ int nb)
         sfRenderWindow_display(window);
     }
     display_game(misc->tab, window, 8, 0);
-    display_stat(window, linked, misc->stat, 6);
+    display_stat(window, misc->stat, 6);
     destroy_obj(sprite);
     sfClock_destroy(clock);
+    return (0);
 }
 
 misc_t init_atk(game_object **tab, text_t *stat)
@@ -467,11 +466,10 @@ int flag)
     return (flag);
 }
 
-int disp_txt(sfRenderWindow *window, pkmn_list_t *linked,
-text_t *stat, text_t *name_pow)
+int disp_txt(sfRenderWindow *window, text_t *stat, text_t *name_pow)
 {
-    display_stat(window, linked, stat, 6);
-    display_stat(window, linked, name_pow, 9);
+    display_stat(window, stat, 6);
+    display_stat(window, name_pow, 9);
     return (0);
 }
 
@@ -490,7 +488,7 @@ pkmn_list_t *linked, text_t *stat)
             break;
         }
         misc_atk(tab, box, window, atk);
-        disp_txt(window, linked, stat, name_pow);
+        disp_txt(window, stat, name_pow);
         if (launch(tab, window, linked, stat) == 1) {
             ret = 12;
             break;
@@ -541,7 +539,7 @@ int check_flag(misc_t *misc, int flag, sfRenderWindow *win, pkmn_list_t *linked)
     return (flag);
 }
 
-text_t *init_txt(pkmn_list_t *linked)
+text_t *init_txt(void)
 {
     text_t *stat = malloc(sizeof(text_t) * 6);
     int size = 15;
@@ -555,7 +553,7 @@ text_t *init_txt(pkmn_list_t *linked)
 
 text_t *change_pos(pkmn_list_t *node)
 {
-    text_t *stat = init_txt(node);
+    text_t *stat = init_txt();
 
     change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
     change_text(itoa_dup(node->pokemon.health), &stat[1]);
@@ -646,14 +644,14 @@ game_object **tab, text_t *stat)
 {
     sfRenderWindow_clear(window, sfBlack);
     display_game(tab, window, 7, 0);
-    display_stat(window, linked, stat, 6);
+    display_stat(window, stat, 6);
     riposte(linked, window);
     return (0);
 }
 
-int disp_txt_atk(sfRenderWindow *window, pkmn_list_t *linked, text_t *stat)
+int disp_txt_atk(sfRenderWindow *window, text_t *stat)
 {
-    display_stat(window, linked, stat, 6);
+    display_stat(window, stat, 6);
     sfRenderWindow_display(window);
     return (0);
 }
@@ -690,7 +688,7 @@ int death(pkmn_list_t *linked, sfRenderWindow *window, misc_t *misc)
     char *str = malloc(sizeof(char));
 
     *str = 0;
-    display_stat(window, linked, misc->stat, 6);
+    display_stat(window, misc->stat, 6);
     if (linked->pokemon.health <= 0)
         str = my_strcat(str, name[linked->pokemon.number]);
     else if (linked->next->pokemon.health <= 0)
@@ -718,7 +716,7 @@ int combat(sfRenderWindow *window, pkmn_list_t *linked)
         if (linked->pokemon.health <= 0 || linked->next->pokemon.health <= 0)
             return (death(linked, window, misc));
         menu == 12 ? disp_atk_mod(window, linked, misc->tab, misc->stat) : 0;
-        disp_txt_atk(window, linked, misc->stat);
+        disp_txt_atk(window, misc->stat);
         if (linked->pokemon.health <= 0 || linked->next->pokemon.health <= 0)
             return (death(linked, window, misc));
     }

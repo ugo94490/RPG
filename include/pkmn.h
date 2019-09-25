@@ -16,7 +16,7 @@ typedef struct atk_s
     int power;
 } atk_t;
 
-static const atk_t atks[4] =
+static atk_t atks[4] =
 {
     {0, 0},
     {1, 100},
@@ -77,7 +77,7 @@ static char *phr[3] =
     " est K.O !"
 };
 
-static const sfVector2f atk_pos[4] =
+static sfVector2f atk_pos[4] =
 {
     {342, 536},
     {342, 683},
@@ -85,7 +85,7 @@ static const sfVector2f atk_pos[4] =
     {645, 683}
 };
 
-static const sfVector2f pos_txt[6] =
+static sfVector2f pos_txt[6] =
 {
     {880, 328},
     {815, 328},
@@ -95,7 +95,7 @@ static const sfVector2f pos_txt[6] =
     {700, 275}
 };
 
-static const sfVector2f atk_txt[8] =
+static sfVector2f atk_txt[8] =
 {
     {372, 566},
     {372, 713},

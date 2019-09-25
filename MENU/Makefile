@@ -5,16 +5,10 @@
 ## Makefile
 ##
 
-SRC	=	main.c				\
-		../UGO/useful_fct.c			\
-		../lib_CSFML/clock_functions.c	\
-		../lib_CSFML/sound_functions.c	\
-		../lib_CSFML/text_functions.c	\
+SRC	=	main.c	\
+		bouton_tools.c	\
+		menu_button.c	\
 		../lib_CSFML/window_functions.c	\
-		../lib_CSFML/sprite_functions.c	\
-		../lib_CSFML/value_structs.c	\
-		tools_two.c			\
-		../src/basics/my_strlen.c	\
 
 SRC_T		=
 
@@ -24,7 +18,7 @@ TESTS_NAME	=	tests_run
 
 CC			=	gcc
 
-CFLAGS		=	-I../include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -g3 -I../lib_CSFML/include
+CFLAGS		=	-I../include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I../lib_CSFML/include/
 
 CPPFLAGS	+=	-Wall -Wextra
 
