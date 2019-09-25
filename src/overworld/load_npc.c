@@ -99,7 +99,7 @@ void load_npcs(char *path, game_object_list_t **list)
             break;
         else if (nread > 0)
             line[nread-1] = '\0';
-         while (nread > 0 && my_strcmp(line, "-npc") == 1)
+        while (nread > 0 && my_strcmp(line, "-npc") == 1)
             load_npc(file, line, list, &nread);
     } while (nread != -1);
     if (line != NULL)

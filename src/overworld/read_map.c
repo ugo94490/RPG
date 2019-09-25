@@ -15,6 +15,16 @@
 #include "game_object.h"
 #include "overworld_rects.h"
 
+void sub_setGroundRect(ground_t *ground, ground_info_t info, int rect)
+{
+    if (info.type == 1 && info.map == 1)
+        ground->anim.rects = objRectsIn[rect];
+    if (info.type == 2 && info.map == 1)
+        ground->anim.rects = WallRectsIn[rect];
+    if (info.type == 3 && info.map == 1)
+        ground->anim.rects = heightsRectsIn[rect];
+}
+
 void setGroundRect(ground_t *ground, ground_info_t info, int rect)
 {
     if (info.type == 0 && info.map == 0)
@@ -31,14 +41,7 @@ void setGroundRect(ground_t *ground, ground_info_t info, int rect)
         ground->anim.rects = groundRectsIn[rect];
     if (info.type == 5)
         ground->anim.rects = nocolobjsRects[rect];
-    if (info.type == 1 && info.map == 1)
-        ground->anim.rects = objRectsIn[rect];
-    if (info.type == 2 && info.map == 1)
-        ground->anim.rects = WallRectsIn[rect];
-    if (info.type == 3 && info.map == 1)
-        ground->anim.rects = heightsRectsIn[rect];
-//    if (info.type == 4 && info.map == 1)
-//        ground->anim.rects = solidRectsIn[rect];
+    sub_setGroundRect(ground, info, rect);
 }
 
 ground_t *create_ground(game_object_list_t **list,

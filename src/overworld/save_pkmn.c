@@ -72,7 +72,7 @@ void save_pkmn(FILE *file, pkmn_t pkmn)
     fwrite(nbr, 1, my_strlen(nbr), file);
     fwrite("\n", 1, 1, file);
     fwrite("level:", 1, 6, file);
-    nbr	= my_itoa(pkmn.level, nbr);
+    nbr = my_itoa(pkmn.level, nbr);
     fwrite(nbr, 1, my_strlen(nbr), file);
     fwrite("\n", 1, 1, file);
     fwrite("health:", 1, 7, file);

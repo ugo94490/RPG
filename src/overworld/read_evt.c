@@ -43,6 +43,20 @@ void put_event_in_list(evt_list_t **list, evt_t event, int perm)
     *list = element;
 }
 
+void sub_analyse_line_evt(char *line, char **words, evt_t *evt)
+{
+    my_strcmp(words[0], "destx") == 1 ? evt->dest.x = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "desty") == 1 ? evt->dest.y = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "destmap") == 1 ?
+        evt->destmap = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "direction") == 1 ?
+        evt->direction = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "height") == 1 ?
+        evt->colrect.height = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "width") == 1 ?
+        evt->colrect.width = my_getnbr(words[1]) : 0;
+}
+
 void analyse_line_evt(char *line, evt_t *evt)
 {
     char **words = my_str_to_word_array(line, ": \n");
@@ -57,16 +71,7 @@ void analyse_line_evt(char *line, evt_t *evt)
     my_strcmp(words[0], "posx") == 1 ? evt->pos.x = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "posy") == 1 ? evt->pos.y = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "locmap") == 1 ? evt->locmap = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "destx") == 1 ? evt->dest.x = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "desty") == 1 ? evt->dest.y = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "destmap") == 1 ?
-    evt->destmap = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "direction") == 1 ?
-    evt->direction = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "height") == 1 ?
-    evt->colrect.height = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "width") == 1 ?
-    evt->colrect.width = my_getnbr(words[1]) : 0;
+    sub_analyse_line_evt(line, words, evt);
     free_word_array(words);
 }
 
