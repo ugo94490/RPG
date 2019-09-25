@@ -312,7 +312,6 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
             flag = do_text(base, set, window, opt);
         if (flag == -1)
             break;
-        sfRenderWindow_display(window->window);
     }
     destroy_obj(spr);
     return 0;
