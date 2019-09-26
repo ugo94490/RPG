@@ -225,7 +225,7 @@ static int update_cpt(txt_t *text, int cpt, int flag, int dif)
     return cpt;
 }
 
-static int loop(txt_t *text, setting_t set, int cpt)
+static int loop(txt_t *text, setting_t set, int cpt, int opt)
 {
     while (text->flag < 3) {
         text->flag = check_event(text->event, text->flag, set.window);
@@ -235,8 +235,10 @@ static int loop(txt_t *text, setting_t set, int cpt)
             cpt = check_cpt(text, cpt, set.window, set.sprite);
         else
             text->tmp = draw_all(text, text->tmp, set, cpt);
-        if (text->flag == 2 || text->str[cpt] == '\0')
+        if ((text->flag == 2 || text->str[cpt] == '\0') && opt != 0)
             while (wait_event(text, set.window) == 0);
+        if ((text->flag == 2 || text->str[cpt] == '\0') && opt == 0)
+            text->flag = 3;
         if (sfRenderWindow_isOpen(set.window) == 0)
             return -1;
     }
@@ -265,7 +267,7 @@ static int do_text(char *base, setting_t set, window_t *window, int opt)
     flag = text.flag;
     if (save == NULL || text.str == NULL || save == NULL)
         return -1;
-    cpt = loop(&text, set, cpt);
+    cpt = loop(&text, set, cpt, opt);
     if (cpt == -1)
         return -1;
     cpt = update_cpt(&text, cpt, flag, dif);
@@ -312,6 +314,7 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
             flag = do_text(base, set, window, opt);
         if (flag == -1)
             break;
+        printf("hey\n");
     }
     destroy_obj(spr);
     return 0;
