@@ -11,6 +11,15 @@
 #include "game_object.h"
 #include "pkmn.h"
 #include "my_rpg.h"
+#include "overworld.h"
+
+static const int topIcon[] = {0, 70, 128, 190, 240, 320, 380};
+static const float posIconY[] = {509, 562, 600, 640, 672, 735, 784};
+static const float posTextY[] = {522, 570, 615, 661, 707, 752, 797};
+
+static const int SLOT_TOP[] = {600, 450, 450, 450, 450, 450};
+static const float POS_X_SLOT[] = {5, 262, 5, 262, 5, 262};
+static const float POS_Y_SLOT[] = {0, 18, 107, 125, 214, 232};
 
 static const int NBR_PKMN = 6;
 static const int NBR_ATKS = 4;
@@ -102,9 +111,9 @@ typedef struct menu_s {
 } menu_t;
 
 /* Menu Pause */
-void menu_game(window_t *);
-void display_menu_game(menu_t *);
-void analyse_menu_game(menu_t *);
+void menu_game(game_t *, window_t *);
+void display_menu_game(game_t *, menu_t *);
+void analyse_menu_game(game_t *, menu_t *);
 void destroy_menu_game(menu_t *);
 menu_t *create_menu_game(window_t *);
 

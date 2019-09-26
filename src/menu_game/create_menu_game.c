@@ -12,9 +12,6 @@
 #include "game_object.h"
 #include "menu.h"
 
-static const int topIcon[] = {0, 70, 128, 190, 240, 320, 380};
-static const float posIconY[] = {9, 62, 100, 140, 172, 235, 284};
-static const float posTextY[] = {22, 70, 115, 161, 207, 252, 297};
 static const char *NAME_EN[] = {"Pokedex", "Pokemon", "Bag",
     "Save", "Settings", "Badges", "Resume"};
 
@@ -25,8 +22,8 @@ static void create_select(menu_t *menu)
     menu->select.rect.top = 0;
     menu->select.rect.width = 178;
     menu->select.rect.height = 46;
-    menu->select.pos_select.x = 1090;
-    menu->select.pos_select.y = 8;
+    menu->select.pos_select.x = 690;
+    menu->select.pos_select.y = 508;
 }
 
 static button_t *create_button(menu_t *menu)
@@ -42,9 +39,9 @@ static button_t *create_button(menu_t *menu)
         buttons[i].rect.left = 0;
         buttons[i].rect.height = 70;
         buttons[i].rect.width = 75;
-        buttons[i].pos_img.x = 1088;
+        buttons[i].pos_img.x = 688;
         buttons[i].pos_img.y = posIconY[i];
-        buttons[i].pos_text.x = 1170;
+        buttons[i].pos_text.x = 770;
         buttons[i].pos_text.y = posTextY[i];
         buttons[i].text = create_text((char *)NAME_EN[i],
         "assets/Pokemon Solid.ttf", 20, buttons[i].pos_text);
@@ -64,8 +61,8 @@ static void create_menu(menu_t *menu)
     menu->menu_rect.left = 294;
     menu->menu_rect.width = 202;
     menu->menu_rect.height = 534;
-    menu->pos_menu.x = 1078;
-    menu->pos_menu.y = 0;
+    menu->pos_menu.x = 678;
+    menu->pos_menu.y = 500;
 }
 
 menu_t *create_menu_game(window_t *window)

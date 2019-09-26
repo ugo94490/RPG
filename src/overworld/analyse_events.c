@@ -82,6 +82,8 @@ void get_key_pressed(window_t *window, game_t *game)
         printf("%f, %f\n", game->character->pos.x, game->character->pos.y);
     if (sfKeyboard_isKeyPressed(sfKeySpace))
         interact(game);
+    if (sfKeyboard_isKeyPressed(sfKeyTab))
+        menu_game(game, window);
 }
 
 void analyse_event(window_t *window, game_t *game)

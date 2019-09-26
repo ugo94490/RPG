@@ -40,7 +40,6 @@ static void heal(pkmn_bag_t *pkmn_bag, int stuff)
     pkmn_list_t *tmp = NULL;
     char *buff = NULL;
 
-    printf("Here\n");
     tmp = pkmn_bag->param->list_pkmn;
     for (int i = 1; i < pkmn_bag->n_slot; i += 1)
         pkmn_bag->param->list_pkmn = pkmn_bag->param->list_pkmn->next;

@@ -12,11 +12,7 @@
 #include "game_object.h"
 #include "menu.h"
 
-static const int SLOT_TOP[] = {600, 450, 450, 450, 450, 450};
-static const float POS_X_SLOT[] = {5, 262, 5, 262, 5, 262};
-static const float POS_Y_SLOT[] = {0, 18, 107, 125, 214, 232};
-
-int my_linklen(pkmn_list_t *linked)
+static int my_linklen(pkmn_list_t *linked)
 {
     int i = 0;
 

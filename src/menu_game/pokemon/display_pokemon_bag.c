@@ -14,11 +14,15 @@
 
 static void display_slot(pkmn_bag_t *pkmn_bag)
 {
+    sfVector2f pos_txt;
+
     for (int i = 0; i < pkmn_bag->n_pkmn; i += 1) {
         if (pkmn_bag->n_slot == pkmn_bag->slot[i].nbr)
             pkmn_bag->slot[i].rect.left = 0;
         else
             pkmn_bag->slot[i].rect.left = 258;
+        pkmn_bag->slot[i].pos.x = POS_X_SLOT[i];
+        pkmn_bag->slot[i].pos.y = POS_Y_SLOT[i];
         sfSprite_setTextureRect(pkmn_bag->slot[i].img.sprite,
         pkmn_bag->slot[i].rect);
         sfSprite_setPosition(pkmn_bag->slot[i].img.sprite,
