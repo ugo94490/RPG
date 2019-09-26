@@ -8,14 +8,16 @@
 #include "my_rpg.h"
 
 struct game_object *create_object(char *spritesheet, sfVector2f
-position, sfIntRect rect1)
+position, sfIntRect rect1, window_t *window)
 {
     game_object *assets = malloc(sizeof(game_object));
 
     assets->texture = sfTexture_createFromFile(spritesheet, NULL);
     assets->sprite = sfSprite_create();
     sfSprite_setTexture(assets->sprite, assets->texture, sfTrue);
-    assets->pos = position;
+    assets->pos.x = position.x * window->scale.x;
+    assets->pos.y = position.y * window->scale.y;
+    sfSprite_setScale(assets->sprite, window->scale);
     sfSprite_setPosition(assets->sprite, assets->pos);
     assets->rect = rect1;
     if (assets->sprite == NULL || assets->texture == NULL)

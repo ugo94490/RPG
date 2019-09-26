@@ -25,113 +25,62 @@ int pause_time(float sec)
     return (0);
 }
 
-pkmn_list_t *fill_atk(pkmn_list_t *node)
-{
-    for (int i = 0; i < 4; i++) {
-        node->pokemon.atks[i].number = i;
-        node->pokemon.atks[i].power = i * 10 + 10;
-    }
-    return (node);
-}
-
-pkmn_list_t *fill(int flag)
-{
-    pkmn_list_t *node = malloc(sizeof(*node));
-
-    node->pokemon.number = flag;
-    node->pokemon.level = 7;
-    node->pokemon.health = 100;
-    node->pokemon.max_health = 100;
-    node->pokemon.xp_to_next_lvl = 3532;
-    node->pokemon.atq = 10;
-    node->pokemon.def = 15;
-    node = fill_atk(node);
-    return (node);
-}
-
-void add_node(pkmn_list_t *node, int flag)
-{
-    pkmn_list_t *new;
-    int i = 0;
-
-    for (i = 0; node->next != NULL; i++)
-        node = node->next;
-    new = fill(flag);
-    node->next = new;
-    node = node->next;
-    node->next = NULL;
-}
-
-pkmn_list_t *init(void)
-{
-    pkmn_list_t *node;
-    int flag = 0;
-
-    node = fill(flag);
-    node->next = NULL;
-    for (int i = 0; i < 6; i++) {
-        flag++;
-        add_node(node, flag);
-    }
-    return (node);
-}
-
-game_object *init_hud(char *path, int x, int y)
+game_object *init_hud(char *path, int x, int y, window_t *window)
 {
     sfVector2f position = {x, y};
     sfIntRect rect = {0, 203, 256, 203};
-    game_object *hud = create_object(path, position, rect);
+    game_object *hud = create_object(path, position, rect, window);
 
     return (hud);
 }
 
-game_object *init_choice(char *path)
+game_object *init_choice(char *path, window_t *window)
 {
     sfIntRect rect = {0, 90, 216, 90};
     sfVector2f position = {340, 535};
-    game_object *choice = create_object(path, position, rect);
+    game_object *choice = create_object(path, position, rect, window);
 
     return (choice);
 }
 
-game_object *init_little(char *path, int x, int y)
+game_object *init_little(char *path, int x, int y, window_t *window)
 {
     sfIntRect rect = {0, 44, 78, 44};
     sfVector2f position = {x, y};
-    game_object *choice = create_object(path, position, rect);
+    game_object *choice = create_object(path, position, rect, window);
 
     return (choice);
 }
 
-void add_attack(sfVector2f *prev, sfVector2f *position, int flag)
+void add_attack(sfVector2f *prev, sfVector2f *position, int flag, window_t *window)
 {
     if (flag == 0) {
-        position->x -= 0.47;
-        position->y -= 0.25;
-        prev->x += 0.002;
-        prev->y += 0.002;
+        position->x -= 0.47 * window->scale.x;
+        position->y -= 0.25 * window->scale.y;
+        prev->x += 0.002 * window->scale.x;
+        prev->y += 0.002 * window->scale.y;
     }
     if (flag == 1) {
-        position->x += 0.47;
-        position->y += 0.25;
-        prev->x -= 0.002;
-        prev->y -= 0.002;
+        position->x += 0.47 * window->scale.x;
+        position->y += 0.25 * window->scale.y;
+        prev->x -= 0.002 * window->scale.x;
+        prev->y -= 0.002 * window->scale.y;
     }
 }
 
-void add_bag(sfVector2f *prev, sfVector2f *position, int flag)
+void add_bag(sfVector2f *prev, sfVector2f *position, int flag, window_t *window)
 {
     if (flag == 0) {
-        position->x -= 0.35;
-        position->y -= 0.25;
-        prev->x += 0.003;
-        prev->y += 0.003;
+        position->x -= 0.35 * window->scale.x;
+        position->y -= 0.25 * window->scale.y;
+        prev->x += 0.003 * window->scale.x;
+        prev->y += 0.003 * window->scale.y;
     }
     if (flag == 1) {
-        position->x += 0.35;
-        position->y += 0.25;
-        prev->x -= 0.003;
-        prev->y -= 0.003;
+        position->x += 0.35 * window->scale.x;
+        position->y += 0.25 * window->scale.y;
+        prev->x -= 0.003 * window->scale.x;
+        prev->y -= 0.003 * window->scale.y;
     }
 }
 
@@ -143,13 +92,13 @@ int attack(game_object *sp, sfClock *clk, window_t *window)
     sfVector2f position = sfSprite_getPosition(sp->sprite);
 
     time = sfClock_getElapsedTime(clk);
-    (prev.x <= 1) ? toggle = 0 : 0;
-    (prev.x >= 1.04) ? toggle = 1 : 0;
+    (prev.x <= 1 * window->scale.x) ? toggle = 0 : 0;
+    (prev.x >= 1.04 * window->scale.x) ? toggle = 1 : 0;
     if (time.microseconds >= 1000000) {
         if (toggle == 0)
-            add_attack(&prev, &position, 0);
+            add_attack(&prev, &position, 0, window);
         if (toggle == 1)
-            add_attack(&prev, &position, 1);
+            add_attack(&prev, &position, 1, window);
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
@@ -164,13 +113,13 @@ int bag(game_object *sp, sfClock *clk, window_t *window)
     sfVector2f prev = sfSprite_getScale(sp->sprite);
     sfVector2f position = sfSprite_getPosition(sp->sprite);
 
-    (prev.x <= 1) ? toggle = 0 : 0;
-    (prev.x >= 1.04) ? toggle = 1 : 0;
+    (prev.x <= 1 * window->scale.x) ? toggle = 0 : 0;
+    (prev.x >= 1.04 * window->scale.x) ? toggle = 1 : 0;
     if (time.microseconds >= 1000000) {
         if (toggle == 0)
-            add_bag(&prev, &position, 0);
+            add_bag(&prev, &position, 0, window);
         if (toggle == 1)
-            add_bag(&prev, &position, 1);
+            add_bag(&prev, &position, 1, window);
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
@@ -238,7 +187,7 @@ int attack_box(pkmn_list_t *linked, window_t *window,
 int nb, game_object **tab)
 {
     char *str = malloc(sizeof(char));
-    sfVector2f pos = {338, 374};
+    sfVector2f pos = {338 * window->scale.x, 374 * window->scale.y};
 
     *str = 0;
     str = my_strcat(str, name[linked->pokemon.number]);
@@ -285,7 +234,7 @@ int nb)
         return (0);
     display_game(misc->tab, window, 8, 0);
     display_stat(window, misc->stat, 6);
-    sprite = create_object(asset_atk[nb_atk], pos, rect);
+    sprite = create_object(asset_atk[nb_atk], pos, rect, window);
     clock = sfClock_create();
     sfSprite_setTextureRect(sprite->sprite, rect);
     while (sfRenderWindow_isOpen(window->window)) {
@@ -399,16 +348,16 @@ char *itoa_dup(int nb)
     return (nbr);
 }
 
-game_object **init_box(pkmn_list_t *linked)
+game_object **init_box(pkmn_list_t *linked, window_t *window)
 {
     game_object **tab = malloc(sizeof(game_object *) * 5);
     sfIntRect rect = {0, 0, 0, 0};
 
     for (int i = 0; i < 4; i++) {
         if (linked->pokemon.atks[i].number != -1)
-            tab[i] = create_object("assets/attack.png", atk_pos[i], rect);
+            tab[i] = create_object("assets/attack.png", atk_pos[i], rect, window);
         else
-            tab[i] = create_object("assets/vide.png", atk_pos[i], rect);
+            tab[i] = create_object("assets/vide.png", atk_pos[i], rect, window);
     }
     tab[4] = NULL;
     return (tab);
@@ -440,18 +389,21 @@ game_object *atk)
     return (0);
 }
 
-text_t *init_name(pkmn_list_t *linked)
+text_t *init_name(pkmn_list_t *linked, window_t *window)
 {
     text_t *stat = malloc(sizeof(text_t) * 9);
-    int size = 15;
+    int size = 15 * window->scale.x;
+    sfVector2f tmp = {0, 0};
 
     for (int i = 0; i < 9; i++) {
+        tmp.x = atk_txt[i].x * window->scale.x;
+        tmp.y = atk_txt[i].y * window->scale.y;
         if (i < 4)
             stat[i] = create_text(atk_name[i],
-            "assets/classic.ttf", size, atk_txt[i]);
+            "assets/classic.ttf", size, tmp);
         else
             stat[i] = create_text(itoa_dup(linked->pokemon.atks[i - 4].power),
-            "assets/classic.ttf", size, atk_txt[i]);
+            "assets/classic.ttf", size, tmp);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
@@ -476,9 +428,9 @@ int disp_txt(window_t *window, text_t *stat, text_t *name_pow)
 int atk_hud(window_t *window, game_object **tab,
 pkmn_list_t *linked, text_t *stat)
 {
-    game_object *atk = init_hud("assets/pp_hud.png", 338, 480);
-    game_object **box = init_box(linked);
-    text_t *name_pow = init_name(linked);
+    game_object *atk = init_hud("assets/pp_hud.png", 338, 480, window);
+    game_object **box = init_box(linked, window);
+    text_t *name_pow = init_name(linked, window);
     int ret = 0;
     static int mode = 0;
     while (sfRenderWindow_isOpen(window->window)) {
@@ -498,25 +450,25 @@ pkmn_list_t *linked, text_t *stat)
     return (destroy_atkhud(name_pow, box, atk, ret));
 }
 
-game_object **init_object(void)
+game_object **init_object(window_t *window)
 {
     game_object **tab = malloc(sizeof(game_object *) * 13);
     sfVector2f pos = {420, 218};
     sfVector2f pos2 = {720, 85};
     sfIntRect rect = {0, 0, 0, 0};
 
-    tab[0] = init_hud("assets/attack_hud.png", 338, 480);
-    tab[8] = init_choice("assets/game_menu.png");
-    tab[1]= init_hud("assets/combat_screen.png", 338, 0);
-    tab[3] = init_hud("assets/text_combat.png", 338, 374);
-    tab[2] = init_hud("assets/cercle.png", 338, 204);
-    tab[5] = init_hud("assets/opponent_life.png", 338, 123);
-    tab[4] = init_hud("assets/my_life.png", 659, 263);
-    tab[9] = init_little("assets/m_sel.png", 341, 825);
-    tab[10] = init_little("assets/m_sel.png", 549, 844);
-    tab[11] = init_little("assets/m_sel.png", 757, 825);
-    tab[6] = create_object("assets/front_pkmn.png", pos2, rect);
-    tab[7] = create_object("assets/back_pkmn.png", pos, rect);
+    tab[0] = init_hud("assets/attack_hud.png", 338, 480, window);
+    tab[8] = init_choice("assets/game_menu.png", window);
+    tab[1]= init_hud("assets/combat_screen.png", 338, 0, window);
+    tab[3] = init_hud("assets/text_combat.png", 338, 374, window);
+    tab[2] = init_hud("assets/cercle.png", 338, 204, window);
+    tab[5] = init_hud("assets/opponent_life.png", 338, 123, window);
+    tab[4] = init_hud("assets/my_life.png", 659, 263, window);
+    tab[9] = init_little("assets/m_sel.png", 341, 825, window);
+    tab[10] = init_little("assets/m_sel.png", 549, 844, window);
+    tab[11] = init_little("assets/m_sel.png", 757, 825, window);
+    tab[6] = create_object("assets/front_pkmn.png", pos2, rect, window);
+    tab[7] = create_object("assets/back_pkmn.png", pos, rect, window);
     tab[12] = NULL;
     return (tab);
 }
@@ -539,21 +491,24 @@ int check_flag(misc_t *misc, int flag, window_t *win, pkmn_list_t *linked)
     return (flag);
 }
 
-text_t *init_txt(void)
+text_t *init_txt(window_t *window)
 {
     text_t *stat = malloc(sizeof(text_t) * 6);
-    int size = 15;
+    int size = 15 * window->scale.x;
+    sfVector2f tmp = {0, 0};
 
     for (int i = 0; i < 6; i++) {
-        stat[i] = create_text("init", "assets/classic.ttf", size, pos_txt[i]);
+        tmp.x = pos_txt[i].x * window->scale.x;
+        tmp.y = pos_txt[i].y * window->scale.y;
+        stat[i] = create_text("init", "assets/classic.ttf", size, tmp);
         sfText_setFillColor(stat[i].text, sfBlack);
     }
     return (stat);
 }
 
-text_t *change_pos(pkmn_list_t *node)
+text_t *change_pos(pkmn_list_t *node, window_t *window)
 {
-    text_t *stat = init_txt();
+    text_t *stat = init_txt(window);
 
     change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
     change_text(itoa_dup(node->pokemon.health), &stat[1]);
@@ -564,7 +519,7 @@ text_t *change_pos(pkmn_list_t *node)
     return (stat);
 }
 
-game_object **init_player(void)
+game_object **init_player(window_t *window)
 {
     game_object **tmp = malloc(sizeof(game_object *) * 2);
     sfIntRect rect = {0, 0, 170, 148};
@@ -572,8 +527,8 @@ game_object **init_player(void)
     sfVector2f pos = {380, 226};
     sfVector2f pos2 = {740, 30};
 
-    tmp[0] = create_object("assets/back_train.png", pos, rect);
-    tmp[1] = create_object("assets/rival_two.png", pos2, rect2);
+    tmp[0] = create_object("assets/back_train.png", pos, rect, window);
+    tmp[1] = create_object("assets/rival_two.png", pos2, rect2, window);
     return (tmp);
 }
 
@@ -597,7 +552,7 @@ int free_character(game_object **character)
 
 int animation(window_t *window, game_object **tab)
 {
-    game_object **character = init_player();
+    game_object **character = init_player(window);
     sfClock *clock = sfClock_create();
     sfTime time;
     int count = 0;
@@ -624,7 +579,7 @@ int riposte(pkmn_list_t *linked, window_t *window)
 {
     int nb = rand() % 3;
     char *str = NULL;
-    sfVector2f pos = {338, 374};
+    sfVector2f pos = {338 * window->scale.x, 374 * window->scale.y};
 
     str = malloc(sizeof(char));
     str[0] = '\0';
@@ -672,19 +627,19 @@ int destroy_all(misc_t *misc)
     return (0);
 }
 
-misc_t *init_misc(pkmn_list_t *linked)
+misc_t *init_misc(pkmn_list_t *linked, window_t *window)
 {
     misc_t *misc = malloc(sizeof(misc_t));
 
-    misc->tab = init_object();
+    misc->tab = init_object(window);
     misc->clock = sfClock_create();
-    misc->stat = change_pos(linked);
+    misc->stat = change_pos(linked, window);
     return (misc);
 }
 
 int death(pkmn_list_t *linked, window_t *window, misc_t *misc)
 {
-    sfVector2f pos = {338, 374};
+    sfVector2f pos = {338 * window->scale.x, 374 * window->scale.y};
     char *str = malloc(sizeof(char));
 
     *str = 0;
@@ -701,7 +656,7 @@ int death(pkmn_list_t *linked, window_t *window, misc_t *misc)
 
 int combat(window_t *window, pkmn_list_t *linked)
 {
-    misc_t *misc = init_misc(linked);
+    misc_t *misc = init_misc(linked, window);
     int menu = 0;
 
     animation(window, misc->tab);

@@ -37,7 +37,7 @@ typedef struct misc_s
     text_t *stat;
 }misc_t;
 
-struct game_object *create_object(char *sprite, sfVector2f position, sfIntRect rect1);
+struct game_object *create_object(char *sprite, sfVector2f position, sfIntRect rect1, window_t *window);
 void destroy_obj(struct game_object *obj);
 void display_pause(window_t *window);
 void close_window(sfEvent event, window_t *window);

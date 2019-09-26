@@ -299,7 +299,7 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
     int flag = 0;
     sfIntRect rec = {0, 0, 0, 0};
     sfVector2f scale = {0.50 * window->scale.x, 0.50 * window->scale.y};
-    game_object *spr = create_object("assets/text_combat.png", pos, rec);
+    game_object *spr = create_object("assets/text_combat.png", pos, rec, window);
     setting_t set = set_setting(pos, scale, window, opt);
 
     set.sprite = spr->sprite;
