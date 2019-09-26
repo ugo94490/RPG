@@ -42,10 +42,20 @@ typedef struct pkmn_list_s
     struct pkmn_list_s *next;
 } pkmn_list_t;
 
-static char *name[3] =
+static char *name[13] =
 {
+    "Ouisticram",
+    "Tiplouf",
+    "Tortipouss",
+    "Chimpenfeu",
+    "Prinplouf",
+    "Boskerra",
     "Simiabraz",
+    "Pingoleon",
     "Torterra",
+    "Dialga",
+    "Palkia",
+    "Arceus",
     NULL
 };
 
@@ -62,14 +72,36 @@ static char *asset_atk[2] =
     "assets/ultralaser.png"
 };
 
-static char *front_pkm[1] =
+static char *front_pkm[12] =
 {
-    "assets/front_pkmn.png"
+    "assets/front/ouisticram.png",
+    "assets/front/tiplouf.png",
+    "assets/front/tortipouss.png",
+    "assets/front/chimpenfeu.png",
+    "assets/front/prinplouf.png",
+    "assets/front/boskerra.png",
+    "assets/front/simiabraz.png",
+    "assets/front/pingoleon.png",
+    "assets/front/torterra.png",
+    "assets/front/dialga.png",
+    "assets/front/palkia.png",
+    "assets/front/arceus.png"
 };
 
-static char *back_pkm[1] =
+static char *back_pkm[12] =
 {
-    "assets/back_pkmn.png"
+    "assets/back/ouisticram.png",
+    "assets/back/tiplouf.png",
+    "assets/back/tortipouss.png",
+    "assets/back/chimpenfeu.png",
+    "assets/back/prinplouf.png",
+    "assets/back/boskerra.png",
+    "assets/back/simiabraz.png",
+    "assets/back/pingoleon.png",
+    "assets/back/torterra.png",
+    "assets/back/dialga.png",
+    "assets/back/palkia.png",
+    "assets/back/arceus.png"
 };
 
 static char *atk_name[4] =
