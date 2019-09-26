@@ -18,7 +18,7 @@ typedef struct atk_s
 
 static atk_t atks[4] =
 {
-    {0, 0},
+    {0, 20},
     {1, 100},
     {2, 50},
     {3, 70}
@@ -60,6 +60,16 @@ static char *asset_atk[2] =
 {
     "assets/hydrocanon.png",
     "assets/ultralaser.png"
+};
+
+static char *front_pkm[1] =
+{
+    "assets/front_pkmn.png"
+};
+
+static char *back_pkm[1] =
+{
+    "assets/back_pkmn.png"
 };
 
 static char *atk_name[4] =

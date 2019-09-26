@@ -21,6 +21,8 @@
 #include "pkmn.h"
 #include "sounds.h"
 #include "systems.h"
+#include "game_object.h"
+#include "overworld.h"
 
 typedef struct game_object
 {
@@ -42,7 +44,7 @@ void destroy_obj(struct game_object *obj);
 void display_pause(window_t *window);
 void close_window(sfEvent event, window_t *window);
 int event(window_t *window);
-int combat(window_t *window, pkmn_list_t *linked);
+int combat(window_t *window, game_t *game, npc_t *npc);
 int my_strlen92(char *str);
 void my_revstr(char *str);
 int my_int(int nb);
