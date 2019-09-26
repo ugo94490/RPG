@@ -19,7 +19,6 @@ static void menu_game_loop(game_t *game, menu_t *menu)
 
     param.item = NO;
     param.action = ORDER;
-    param.list_pkmn = game->;
     while (menu->state != QUIT) {
         analyse_menu_game(game, menu);
         sfClock_restart(time_loop.clock);

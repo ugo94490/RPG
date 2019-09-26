@@ -50,7 +50,9 @@ SRC	=	src/main.c				\
 		lib_CSFML/text_functions.c		\
 		lib_CSFML/value_structs.c		\
 		lib_CSFML/sprite_functions.c		\
-		src/feature/display_text.c
+		src/feature/display_text.c		\
+		src/menu_game/*.c			\
+		src/menu_game/pokemon/*.c
 
 SRC_T		=
 
