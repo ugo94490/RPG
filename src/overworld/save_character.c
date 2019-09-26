@@ -48,6 +48,10 @@ void save_character(char *path, character_t *character)
     if (nbr == NULL || file == NULL || character == NULL)
         return;
     sub_save_character(file, nbr, character);
+    fwrite("music:", 1, 6, file);
+    nbr = my_itoa(character->music, nbr);
+    fwrite(nbr, 1, my_strlen(nbr), file);
+    fwrite("\n", 1, 1, file);
     save_pkmns((void *)(file), character->pkmns);
     fclose(file);
     free(cpy);

@@ -13,6 +13,7 @@
 #include "overworld.h"
 #include "overworld_evt.h"
 #include "my_rpg.h"
+#include "overworld_sound.h"
 
 void teleport(game_t *game, evt_t event)
 {
@@ -33,6 +34,8 @@ void activate_event(game_t *game, evt_list_t *evt)
         evt->event.type = 0;
         evt->perm = 1;
     }
+    change_music(evt->event.music, &(game->music),
+    &(game->character->music));
 }
 
 void check_evt_trigger(game_t *game, sfVector2f pos, int locmap)
@@ -82,8 +85,8 @@ void get_key_pressed(window_t *window, game_t *game)
         printf("%f, %f\n", game->character->pos.x, game->character->pos.y);
     if (sfKeyboard_isKeyPressed(sfKeySpace))
         interact(game);
-    if (sfKeyboard_isKeyPressed(sfKeyTab))
-        menu_game(game, window);
+//    if (sfKeyboard_isKeyPressed(sfKeyTab))
+//        menu_game(game, window);
 }
 
 void analyse_event(window_t *window, game_t *game)

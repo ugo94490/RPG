@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
+#include <SFML/Audio.h>
 #include "systems.h"
 #include "graphics.h"
 #include "game_object.h"
@@ -38,4 +39,5 @@ void destroy_game(game_t *game)
     destroy_object_list(game->objects);
     destroy_evt_list(game->evts);
     sfView_destroy(game->view);
+    sfMusic_destroy(game->music);
 }

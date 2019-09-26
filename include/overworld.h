@@ -25,6 +25,7 @@ typedef struct evt_s
     int proba;
     int item;
     int quantity;
+    int music;
 } evt_t;
 
 typedef struct evt_list_s
@@ -39,6 +40,7 @@ typedef struct game_s
     struct game_object_list_s *objects;
     struct evt_list_s *evts;
     struct character_s *character;
+    struct sfMusic *music;
     sfView *view;
     int status;
     sprite_t *sprites;
@@ -50,7 +52,7 @@ void draw_game(window_t *window, game_t *game);
 void analyse_event(window_t *window, game_t *game);
 void read_evts(char *path, evt_list_t **list, int arg);
 int check_col_event(sfVector2f pos, int locmap, evt_t event);
-game_t create_game(void);
+game_t create_game(int arg);
 void unload_map(struct game_object_list_s **objects);
 void animate_objects(game_t *game);
 void destroy_game(game_t *game);

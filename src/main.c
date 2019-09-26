@@ -36,7 +36,7 @@ void init_game()
 {
     window_t window = create_window(1280*1, 960*1, 32, "poukiman");
     sfVector2f scale = {1, 1};
-    game_t game = create_game();
+    game_t game = create_game(0);
 
     if (game.view == NULL || game.objects == NULL ||
     game.sprites == NULL || game.character == NULL)

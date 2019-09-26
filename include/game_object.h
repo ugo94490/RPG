@@ -39,6 +39,7 @@ typedef struct character_s
     int type;
     int status;
     int world;
+    int music;
     int direction;
     sfVector2f objective;
     anim_t anim;

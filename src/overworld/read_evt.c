@@ -70,6 +70,7 @@ void analyse_line_evt(char *line, evt_t *evt)
     my_strcmp(words[0], "item") == 1 ? evt->item = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "posx") == 1 ? evt->pos.x = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "posy") == 1 ? evt->pos.y = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "music") == 1 ? evt->music = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "locmap") == 1 ? evt->locmap = my_getnbr(words[1]) : 0;
     sub_analyse_line_evt(line, words, evt);
     free_word_array(words);

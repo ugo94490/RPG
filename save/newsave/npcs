@@ -4,7 +4,33 @@ posx:768
 posy:608
 world:0
 direction:1
-aggro:0
+aggro:1
+diag2:J'vais t'niquer !!!
 diag1:Yo frer ca va ?
 interact:0
 
+-pkmn
+number:0
+level:1
+health:100
+max_health:100
+xp_to_next_lvl:100
+atq:100
+def:200
+atk1:3
+atk2:1
+atk3:0
+atk4:0
+
+-pkmn
+number:1
+level:1
+health:100
+max_health:100
+xp_to_next_lvl:100
+atq:200
+def:100
+atk1:1
+atk2:2
+atk3:0
+atk4:0

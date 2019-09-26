@@ -15,6 +15,7 @@
 #include "game_object.h"
 #include "overworld.h"
 #include "overworld_rects.h"
+#include "overworld_sound.h"
 
 sprite_t *create_sprites(void)
 {
@@ -28,7 +29,23 @@ sprite_t *create_sprites(void)
     return (sprites);
 }
 
-game_t create_game(void)
+static void load_save(game_t *game)
+{
+    load_npcs("save/actualsave/npcs", &(game->objects));
+    game->character = load_character("save/actualsave/characterInfo",
+    &(game->objects));
+    game->music = load_music(game->character->music);
+}
+
+static void load_newsave(game_t *game)
+{
+    load_npcs("save/newsave/npcs", &(game->objects));
+    game->character = load_character("save/newsave/characterInfo",
+    &(game->objects));
+    game->music = load_music(game->character->music);
+}
+
+game_t create_game(int arg)
 {
     game_t game;
 
@@ -38,9 +55,10 @@ game_t create_game(void)
     game.status = 0;
     game.sprites = create_sprites();
     read_evts("maps/permevts", &(game.evts), 1);
-    load_npcs("save/actualsave/npcs", &(game.objects));
-    game.character = load_character("save/actualsave/characterInfo",
-    &(game.objects));
+    if (arg == 1)
+        load_save(&game);
+    else
+        load_newsave(&game);
     load_map(&(game.objects), game.character->world);
     return (game);
 }

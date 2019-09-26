@@ -10,6 +10,7 @@ destmap:1
 destx:224
 desty:224
 direction:3
+music:3
 -evt
 type:1
 trigger:1
@@ -22,6 +23,7 @@ destmap:0
 destx:608
 desty:576
 direction:1
+music:1
 -evt
 type:1
 trigger:1
@@ -34,6 +36,7 @@ destmap:0
 destx:608
 desty:576
 direction:1
+music:1
 -evt
 type:1
 trigger:2
@@ -58,6 +61,7 @@ destmap:1
 destx:1056
 desty:224
 direction:3
+music:4
 -evt
 type:1
 trigger:1
@@ -70,6 +74,7 @@ destmap:0
 destx:896
 desty:576
 direction:1
+music:3
 -evt
 type:1
 trigger:1
@@ -82,4 +87,5 @@ destmap:0
 destx:896
 desty:576
 direction:1
+music:1
 

@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
+#include <SFML/Audio.h>
 #include "graphics.h"
 #include "systems.h"
 #include "game_object.h"
@@ -15,9 +16,11 @@
 
 void aggro(game_t *game, npc_t *npc)
 {
-    if (npc->diag2)
+    if (npc && npc->diag2)
         display_text_overworld(game->window, npc->diag2, game);
+    sfMusic_stop(game->music);
     main_cbt(game->window, game, npc);
+    sfMusic_play(game->music);
 }
 
 void npc_interact(game_t *game, npc_t *npc)

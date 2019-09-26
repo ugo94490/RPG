@@ -30,6 +30,7 @@ character_t *create_base_character(void)
     character->direction = 0;
     character->pos = basevector;
     character->world = 0;
+    character->music = 0;
     character->anim = baseanim;
     character->anim.rects = dawn_rects;
     character->anim.clock = create_clock();
@@ -47,6 +48,8 @@ void analyse_line_character(char *line, character_t *character)
         character->type = my_getnbr(words[1]);
     my_strcmp(words[0], "world") == 1 ?
     character->world = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "music") == 1 ?
+    character->music = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "direction") == 1 ?
     character->direction = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "posx") == 1 ?
@@ -77,6 +80,7 @@ character_t *get_character(char *path, game_object_list_t **list)
     } while (nread != -1);
     if (line != NULL)
         free(line);
+    fclose(file);
     return (character);
 }
 
