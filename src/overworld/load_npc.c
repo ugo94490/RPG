@@ -51,7 +51,7 @@ void analyse_line_npc(char *line, npc_t *npc)
     my_strcmp(words[0], "world") == 1 ? npc->world = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "diag1") == 1 ? npc->diag1 = my_strdup(words[1]) : 0;
     my_strcmp(words[0], "diag2") == 1 ? npc->diag2 = my_strdup(words[1]) : 0;
-    my_strcmp(words[0], "aggro") == 1 ? npc->type = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "aggro") == 1 ? npc->aggro = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "interact") == 1 ?
     npc->interact = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "direction") == 1 ?

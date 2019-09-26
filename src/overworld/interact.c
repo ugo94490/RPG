@@ -13,8 +13,17 @@
 #include "game_object.h"
 #include "overworld.h"
 
+void aggro(game_t *game, npc_t *npc)
+{
+    if (npc->diag2)
+        display_text_overworld(game->window, npc->diag2, game);
+    main_cbt(game->window, game, npc);
+}
+
 void npc_interact(game_t *game, npc_t *npc)
 {
+    if (npc->aggro == 1)
+        aggro(game, npc);
     if (npc->aggro == 0 && npc->diag1)
         display_text_overworld(game->window, npc->diag1, game);
 }

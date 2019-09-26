@@ -70,8 +70,6 @@ void display_text_overworld(window_t *window, char *text, game_t *game)
 
 void get_key_pressed(window_t *window, game_t *game)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyC))
-        main_cbt(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyRight))
         move_right(window, game);
     if (sfKeyboard_isKeyPressed(sfKeyLeft))

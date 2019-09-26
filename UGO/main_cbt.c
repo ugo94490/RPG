@@ -701,7 +701,7 @@ void free_linked(pkmn_list_t **linked, pkmn_list_t *tmp)
     (*linked) = NULL;
 }
 
-void main_cbt(window_t *window, game_t *game)
+void main_cbt(window_t *window, game_t *game, npc_t *npc)
 {
     const sfView *default_view = sfRenderWindow_getDefaultView(window->window);
 

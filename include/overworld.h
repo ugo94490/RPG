@@ -10,6 +10,8 @@
 
 static const sfVector2f boxpos = {338, 854};
 
+struct npc_s;
+
 typedef struct evt_s
 {
     int type;
@@ -53,7 +55,7 @@ void unload_map(struct game_object_list_s **objects);
 void animate_objects(game_t *game);
 void destroy_game(game_t *game);
 int display_text(char *base, sfVector2f pos, window_t *window, int opt);
-void main_cbt(window_t *window, game_t *game);
+void main_cbt(window_t *window, game_t *game, struct npc_s *npc);
 void save_game(game_t *game);
 void interact(game_t *game);
 void activate_event(game_t *game, evt_list_t *evt);
