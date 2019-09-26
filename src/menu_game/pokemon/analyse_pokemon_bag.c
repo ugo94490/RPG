@@ -12,6 +12,9 @@
 #include "game_object.h"
 #include "menu.h"
 
+void fn_item(pkmn_bag_t * pkmn_bag);
+void switch_pokemon(pkmn_bag_t *pkmn_bag);
+
 static void analyse_keyboard_pkmn_bag_game(pkmn_bag_t *pkmn_bag)
 {
     if (sfKeyboard_isKeyPressed(sfKeyEscape))
@@ -26,9 +29,9 @@ static void analyse_keyboard_pkmn_bag_game(pkmn_bag_t *pkmn_bag)
         pkmn_bag->n_slot += 2;
     if (sfKeyboard_isKeyPressed(sfKeyUp) && pkmn_bag->n_slot - 2 >= 1)
         pkmn_bag->n_slot -= 2;
-    if (sfKeyboard_isKeyPressed(sfKeyEnter) && pkmn_bag->param->action == HEAL)
+    if (sfKeyboard_isKeyPressed(sfKeyReturn) && pkmn_bag->param->action == HEAL)
         fn_item(pkmn_bag);
-    if (sfKeyboard_isKeyPressed(sfKeyEnter) && pkmn_bag->param->action == SWITCH)
+    if (sfKeyboard_isKeyPressed(sfKeyReturn) && pkmn_bag->param->action == SWITCH)
         switch_pokemon(pkmn_bag);
 }
 
