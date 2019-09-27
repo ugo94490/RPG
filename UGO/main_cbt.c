@@ -741,7 +741,7 @@ npc_t *init_rand(game_t *game)
     npc->pkmns->next = NULL;
     npc->pkmns->pokemon.number = rand() % 9;
     npc->pkmns->pokemon.level = choose_level(game);
-    npc->pkmns->pokemon.health = 1000;//200 * (npc->pkmns->pokemon.level / 80) + 10;
+    npc->pkmns->pokemon.health = 200 * (npc->pkmns->pokemon.level / 80) + 10;
     npc->pkmns->pokemon.max_health = 200 * (npc->pkmns->pokemon.level
     / 80) + 10;
     npc->pkmns->pokemon.xp_to_next_lvl = 0;
