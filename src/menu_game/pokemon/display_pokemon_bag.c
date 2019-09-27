@@ -12,6 +12,24 @@
 #include "game_object.h"
 #include "menu.h"
 
+static void sub_display_slot(pkmn_bag_t *pkmn_bag, int i, sfVector2f temppos)
+{
+    sfSprite_setTextureRect(pkmn_bag->slot[i].img.sprite,
+    pkmn_bag->slot[i].rect);
+    sfSprite_setPosition(pkmn_bag->slot[i].img.sprite,
+    pkmn_bag->slot[i].pos);
+    sfRenderWindow_drawSprite(pkmn_bag->window->window,
+    pkmn_bag->slot[i].img.sprite, NULL);
+    pkmn_bag->slot[i].pv.pos.x = temppos.x + POS_X_SLOT[i] - 243 + 125;
+    pkmn_bag->slot[i].pv.pos.y = temppos.y + POS_Y_SLOT[i] - 225 + 75;
+    sfText_setPosition(pkmn_bag->slot[i].pv.text,
+    pkmn_bag->slot[i].pv.pos);
+    pkmn_bag->slot[i].m_pv.pos.x = temppos.x + POS_X_SLOT[i] - 243 + 200;
+    pkmn_bag->slot[i].m_pv.pos.y = temppos.y + POS_Y_SLOT[i] - 225 + 75;
+    sfText_setPosition(pkmn_bag->slot[i].m_pv.text,
+    pkmn_bag->slot[i].m_pv.pos);
+}
+
 static void display_slot(pkmn_bag_t *pkmn_bag, game_t *game)
 {
     sfVector2f pos_txt;
@@ -26,18 +44,7 @@ static void display_slot(pkmn_bag_t *pkmn_bag, game_t *game)
             pkmn_bag->slot[i].rect.left = 258;
         pkmn_bag->slot[i].pos.x = temppos.x + POS_X_SLOT[i] - 250;
         pkmn_bag->slot[i].pos.y = temppos.y + POS_Y_SLOT[i] - 225;
-        sfSprite_setTextureRect(pkmn_bag->slot[i].img.sprite,
-        pkmn_bag->slot[i].rect);
-        sfSprite_setPosition(pkmn_bag->slot[i].img.sprite,
-        pkmn_bag->slot[i].pos);
-        sfRenderWindow_drawSprite(pkmn_bag->window->window,
-        pkmn_bag->slot[i].img.sprite, NULL);
-        pkmn_bag->slot[i].pv.pos.x = temppos.x - POS_X_SLOT[i] - 243 + 300;
-        pkmn_bag->slot[i].pv.pos.y = temppos.y - POS_Y_SLOT[i] - 225 + 75;
-        sfText_setPosition(pkmn_bag->slot[i].pv.text, pkmn_bag->slot[i].pv.pos);
-        pkmn_bag->slot[i].m_pv.pos.x = temppos.x - POS_X_SLOT[i] - 243 + 200;
-        pkmn_bag->slot[i].m_pv.pos.y = temppos.y - POS_Y_SLOT[i] - 225 + 75;
-        sfText_setPosition(pkmn_bag->slot[i].m_pv.text, pkmn_bag->slot[i].m_pv.pos);
+        sub_display_slot(pkmn_bag, i, temppos);
         sfRenderWindow_drawText(pkmn_bag->window->window,
         pkmn_bag->slot[i].pv.text, NULL);
         sfRenderWindow_drawText(pkmn_bag->window->window,
