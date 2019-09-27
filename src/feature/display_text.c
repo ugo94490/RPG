@@ -65,15 +65,16 @@ int check_event(sfEvent event, int flag, sfRenderWindow *window)
         if ((event.type == sfEvtKeyPressed &&
         event.key.code == sfKeyEscape)) {
             sfRenderWindow_close(window);
-                return -1;
+            return -1;
         } if ((event.type == sfEvtKeyPressed &&
-        event.key.code == sfKeyReturn))
+            event.key.code == sfKeyReturn))
             flag = 2;
     }
     return flag;
 }
 
-static void display(sfText *text, char *str, sfRenderWindow *window, sfSprite *sprite)
+static void display(sfText *text, char *str, sfRenderWindow *window,
+sfSprite *sprite)
 {
     sfText_setString(text, str);
     sfRenderWindow_drawSprite(window, sprite, NULL);
@@ -183,7 +184,8 @@ static txt_t set_text(txt_t *text, setting_t set, char *base, int opt)
     return (*text);
 }
 
-static int check_cpt(txt_t *text, int cpt, sfRenderWindow *window, sfSprite *sprite)
+static int check_cpt(txt_t *text, int cpt, sfRenderWindow *window, sfSprite
+*sprite)
 {
     text->seconds = get_seconds(text->clock);
     if (text->seconds > 0.03) {
@@ -197,7 +199,8 @@ static int check_cpt(txt_t *text, int cpt, sfRenderWindow *window, sfSprite *spr
     return cpt;
 }
 
-static char *set_save(char *save, txt_t *text, sfRenderWindow *window, sfSprite *sprite)
+static char *set_save(char *save, txt_t *text, sfRenderWindow *window,
+sfSprite *sprite)
 {
     if (save == NULL) {
         save = malloc(sizeof(char));
@@ -279,7 +282,8 @@ static int do_text(char *base, setting_t set, window_t *window, int opt)
     return 1;
 }
 
-static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window, int opt)
+static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window,
+int opt)
 {
     setting_t set;
 
@@ -309,13 +313,22 @@ void wait_clock(void)
     sfClock_destroy(clock);
 }
 
+#define TEXT_COMBAT "assets/text_combat.png"
+
+game_object *set_spr(game_object *spr, sfVector2f pos, window_t *window)
+{
+    sfIntRect rec = {0, 0, 0, 0};
+
+    spr = create_object(TEXT_COMBAT, pos, rec, window);
+    return spr;
+}
+
 int display_text(char *base, sfVector2f pos, window_t *window, int opt)
 {
     int flag = 0;
-    sfIntRect rec = {0, 0, 0, 0};
     sfVector2f scale = {0.50 * window->scale.x, 0.50 * window->scale.y};
-    game_object *spr = create_object("assets/text_combat.png", pos, rec, window);
     setting_t set = set_setting(pos, scale, window, opt);
+    game_object *spr = set_spr(spr, pos, window);
 
     set.sprite = spr->sprite;
     if (opt == 1)
@@ -327,7 +340,6 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
             flag = do_text(base, set, window, opt);
         if (flag == -1)
             break;
-        printf("hey\n");
     }
     if (opt == 0)
         wait_clock();

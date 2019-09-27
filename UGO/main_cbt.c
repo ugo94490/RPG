@@ -276,8 +276,10 @@ misc_t init_atk(game_object **tab, text_t *stat)
 int attack_one(window_t *window, pkmn_list_t *linked,
 misc_t *misc, pkmn_list_t *npc)
 {
-    npc->pokemon.health -= linked->pokemon.atks[0].power;
-    attack_box(linked, window, 0, misc->tab);
+    npc->pokemon.health -= ((linked->pokemon.level * 0.4 + 2) *
+    linked->pokemon.atks[0].power * linked->pokemon.atq) /
+    (linked->pokemon.def * 50) + 2;
+    attack_box(linked, window, linked->pokemon.atks[0].number, misc->tab);
     attack_anim(misc, window, linked, 0);
     return (1);
 }
@@ -285,8 +287,10 @@ misc_t *misc, pkmn_list_t *npc)
 int attack_two(window_t *window, pkmn_list_t *linked,
 misc_t *misc, pkmn_list_t *npc)
 {
-    npc->pokemon.health -= linked->pokemon.atks[1].power;
-    attack_box(linked, window, 1, misc->tab);
+    npc->pokemon.health -= ((linked->pokemon.level * 0.4 + 2) *
+    linked->pokemon.atks[1].power * linked->pokemon.atq) /
+    (linked->pokemon.def * 50) + 2;
+    attack_box(linked, window, linked->pokemon.atks[1].number, misc->tab);
     attack_anim(misc, window, linked, 1);
     return (1);
 }
@@ -294,8 +298,10 @@ misc_t *misc, pkmn_list_t *npc)
 int attack_three(window_t *window, pkmn_list_t *linked,
 misc_t *misc, pkmn_list_t *npc)
 {
-    npc->pokemon.health -= linked->pokemon.atks[2].power;
-    attack_box(linked, window, 2, misc->tab);
+    npc->pokemon.health -= ((linked->pokemon.level * 0.4 + 2) *
+    linked->pokemon.atks[2].power * linked->pokemon.atq) /
+    (linked->pokemon.def * 50) + 2;
+    attack_box(linked, window, linked->pokemon.atks[2].number, misc->tab);
     attack_anim(misc, window, linked, 2);
     return (1);
 }
@@ -303,8 +309,10 @@ misc_t *misc, pkmn_list_t *npc)
 int attack_four(window_t *window, pkmn_list_t *linked,
 misc_t *misc, pkmn_list_t *npc)
 {
-    npc->pokemon.health -= linked->pokemon.atks[3].power;
-    attack_box(linked, window, 3, misc->tab);
+    npc->pokemon.health -= ((linked->pokemon.level * 0.4 + 2) *
+    linked->pokemon.atks[3].power * linked->pokemon.atq) /
+    (linked->pokemon.def * 50) + 2;
+    attack_box(linked, window, linked->pokemon.atks[3].number, misc->tab);
     attack_anim(misc, window, linked, 3);
     return (1);
 }
@@ -585,6 +593,8 @@ int riposte(npc_t *npc, window_t *window, game_t *game)
     str = my_strcat(str, phr[1]);
     game->character->pkmns->pokemon.health -=
     npc->pkmns->pokemon.atks[nb].power;
+    if (game->character->pkmns->pokemon.health <= 0)
+        game->character->pkmns->pokemon.health = 0;
     pause_time(0.3);
     display_text(str, pos, window, 0);
     free(str);
@@ -741,12 +751,13 @@ npc_t *init_rand(game_t *game)
     npc->pkmns->next = NULL;
     npc->pkmns->pokemon.number = rand() % 9;
     npc->pkmns->pokemon.level = choose_level(game);
-    npc->pkmns->pokemon.health = 200 * (npc->pkmns->pokemon.level / 80) + 10;
-    npc->pkmns->pokemon.max_health = 200 * (npc->pkmns->pokemon.level
-    / 80) + 10;
     npc->pkmns->pokemon.xp_to_next_lvl = 0;
     npc->pkmns->pokemon.atq = 100 * (npc->pkmns->pokemon.level / 80) + 10;
     npc->pkmns->pokemon.def = 100 * (npc->pkmns->pokemon.level / 90) + 10;
+    npc->pkmns->pokemon.health = ((0.90 + 2) * 20 + (20 / 4) + 100)
+    * npc->pkmns->pokemon.level / 100 + 10;
+    npc->pkmns->pokemon.max_health = ((0.90 + 2) * 60 + (20 / 4) + 100)
+    * npc->pkmns->pokemon.level / 100 + 10;
     for (int i = 0; i < 4; i++) {
         npc->pkmns->pokemon.atks[i] = atks[rand() % NB_ATK];
     }
