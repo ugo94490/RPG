@@ -35,4 +35,6 @@ typedef struct setting_s {
 int loop(txt_t *text, setting_t set, int cpt, int opt);
 int do_text(char *base, setting_t set, window_t *window, int opt);
 
+txt_t set_text(txt_t *text, setting_t set, char *base, int opt);
+
 #endif

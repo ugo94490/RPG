@@ -58,6 +58,7 @@ SRC	=	src/main.c					\
 		src/feature/display_text.c			\
 		src/feature/do_text.c				\
 		src/feature/loop.c				\
+		src/feature/set_text.c				\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\
