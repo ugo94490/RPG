@@ -19,7 +19,7 @@ void aggro(game_t *game, npc_t *npc)
     if (npc && npc->diag2)
         display_text_overworld(game->window, npc->diag2, game);
     sfMusic_stop(game->music);
-    main_cbt(game->window, game, npc);
+    main_cbt(game->window, game, /*npc*/NULL);
     sfMusic_play(game->music);
 }
 

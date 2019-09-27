@@ -52,7 +52,8 @@ game_object *init_little(char *path, int x, int y, window_t *window)
     return (choice);
 }
 
-void add_attack(sfVector2f *prev, sfVector2f *position, int flag, window_t *window)
+void add_attack(sfVector2f *prev, sfVector2f *position,
+int flag, window_t *window)
 {
     if (flag == 0) {
         position->x -= 0.47 * window->scale.x;
@@ -272,71 +273,63 @@ misc_t init_atk(game_object **tab, text_t *stat)
     return (misc);
 }
 
-int attack_one(game_object **tab, window_t *window,
-pkmn_list_t *linked, text_t *stat)
+int attack_one(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
 {
-    misc_t misc = init_atk(tab, stat);
-
-    linked->next->pokemon.health -= linked->pokemon.atks[0].power;
-    attack_box(linked, window, 0, tab);
-    attack_anim(&misc, window, linked, 0);
+    npc->pokemon.health -= linked->pokemon.atks[0].power;
+    attack_box(linked, window, 0, misc->tab);
+    attack_anim(misc, window, linked, 0);
     return (1);
 }
 
-int attack_two(game_object **tab, window_t *window,
-pkmn_list_t *linked, text_t *stat)
+int attack_two(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
 {
-    misc_t misc = init_atk(tab, stat);
-
-    linked->next->pokemon.health -= linked->pokemon.atks[1].power;
-    attack_box(linked, window, 1, tab);
-    attack_anim(&misc, window, linked, 1);
+    npc->pokemon.health -= linked->pokemon.atks[1].power;
+    attack_box(linked, window, 1, misc->tab);
+    attack_anim(misc, window, linked, 1);
     return (1);
 }
 
-int attack_three(game_object **tab, window_t *window,
-pkmn_list_t *linked, text_t *stat)
+int attack_three(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
 {
-    misc_t misc = init_atk(tab, stat);
-
-    linked->next->pokemon.health -= linked->pokemon.atks[2].power;
-    attack_box(linked, window, 2, tab);
-    attack_anim(&misc, window, linked, 2);
+    npc->pokemon.health -= linked->pokemon.atks[2].power;
+    attack_box(linked, window, 2, misc->tab);
+    attack_anim(misc, window, linked, 2);
     return (1);
 }
 
-int attack_four(game_object **tab, window_t *window,
-pkmn_list_t *linked, text_t *stat)
+int attack_four(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
 {
-    misc_t misc = init_atk(tab, stat);
-
-    linked->next->pokemon.health -= linked->pokemon.atks[3].power;
-    attack_box(linked, window, 3, tab);
-    attack_anim(&misc, window, linked, 3);
+    npc->pokemon.health -= linked->pokemon.atks[3].power;
+    attack_box(linked, window, 3, misc->tab);
+    attack_anim(misc, window, linked, 3);
     return (1);
 }
 
-int launch(game_object **tab, window_t *window,
-pkmn_list_t *linked, text_t *stat)
+int launch(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
 
     if (linked->pokemon.atks[0].number != -1 && atk_pos[0].x <= vct.x &&
         atk_pos[0].x + 293 >= vct.x && atk_pos[0].y <= vct.y && atk_pos[0].y
         + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
-        return (attack_one(tab, window, linked, stat));
+        return (attack_one(window, linked, misc, npc));
     if (linked->pokemon.atks[1].number != -1 && atk_pos[1].x <= vct.x &&
         atk_pos[1].x + 293 >= vct.x && atk_pos[1].y <= vct.y && atk_pos[1].y
         + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
-        return (attack_two(tab, window, linked, stat));
+        return (attack_two(window, linked, misc, npc));
     if (linked->pokemon.atks[2].number != -1 && atk_pos[2].x <= vct.x &&
         atk_pos[2].x + 293 >= vct.x && atk_pos[2].y <= vct.y && atk_pos[2].y
         + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
-        return (attack_three(tab, window, linked, stat));
+        return (attack_three(window, linked, misc, npc));
     if (linked->pokemon.atks[3].number != -1 && atk_pos[3].x <= vct.x &&
         atk_pos[3].x + 293 >= vct.x && atk_pos[3].y <= vct.y && atk_pos[3].y
         + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
-        return (attack_four(tab, window, linked, stat));
+        return (attack_four(window, linked, misc, npc));
     return (0);
 }
 
@@ -351,13 +344,13 @@ char *itoa_dup(int nb)
 game_object **init_box(pkmn_list_t *linked, window_t *window)
 {
     game_object **tab = malloc(sizeof(game_object *) * 5);
-    sfIntRect rect = {0, 0, 0, 0};
+    sfIntRect rc = {0, 0, 0, 0};
 
     for (int i = 0; i < 4; i++) {
         if (linked->pokemon.atks[i].number != -1)
-            tab[i] = create_object("assets/attack.png", atk_pos[i], rect, window);
+            tab[i] = create_object("assets/attack.png", atk_pos[i], rc, window);
         else
-            tab[i] = create_object("assets/vide.png", atk_pos[i], rect, window);
+            tab[i] = create_object("assets/vide.png", atk_pos[i], rc, window);
     }
     tab[4] = NULL;
     return (tab);
@@ -402,9 +395,9 @@ text_t *init_name(pkmn_list_t *linked, window_t *window)
         tmp2.x = atk_txt[i + 4].x * window->scale.x;
         tmp2.y = atk_txt[i + 4].y * window->scale.y;
         stat[i] = create_text(atk_name[linked->pokemon.atks[i].number],
-                              "assets/classic.ttf", size, tmp);
+        "assets/classic.ttf", size, tmp);
         stat[i + 4] = create_text(itoa_dup(linked->pokemon.atks[i].power),
-                              "assets/classic.ttf", size, tmp2);
+        "assets/classic.ttf", size, tmp2);
         sfText_setFillColor(stat[i].text, sfBlack);
         sfText_setFillColor(stat[i + 4].text, sfBlack);
     }
@@ -427,8 +420,8 @@ int disp_txt(window_t *window, text_t *stat, text_t *name_pow)
     return (0);
 }
 
-int atk_hud(window_t *window, game_object **tab,
-pkmn_list_t *linked, text_t *stat)
+int atk_hud(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
 {
     game_object *atk = init_hud("assets/pp_hud.png", 338, 480, window);
     game_object **box = init_box(linked, window);
@@ -441,9 +434,9 @@ pkmn_list_t *linked, text_t *stat)
             mode = 0;
             break;
         }
-        misc_atk(tab, box, window, atk);
-        disp_txt(window, stat, name_pow);
-        if (launch(tab, window, linked, stat) == 1) {
+        misc_atk(misc->tab, box, window, atk);
+        disp_txt(window, misc->stat, name_pow);
+        if (launch(window, linked, misc, npc) == 1) {
             ret = 12;
             break;
         }
@@ -475,22 +468,23 @@ game_object **init_object(window_t *window, pkmn_list_t *pkm, pkmn_list_t *npc)
     return (tab);
 }
 
-int check_flag(misc_t *misc, int flag, window_t *win, pkmn_list_t *linked)
+int check_flag(misc_t *misc, window_t *win,
+pkmn_list_t *linked, pkmn_list_t *npc)
 {
-    if (flag == 1)
+    if (misc->flag == 1)
         attack(misc->tab[8], misc->clock, win);
-    if (flag == 2)
+    if (misc->flag == 2)
         bag(misc->tab[9], misc->clock, win);
-    if (flag == 3)
+    if (misc->flag == 3)
         bag(misc->tab[10], misc->clock, win);
-    if (flag == 4)
+    if (misc->flag == 4)
         bag(misc->tab[11], misc->clock, win);
-    if (flag == 5)
+    if (misc->flag == 5)
         return (84);
-    if (flag == 6) {
-        return (atk_hud(win, misc->tab, linked, misc->stat));
+    if (misc->flag == 6) {
+        return (atk_hud(win, linked, misc, npc));
     }
-    return (flag);
+    return (misc->flag);
 }
 
 text_t *init_txt(window_t *window)
@@ -508,15 +502,15 @@ text_t *init_txt(window_t *window)
     return (stat);
 }
 
-text_t *change_pos(pkmn_list_t *node, window_t *window)
+text_t *change_pos(pkmn_list_t *node, window_t *window, pkmn_list_t *npc)
 {
     text_t *stat = init_txt(window);
 
     change_text(itoa_dup(node->pokemon.max_health), &stat[0]);
     change_text(itoa_dup(node->pokemon.health), &stat[1]);
     change_text(itoa_dup(node->pokemon.level), &stat[2]);
-    change_text(itoa_dup(node->pokemon.level), &stat[3]);
-    change_text(name[node->next->pokemon.number], &stat[4]);
+    change_text(itoa_dup(npc->pokemon.level), &stat[3]);
+    change_text(name[npc->pokemon.number], &stat[4]);
     change_text(name[node->pokemon.number], &stat[5]);
     return (stat);
 }
@@ -589,7 +583,8 @@ int riposte(npc_t *npc, window_t *window, game_t *game)
     str = my_strcat(str, phr[0]);
     str = my_strcat(str, atk_name[npc->pkmns->pokemon.atks[nb].number]);
     str = my_strcat(str, phr[1]);
-    game->character->pkmns->pokemon.health -= npc->pkmns->pokemon.atks[nb].power;
+    game->character->pkmns->pokemon.health -=
+    npc->pkmns->pokemon.atks[nb].power;
     pause_time(0.3);
     display_text(str, pos, window, 0);
     free(str);
@@ -634,7 +629,7 @@ misc_t *init_misc(window_t *window, game_t *game, npc_t *npc)
 
     misc->tab = init_object(window, game->character->pkmns, npc->pkmns);
     misc->clock = sfClock_create();
-    misc->stat = change_pos(game->character->pkmns, window);
+    misc->stat = change_pos(game->character->pkmns, window, npc->pkmns);
     return (misc);
 }
 
@@ -642,40 +637,60 @@ int death(window_t *window, misc_t *misc, npc_t *npc, game_t *game)
 {
     sfVector2f pos = {338 * window->scale.x, 374 * window->scale.y};
     char *str = malloc(sizeof(char));
+    int ret = 0;
 
     *str = 0;
     display_stat(window, misc->stat, 6);
-    if (game->character->pkmns->pokemon.health <= 0)
+    if (game->character->pkmns->pokemon.health <= 0) {
         str = my_strcat(str, name[game->character->pkmns->pokemon.number]);
-    else if (npc->pkmns->pokemon.health <= 0)
+        ret = 0;
+    }
+    else if (npc->pkmns->pokemon.health <= 0) {
         str = my_strcat(str, name[npc->pkmns->pokemon.number]);
+        ret = 1;
+    }
     str = my_strcat(str, phr[2]);
     display_text(str, pos, window, 0);
     free(str);
-    return (destroy_all(misc));
+    destroy_all(misc);
+    return (ret);
 }
 
-int combat(window_t *window, game_t *game, npc_t *npc)
+int check_health(game_t *game, npc_t *npc)
 {
-    misc_t *misc = init_misc(window, game, npc);
-    int menu = 0;
+    if (game->character->pkmns->pokemon.health <= 0 ||
+        npc->pkmns->pokemon.health <= 0)
+        return (1);
+    return (0);
+}
 
-    animation(window, misc->tab);
-    while (sfRenderWindow_isOpen(window->window)) {
-        sfRenderWindow_clear(window->window, sfBlack);
-        menu = check_menu(window, menu, misc->tab);
-        menu = check_flag(misc, menu, window, game->character->pkmns);
-        event(window);
-        change_text(itoa_dup(game->character->pkmns->pokemon.health), &misc->stat[1]);
-        if (menu == 84)
+int display_combat(window_t *win, game_t *game, npc_t *npc, misc_t *misc)
+{
+    misc->flag == 12 ? disp_atk_mod(win, npc, misc, game) : 0;
+    disp_txt_atk(win, misc->stat);
+    return (0);
+}
+
+int combat(window_t *win, game_t *game, npc_t *npc)
+{
+    misc_t *misc = init_misc(win, game, npc);
+
+    misc->flag = 0;
+    animation(win, misc->tab);
+    while (sfRenderWindow_isOpen(win->window)) {
+        sfRenderWindow_clear(win->window, sfBlack);
+        misc->flag = check_menu(win, misc->flag, misc->tab);
+        misc->flag = check_flag(misc, win, game->character->pkmns, npc->pkmns);
+        event(win);
+        change_text(itoa_dup(game->character->pkmns->pokemon.health),
+        &misc->stat[1]);
+        if (misc->flag == 84)
             break;
-        if (game->character->pkmns->pokemon.health <= 0 || npc->pkmns->pokemon.health <= 0)
-            return (death(window, misc, npc, game));
-        menu == 12 ? disp_atk_mod(window, npc,
-        misc, game) : 0;
-        disp_txt_atk(window, misc->stat);
-        if (game->character->pkmns->pokemon.health <= 0 || npc->pkmns->pokemon.health <= 0)
-            return (death(window, misc, npc, game));
+        if (check_health(game, npc) == 1)
+            return (death(win, misc, npc, game));
+        display_combat(win, game, npc, misc);
+        if (check_health(game, npc) == 1)
+            return (death(win, misc, npc, game));
     }
     return (destroy_all(misc));
 }
@@ -703,11 +718,60 @@ void free_linked(pkmn_list_t **linked, pkmn_list_t *tmp)
     (*linked) = NULL;
 }
 
+int choose_level(game_t *game)
+{
+    int nb = rand() % 6;
+    int op = rand() % 2;
+
+    if (op == 1)
+        return (game->character->pkmns->pokemon.level + nb);
+    else
+        return (game->character->pkmns->pokemon.level - nb);
+    return (0);
+}
+
+npc_t *init_rand(game_t *game)
+{
+    npc_t *npc = malloc(sizeof(*npc));
+
+    if (npc == NULL)
+        return (NULL);
+    npc->type = 0;
+    npc->pkmns = malloc(sizeof(pkmn_list_t));
+    npc->pkmns->next = NULL;
+    npc->pkmns->pokemon.number = rand() % 9;
+    npc->pkmns->pokemon.level = choose_level(game);
+    npc->pkmns->pokemon.health = 1000;//200 * (npc->pkmns->pokemon.level / 80) + 10;
+    npc->pkmns->pokemon.max_health = 200 * (npc->pkmns->pokemon.level
+    / 80) + 10;
+    npc->pkmns->pokemon.xp_to_next_lvl = 0;
+    npc->pkmns->pokemon.atq = 100 * (npc->pkmns->pokemon.level / 80) + 10;
+    npc->pkmns->pokemon.def = 100 * (npc->pkmns->pokemon.level / 90) + 10;
+    for (int i = 0; i < 4; i++) {
+        npc->pkmns->pokemon.atks[i] = atks[rand() % NB_ATK];
+    }
+    return (npc);
+}
+
+int free_savage(npc_t *npc)
+{
+    free(npc->pkmns);
+    free(npc);
+    return (0);
+}
+
 void main_cbt(window_t *window, game_t *game, npc_t *npc)
 {
     const sfView *default_view = sfRenderWindow_getDefaultView(window->window);
+    int toggle = 0;
 
+    if (npc == NULL) {
+        npc = init_rand(game);
+        toggle = 1;
+    }
     sfRenderWindow_setView(window->window, default_view);
     combat(window, game, npc);
     sfRenderWindow_setView(window->window, game->view);
+    if (toggle == 1)
+        free_savage(npc);
 }

@@ -10,6 +10,8 @@
 
 #include "graphics.h"
 
+#define NB_ATK 4
+
 typedef struct atk_s
 {
     int number;

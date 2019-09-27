@@ -37,6 +37,7 @@ typedef struct misc_s
     game_object **tab;
     sfClock *clock;
     text_t *stat;
+    int flag;
 }misc_t;
 
 struct game_object *create_object(char *sprite, sfVector2f position, sfIntRect rect1, window_t *window);
