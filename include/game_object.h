@@ -11,8 +11,8 @@
 enum {GROUND = 0, PLAYER, NPC};
 static const int ground_width = 32;
 static const int ground_height = 32;
-static const int character_width = 40;
-static const int character_height = 52;
+static const int character_width = 64;
+static const int character_height = 64;
 static const sfIntRect standardColRect = {0, 0, 32, 32};
 struct game_s;
 

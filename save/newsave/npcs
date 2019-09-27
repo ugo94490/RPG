@@ -34,3 +34,12 @@ atk1:1
 atk2:2
 atk3:0
 atk4:0
+
+-npc
+type:1
+posx:96
+posy:160
+world:1
+direction:2
+diag1:Salut mec.
+interact:0

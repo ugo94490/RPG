@@ -33,8 +33,7 @@ sprite_t sprite, character_t *character)
     sfVector2f temppos = {character->pos.x * window->scale.x,
     character->pos.y * window->scale.y};
     sfVector2f vector0 = {0, 0};
-    sfVector2f origin = {(character_width-ground_width)/2,
-    (character_height-ground_height)};
+    sfVector2f origin = {16, 32};
 
     sfSprite_setOrigin(sprite.sprite, origin);
     sfSprite_setScale(sprite.sprite, window->scale);
