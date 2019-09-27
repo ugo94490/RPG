@@ -27,10 +27,17 @@ typedef struct anim_s
     sfIntRect const *rects;
 } anim_t;
 
+typedef struct item_s
+{
+    int number;
+    int type;
+    int factor;
+} item_t;
+
 typedef struct item_list_s
 {
     int quantity;
-    int item;
+    item_t item;
     struct item_list_s *next;
 } item_list_t;
 
@@ -112,5 +119,7 @@ void save_character(char *path, character_t *character);
 void save_pkmns(void *file, struct pkmn_list_s *pkmns);
 void load_npcs(char *path, struct game_object_list_s **list);
 void save_npcs(char *path, game_object_list_t *list);
+void save_items(void *file, struct item_list_s *items);
+void put_item_in_list(item_list_t **list, item_t item, int qty);
 
 #endif

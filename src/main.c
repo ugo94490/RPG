@@ -44,7 +44,6 @@ void init_game()
     window.scale = scale;
     game.window = &window;
     temp_loop(&window, &scale, &game);
-    save_game(&game);
     destroy_game(&game);
     sfRenderWindow_destroy(window.window);
 }

@@ -14,29 +14,7 @@
 #include "overworld_evt.h"
 #include "my_rpg.h"
 #include "overworld_sound.h"
-
-void teleport(game_t *game, evt_t event)
-{
-    unload_map(&(game->objects));
-    game->character->world = event.destmap;
-    game->character->objective = event.dest;
-    game->character->pos = event.dest;
-    if (event.direction > 0)
-        game->character->direction = event.direction;
-    load_map(&(game->objects), event.destmap);
-}
-
-void activate_event(game_t *game, evt_list_t *evt)
-{
-    if (evt->event.type == 1)
-        teleport(game, evt->event);
-    if (evt->perm == 0) {
-        evt->event.type = 0;
-        evt->perm = 1;
-    }
-    change_music(evt->event.music, &(game->music),
-    &(game->character->music));
-}
+#include "menu.h"
 
 void check_evt_trigger(game_t *game, sfVector2f pos, int locmap)
 {

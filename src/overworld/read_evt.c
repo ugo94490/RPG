@@ -21,6 +21,7 @@ evt_t create_basic_event(void)
     event.type = 0;
     event.pos = basevector;
     event.colrect = baserect;
+    event.music = 0;
     event.locmap = 0;
     event.trigger = 0;
     event.destmap = 0;
@@ -28,6 +29,7 @@ evt_t create_basic_event(void)
     event.direction = 0;
     event.proba = 0;
     event.item = 0;
+    event.quantity = 0;
     return (event);
 }
 
@@ -68,6 +70,8 @@ void analyse_line_evt(char *line, evt_t *evt)
     evt->trigger = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "proba") == 1 ? evt->proba = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "item") == 1 ? evt->item = my_getnbr(words[1]) : 0;
+    my_strcmp(words[0], "quantity") == 1 ?
+    evt->quantity = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "posx") == 1 ? evt->pos.x = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "posy") == 1 ? evt->pos.y = my_getnbr(words[1]) : 0;
     my_strcmp(words[0], "music") == 1 ? evt->music = my_getnbr(words[1]) : 0;

@@ -31,11 +31,20 @@ void destroy_evt_list(evt_list_t *list)
         free(list);
 }
 
+void destroy_item_list(item_list_t *list)
+{
+    if (list && list->next)
+        destroy_item_list(list->next);
+    if (list)
+        free(list);
+}
+
 void destroy_game(game_t *game)
 {
     for (int i = 0; i < 3; i++)
         destroy_sprite(&(game->sprites[i]));
     free(game->sprites);
+    destroy_item_list(game->character->items);
     destroy_object_list(game->objects);
     destroy_evt_list(game->evts);
     sfView_destroy(game->view);

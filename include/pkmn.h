@@ -12,6 +12,8 @@
 
 #define NB_ATK 4
 
+struct item_list_s;
+
 typedef struct atk_s
 {
     int number;
@@ -153,5 +155,7 @@ static sfVector2f atk_txt[8] =
 
 void load_pkmn(FILE *file, char *line, ssize_t *nread,
 struct pkmn_list_s **list);
+void load_item(FILE *file, char *line, ssize_t *nread,
+struct item_list_s **list);
 
 #endif
