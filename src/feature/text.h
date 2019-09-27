@@ -12,6 +12,7 @@
 #include <SFML/System.h>
 #include <SFML/Window.h>
 #include <SFML/Audio.h>
+#include "my_rpg.h"
 
 typedef struct txt_s {
     int flag;
@@ -30,5 +31,7 @@ typedef struct setting_s {
     sfSprite *sprite;
     sfRenderWindow *window;
 } setting_t;
+
+int do_text(char *base, setting_t set, window_t *window, int opt);
 
 #endif

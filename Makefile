@@ -56,6 +56,7 @@ SRC	=	src/main.c					\
 		lib_CSFML/value_structs.c			\
 		lib_CSFML/sprite_functions.c			\
 		src/feature/display_text.c			\
+		src/feature/do_text.c				\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\
@@ -77,7 +78,7 @@ TESTS_NAME	=	tests_run
 
 CC			=	gcc
 
-CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I./src/feature -g3
+CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I./src/feature
 
 CPPFLAGS	+=
 
