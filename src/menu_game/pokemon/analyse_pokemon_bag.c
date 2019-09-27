@@ -29,10 +29,6 @@ static void analyse_keyboard_pkmn_bag_game(pkmn_bag_t *pkmn_bag)
         pkmn_bag->n_slot += 2;
     if (sfKeyboard_isKeyPressed(sfKeyUp) && pkmn_bag->n_slot - 2 >= 1)
         pkmn_bag->n_slot -= 2;
-    if (sfKeyboard_isKeyPressed(sfKeyReturn) && pkmn_bag->param->action == HEAL)
-        fn_item(pkmn_bag);
-    if (sfKeyboard_isKeyPressed(sfKeyReturn) && pkmn_bag->param->action == SWITCH)
-        switch_pokemon(pkmn_bag);
 }
 
 static void analyse_pos_mouse_pkmn_bag_game(pkmn_bag_t *pkmn_bag)

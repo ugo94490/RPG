@@ -12,24 +12,24 @@
 #include "game_object.h"
 #include "menu.h"
 
-static void menu_pkmn_bag_loop(pkmn_bag_t *pkmn_bag)
+static void menu_pkmn_bag_loop(pkmn_bag_t *pkmn_bag, game_t *game)
 {
     clock_sf time_loop = create_clock();
 
     while (pkmn_bag->state == OPEN) {
         sfClock_restart(time_loop.clock);
         sfRenderWindow_clear(pkmn_bag->window->window, sfBlack);
-        display_pokemon_bag(pkmn_bag);
+        display_pokemon_bag(pkmn_bag, game);
         sfRenderWindow_display(pkmn_bag->window->window);
         analyse_pokemon_bag(pkmn_bag);
     }
     sfClock_destroy(time_loop.clock);
 }
 
-void menu_pokemon(window_t *window, param_pkmn_menu_t *param)
+void menu_pokemon(window_t *window, game_t *game)
 {
-    pkmn_bag_t *pkmn_bag = create_pkmn_bag(window, param);
+    pkmn_bag_t *pkmn_bag = create_pkmn_bag(window, game);
 
-    menu_pkmn_bag_loop(pkmn_bag);
+    menu_pkmn_bag_loop(pkmn_bag, game);
     destroy_pokemon_bag(pkmn_bag);
 }

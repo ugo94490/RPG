@@ -58,7 +58,7 @@ static void set_slot_position(pkmn_bag_t *pkmn_bag, int i, sfVector2f *pos_txt)
     pkmn_bag->slot[i].nbr = i + 1;
 }
 
-static void create_slot(pkmn_bag_t *pkmn_bag)
+static void create_slot(pkmn_bag_t *pkmn_bag, game_t *game)
 {
     sfVector2f pos_txt;
     char *tmp = NULL;
@@ -66,29 +66,28 @@ static void create_slot(pkmn_bag_t *pkmn_bag)
     pkmn_bag->n_slot = 1;
     for (int i = 0; i < pkmn_bag->n_pkmn; i += 1) {
         set_slot_position(pkmn_bag, i, &pos_txt);
-        tmp = my_score(pkmn_bag->param->list_pkmn->pokemon.health);
+        tmp = my_score(game->character->pkmns->pokemon.health);
         pkmn_bag->slot[i].pv = create_text(tmp, "assets/Pokemon Solid.ttf",
         15, pos_txt);
         sfText_setColor(pkmn_bag->slot[i].pv.text, sfBlack);
         free(tmp);
-        tmp = my_score(pkmn_bag->param->list_pkmn->pokemon.max_health);
+        tmp = my_score(game->character->pkmns->pokemon.health);
         pos_txt.x = POS_X_SLOT[i] + 200;
         pos_txt.y = POS_Y_SLOT[i] + 75;
         pkmn_bag->slot[i].m_pv = create_text(tmp, "assets/Pokemon Solid.ttf",
         15, pos_txt);
         sfText_setColor(pkmn_bag->slot[i].m_pv.text, sfBlack);
-        pkmn_bag->param->list_pkmn = pkmn_bag->param->list_pkmn->next;
+        game->character->pkmns = game->character->pkmns->next;
         free(tmp);
     }
 }
 
-pkmn_bag_t *create_pkmn_bag(window_t *window, param_pkmn_menu_t *param)
+pkmn_bag_t *create_pkmn_bag(window_t *window, game_t *game)
 {
     pkmn_bag_t *pkmn_bag = malloc(sizeof(*pkmn_bag));
     pkmn_list_t *tmp = NULL;
 
     pkmn_bag->window = window;
-    pkmn_bag->param = param;
     pkmn_bag->img = create_sprite("assets/PokemonMenu.png");
     pkmn_bag->rect.left = 0;
     pkmn_bag->rect.top = 0;
@@ -98,11 +97,7 @@ pkmn_bag_t *create_pkmn_bag(window_t *window, param_pkmn_menu_t *param)
     pkmn_bag->pos.y = 0;
     pkmn_bag->slot = malloc(sizeof(*(pkmn_bag->slot)) * NBR_PKMN);
     pkmn_bag->state = OPEN;
-    pkmn_bag->n_pkmn = my_linklen(param->list_pkmn);
-    pkmn_bag->param->list_pkmn->pokemon.health = 5;
-    pkmn_bag->param->list_pkmn->next->pokemon.health = 50;
-    tmp = pkmn_bag->param->list_pkmn;
-    create_slot(pkmn_bag);
-    pkmn_bag->param->list_pkmn = tmp;
+    pkmn_bag->n_pkmn = my_linklen(game->character->pkmns);
+    create_slot(pkmn_bag, game);
     return (pkmn_bag);
 }
