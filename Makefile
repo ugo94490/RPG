@@ -6,6 +6,7 @@
 ##
 
 SRC	=	src/main.c					\
+		src/overworld/load_evts.c			\
 		src/overworld/read_evt.c			\
 		src/overworld/read_map.c			\
 		src/overworld/put_special_grounds.c		\
@@ -39,6 +40,9 @@ SRC	=	src/main.c					\
 		src/overworld/load_items.c			\
 		src/overworld/activate_evt.c			\
 		src/overworld/save_evts.c			\
+		src/overworld/sub_save_evts.c			\
+		src/overworld/sub_draw_game.c			\
+		src/overworld/load_map.c			\
 		src/basics/my_strlen.c				\
 		src/basics/string_array_fcts.c			\
 		src/basics/my_strdup.c				\

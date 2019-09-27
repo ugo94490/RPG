@@ -15,6 +15,7 @@ static const int character_width = 64;
 static const int character_height = 64;
 static const sfIntRect standardColRect = {0, 0, 32, 32};
 struct game_s;
+struct ground_info_s;
 
 typedef struct anim_s
 {
@@ -121,5 +122,9 @@ void load_npcs(char *path, struct game_object_list_s **list);
 void save_npcs(char *path, game_object_list_t *list);
 void save_items(void *file, struct item_list_s *items);
 void put_item_in_list(item_list_t **list, item_t item, int qty);
+int check_if_draw(game_object_list_t *object,
+character_t *character, int level);
+void put_map_in_grounds(game_object_list_t **list,
+char **map, struct ground_info_s info);
 
 #endif

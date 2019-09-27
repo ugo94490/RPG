@@ -64,5 +64,9 @@ void activate_event(game_t *game, evt_list_t *evt);
 void display_text_overworld(window_t *window, char *text, game_t *game);
 void activate_event(game_t *game, evt_list_t *evt);
 void save_evts(evt_list_t *evts);
+void analyse_line_evt(char *line, evt_t *evt);
+void put_event_in_list(evt_list_t **list, evt_t event, int perm);
+evt_t create_basic_event(void);
+void sub_save_evts(void *file, evt_list_t *evts);
 
 #endif

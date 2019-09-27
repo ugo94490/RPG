@@ -70,17 +70,14 @@ character_t *get_character(char *path, game_object_list_t **list)
 
     if (file == NULL || character == NULL)
         return (NULL);
-    do {
-        nread = getline(&line, &size, file);
-        if (nread == -1)
-            break;
+    while ((nread = getline(&line, &size, file)) != -1) {
         line[nread-1] = '\0';
         if (my_strcmp(line, "-pkmn") == 1)
             load_pkmn(file, line, &nread, &(character->pkmns));
         if (my_strcmp(line, "-item") == 1)
             load_item(file, line, &nread, &(character->items));
         analyse_line_character(line, character);
-    } while (nread != -1);
+    }
     if (line != NULL)
         free(line);
     fclose(file);
