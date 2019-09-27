@@ -24,7 +24,7 @@ static void display_slot(pkmn_bag_t *pkmn_bag, game_t *game)
             pkmn_bag->slot[i].rect.left = 0;
         else
             pkmn_bag->slot[i].rect.left = 258;
-        pkmn_bag->slot[i].pos.x = temppos.x - POS_X_SLOT[i] - 243;
+        pkmn_bag->slot[i].pos.x = temppos.x - POS_X_SLOT[i] - 245;
         pkmn_bag->slot[i].pos.y = temppos.y - POS_Y_SLOT[i] - 225;
         sfSprite_setTextureRect(pkmn_bag->slot[i].img.sprite,
         pkmn_bag->slot[i].rect);
@@ -32,6 +32,12 @@ static void display_slot(pkmn_bag_t *pkmn_bag, game_t *game)
         pkmn_bag->slot[i].pos);
         sfRenderWindow_drawSprite(pkmn_bag->window->window,
         pkmn_bag->slot[i].img.sprite, NULL);
+        pkmn_bag->slot[i].pv.pos.x = temppos.x - POS_X_SLOT[i] - 243 + 200;
+        pkmn_bag->slot[i].pv.pos.y = temppos.y - POS_Y_SLOT[i] - 225 + 75;
+        sfText_setPosition(pkmn_bag->slot[i].pv.text, pkmn_bag->slot[i].pv.pos);
+        pkmn_bag->slot[i].m_pv.pos.x = temppos.x - POS_X_SLOT[i] - 243 + 200;
+        pkmn_bag->slot[i].m_pv.pos.y = temppos.y - POS_Y_SLOT[i] - 225 + 75;
+        sfText_setPosition(pkmn_bag->slot[i].m_pv.text, pkmn_bag->slot[i].m_pv.pos);
         sfRenderWindow_drawText(pkmn_bag->window->window,
         pkmn_bag->slot[i].pv.text, NULL);
         sfRenderWindow_drawText(pkmn_bag->window->window,

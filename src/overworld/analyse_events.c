@@ -15,6 +15,8 @@
 #include "my_rpg.h"
 #include "overworld_sound.h"
 
+void menu_game(game_t *game, window_t *window);
+
 void teleport(game_t *game, evt_t event)
 {
     unload_map(&(game->objects));

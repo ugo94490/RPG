@@ -17,7 +17,9 @@ static void manage_button(game_t *game, menu_t *menu)
     sfVector2f pos = {800, 800};
 
     if (menu->n_button == QUIT)
-        menu->state = QUIT;
+        sfRenderWindow_close(game->window->window);
+    if (menu->n_button == RELEASE)
+        menu->state = RELEASE;
     if (menu->n_button == POKEMON)
         menu->state = POKEMON;
     if (menu->n_button == SAVE) {
@@ -28,7 +30,7 @@ static void manage_button(game_t *game, menu_t *menu)
 
 static void analyse_keyboard_menu_game(game_t *game, menu_t *menu)
 {
-    if (sfKeyboard_isKeyPressed(sfKeyDown) && menu->n_button < 6) {
+    if (sfKeyboard_isKeyPressed(sfKeyDown) && menu->n_button < 7) {
         menu->select.pos_select.y += 46;
         menu->n_button += 1;
     }
@@ -39,7 +41,7 @@ static void analyse_keyboard_menu_game(game_t *game, menu_t *menu)
     if (sfKeyboard_isKeyPressed(sfKeyReturn))
         manage_button(game, menu);
     if (sfKeyboard_isKeyPressed(sfKeyQ))
-        menu->state = QUIT;
+        menu->state = RELEASE;
 }
 
 void analyse_menu_game(game_t *game, menu_t *menu)
