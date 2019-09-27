@@ -47,3 +47,4 @@ int pause_time(float sec);
 int condition_trophy(window_t *window);
 int condition_exit(window_t *window);
 int condition_howto(window_t *window);
+int condition_save(window_t *window);

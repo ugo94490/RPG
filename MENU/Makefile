@@ -8,6 +8,7 @@
 SRC	=	main.c	\
 		bouton_tools.c	\
 		menu_button.c	\
+		choose_save.c	\
 		../lib_CSFML/window_functions.c	\
 
 SRC_T		=
