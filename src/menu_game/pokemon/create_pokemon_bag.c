@@ -18,7 +18,7 @@ static int my_linklen(pkmn_list_t *linked)
 {
     int i = 0;
 
-    for (i = 0; linked->next != NULL; i++)
+    for (i = 0; linked != NULL; i++)
         linked = linked->next;
     return (i);
 }

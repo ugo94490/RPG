@@ -9,28 +9,28 @@ diag1:Yo frer ca va ?
 diag2:J'vais t'niquer !!!
 interact:0
 -pkmn
-number:1
-level:20
-health:200
-max_health:200
+number:0
+level:1
+health:100
+max_health:100
 xp_to_next_lvl:100
 atq:100
 def:200
-atk1:0
-atk2:0
+atk1:3
+atk2:1
 atk3:0
 atk4:0
 
 -pkmn
-number:0
-level:20
-health:200
-max_health:200
+number:1
+level:1
+health:100
+max_health:100
 xp_to_next_lvl:100
 atq:200
 def:100
-atk1:0
-atk2:0
+atk1:1
+atk2:2
 atk3:0
 atk4:0
 
