@@ -94,11 +94,3 @@ trigger:3
 posx:224
 posy:96
 locmap:1
--evt
-type:3
-trigger:3
-quantity:2
-item:1
-posx:288
-posy:96
-locmap:1

@@ -38,6 +38,7 @@ SRC	=	src/main.c					\
 		src/overworld/save_items.c			\
 		src/overworld/load_items.c			\
 		src/overworld/activate_evt.c			\
+		src/overworld/save_evts.c			\
 		src/basics/my_strlen.c				\
 		src/basics/string_array_fcts.c			\
 		src/basics/my_strdup.c				\

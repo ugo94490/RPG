@@ -35,6 +35,7 @@ static void load_save(game_t *game)
     game->character = load_character("save/actualsave/characterInfo",
     &(game->objects));
     game->music = load_music(game->character->music);
+    read_evts("save/actualsave/tempevts", &(game->evts), 0);
 }
 
 static void load_newsave(game_t *game)
@@ -43,6 +44,7 @@ static void load_newsave(game_t *game)
     game->character = load_character("save/newsave/characterInfo",
     &(game->objects));
     game->music = load_music(game->character->music);
+    read_evts("save/newsave/tempevts", &(game->evts), 0);
 }
 
 game_t create_game(int arg)

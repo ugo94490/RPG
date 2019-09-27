@@ -63,5 +63,6 @@ void interact(game_t *game);
 void activate_event(game_t *game, evt_list_t *evt);
 void display_text_overworld(window_t *window, char *text, game_t *game);
 void activate_event(game_t *game, evt_list_t *evt);
+void save_evts(evt_list_t *evts);
 
 #endif
