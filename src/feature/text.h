@@ -32,6 +32,7 @@ typedef struct setting_s {
     sfRenderWindow *window;
 } setting_t;
 
+int loop(txt_t *text, setting_t set, int cpt, int opt);
 int do_text(char *base, setting_t set, window_t *window, int opt);
 
 #endif
