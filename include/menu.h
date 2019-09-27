@@ -85,7 +85,6 @@ typedef struct pkmn_slot_s {
 } pkmn_slot_t;
 
 typedef struct pkmn_bag_s {
-    param_pkmn_menu_t *param;
     window_t *window;
     sprite_t img;
     sfIntRect rect;
@@ -118,8 +117,8 @@ void destroy_menu_game(menu_t *);
 menu_t *create_menu_game(window_t *);
 
 /* Menu Pokemon */
-void menu_pokemon(window_t *, param_pkmn_menu_t *);
-void display_pokemon_bag(pkmn_bag_t *);
+void menu_pokemon(window_t *, game_t *);
+void display_pokemon_bag(pkmn_bag_t *, game_t *);
 void analyse_pokemon_bag(pkmn_bag_t *);
 void destroy_pokemon_bag(pkmn_bag_t *);
-pkmn_bag_t *create_pkmn_bag(window_t *, param_pkmn_menu_t *);
+pkmn_bag_t *create_pkmn_bag(window_t *, game_t *);
