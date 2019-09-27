@@ -296,6 +296,19 @@ static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window,
     return set;
 }
 
+void wait_clock(void)
+{
+    sfClock *clock = sfClock_create();
+    sfTime time;
+    float seconds = 0;
+
+    while (seconds < 0.5) {
+        time = sfClock_getElapsedTime(clock);
+        seconds = time.microseconds / 1000000.0;
+    }
+    sfClock_destroy(clock);
+}
+
 int display_text(char *base, sfVector2f pos, window_t *window, int opt)
 {
     int flag = 0;
@@ -316,6 +329,8 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
             break;
         printf("hey\n");
     }
+    if (opt == 0)
+        wait_clock();
     destroy_obj(spr);
     return 0;
 }
