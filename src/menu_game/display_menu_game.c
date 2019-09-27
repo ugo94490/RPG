@@ -12,7 +12,7 @@
 #include "game_object.h"
 #include "menu.h"
 
-void display_buttons_menu_game(game_t *game, menu_t *menu)
+static void display_buttons_menu_game(game_t *game, menu_t *menu)
 {
     sfVector2f temppos = {(game->character->pos.x + character_width / 2)
         * game->window->scale.x, (game->character->pos.y +
@@ -39,7 +39,10 @@ void display_buttons_menu_game(game_t *game, menu_t *menu)
         sfRenderWindow_drawSprite(menu->window->window,
         menu->buttons[i].img.sprite, NULL);
         menu->buttons[i].pos_text.x = temppos.x - menu->buttons[i].rect.width;
-        menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 5;
+        if (i == 7)
+            menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 25;
+        else
+            menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 5;
         sfText_setPosition(menu->buttons[i].text.text,
         menu->buttons[i].pos_text);
         sfRenderWindow_drawText(menu->window->window,
