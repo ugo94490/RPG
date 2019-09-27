@@ -11,15 +11,6 @@
 #include "graphics.h"
 #include "basics.h"
 
-static void display(sfText *text, char *str, sfRenderWindow *window,
-sfSprite *sprite)
-{
-    sfText_setString(text, str);
-    sfRenderWindow_drawSprite(window, sprite, NULL);
-    sfRenderWindow_drawText(window, text, NULL);
-    sfRenderWindow_display(window);
-}
-
 static char *set_save(char *save, txt_t *text, sfRenderWindow *window,
 sfSprite *sprite)
 {

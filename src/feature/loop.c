@@ -10,15 +10,6 @@
 #include "my_rpg.h"
 #include "basics.h"
 
-static void display(sfText *text, char *str, sfRenderWindow *window,
-sfSprite *sprite)
-{
-    sfText_setString(text, str);
-    sfRenderWindow_drawSprite(window, sprite, NULL);
-    sfRenderWindow_drawText(window, text, NULL);
-    sfRenderWindow_display(window);
-}
-
 static char *get_all(char *str, char *tmp, int where)
 {
     int nb = 0;
