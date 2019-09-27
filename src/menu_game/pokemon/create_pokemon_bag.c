@@ -110,6 +110,7 @@ pkmn_bag_t *create_pkmn_bag(window_t *window, game_t *game, int item)
     pkmn_bag->rect.height = 428;
     pkmn_bag->pos.x = 0;
     pkmn_bag->pos.y = 0;
+    pkmn_bag->n_slot = 0;
     pkmn_bag->slot = malloc(sizeof(*(pkmn_bag->slot)) * NBR_PKMN);
     pkmn_bag->state = OPEN;
     pkmn_bag->n_pkmn = my_linklen(game->character->pkmns);
