@@ -32,7 +32,7 @@ void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
     destroy_clock(&clock);
 }
 
-void init_game()
+void init_game(void)
 {
     window_t window = create_window(1280*1, 960*1, 32, "poukiman");
     sfVector2f scale = {1, 1};
