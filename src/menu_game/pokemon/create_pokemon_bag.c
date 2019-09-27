@@ -16,7 +16,7 @@ static int my_linklen(pkmn_list_t *linked)
 {
     int i = 0;
 
-    for (i = 0; linked->next != NULL; i++)
+    for (i = 0; linked != NULL; i++)
         linked = linked->next;
     return (i);
 }
@@ -82,11 +82,26 @@ static void create_slot(pkmn_bag_t *pkmn_bag, game_t *game)
     }
 }
 
-pkmn_bag_t *create_pkmn_bag(window_t *window, game_t *game)
+pkmn_bag_t *create_pkmn_bag(window_t *window, game_t *game, int item)
 {
     pkmn_bag_t *pkmn_bag = malloc(sizeof(*pkmn_bag));
     pkmn_list_t *tmp = NULL;
+    pkmn_list_t *tmp_l = malloc(sizeof(pkmn_list_t));
 
+    tmp_l->pokemon.health = 10;
+    tmp_l->pokemon.max_health = 100;
+    tmp_l->next = malloc(sizeof(pkmn_list_t));
+    tmp_l->next->pokemon.health = 75;
+    tmp_l->next->pokemon.max_health = 100;
+    tmp_l->next->next = malloc(sizeof(pkmn_list_t));
+    tmp_l->next->next->pokemon.health = 95;
+    tmp_l->next->next->pokemon.max_health = 100;
+    tmp_l->next->next->next = malloc(sizeof(pkmn_list_t));
+    tmp_l->next->next->next->pokemon.health = 5;
+    tmp_l->next->next->next->pokemon.max_health = 100;
+    tmp_l->next->next->next->next = NULL;
+    game->character->pkmns = tmp_l;
+    tmp = game->character->pkmns;
     pkmn_bag->window = window;
     pkmn_bag->img = create_sprite("assets/PokemonMenu.png");
     pkmn_bag->rect.left = 0;
@@ -95,9 +110,13 @@ pkmn_bag_t *create_pkmn_bag(window_t *window, game_t *game)
     pkmn_bag->rect.height = 428;
     pkmn_bag->pos.x = 0;
     pkmn_bag->pos.y = 0;
+    pkmn_bag->n_slot = 0;
     pkmn_bag->slot = malloc(sizeof(*(pkmn_bag->slot)) * NBR_PKMN);
     pkmn_bag->state = OPEN;
     pkmn_bag->n_pkmn = my_linklen(game->character->pkmns);
+    game->character->pkmns = tmp;
     create_slot(pkmn_bag, game);
+    game->character->pkmns = tmp;
+    pkmn_bag->item = item;
     return (pkmn_bag);
 }

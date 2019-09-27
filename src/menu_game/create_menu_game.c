@@ -13,7 +13,7 @@
 #include "menu.h"
 
 static const char *NAME_EN[] = {"Pokedex", "Pokemon", "Bag",
-    "Save", "Settings", "Badges", "Resume"};
+    "Save", "Settings", "Quest", "Resume", "Quit"};
 
 static void create_select(menu_t *menu)
 {

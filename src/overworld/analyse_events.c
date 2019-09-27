@@ -14,7 +14,8 @@
 #include "overworld_evt.h"
 #include "my_rpg.h"
 #include "overworld_sound.h"
-#include "menu.h"
+
+void menu_game(game_t *game, window_t *window);
 
 void check_evt_trigger(game_t *game, sfVector2f pos, int locmap)
 {

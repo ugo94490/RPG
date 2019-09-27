@@ -16,14 +16,15 @@ static void menu_game_loop(game_t *game, menu_t *menu)
 {
     clock_sf time_loop = create_clock();
 
-    while (menu->state != QUIT) {
+    while (menu->state != RELEASE &&
+    sfRenderWindow_isOpen(game->window->window)) {
         sfRenderWindow_clear(menu->window->window, sfBlack);
         analyse_menu_game(game, menu);
         sfClock_restart(time_loop.clock);
         if (menu->state == NONE)
             display_menu_game(game, menu);
         if (menu->state == POKEMON) {
-            menu_pokemon(menu->window, game);
+            menu_pokemon(menu->window, game, POTION);
             menu->state = NONE;
         }
         sfRenderWindow_display(menu->window->window);
