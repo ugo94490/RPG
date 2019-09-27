@@ -34,6 +34,7 @@ typedef struct setting_s {
 
 int loop(txt_t *text, setting_t set, int cpt, int opt);
 int do_text(char *base, setting_t set, window_t *window, int opt);
+int check_cpt(txt_t *text, int cpt, sfRenderWindow *window, sfSprite *sprite);
 
 txt_t set_text(txt_t *text, setting_t set, char *base, int opt);
 
