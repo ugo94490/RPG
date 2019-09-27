@@ -12,6 +12,24 @@
 #include "game_object.h"
 #include "menu.h"
 
+static void sub_display_buttons(menu_t *menu, int i, sfVector2f temppos)
+{
+    if (i == 4)
+        menu->buttons[i].pos_img.y = temppos.y - 225 + (50 * i) + 5 - 20;
+    else
+        menu->buttons[i].pos_img.y = temppos.y - 225 + (50 * i) + 5;
+    sfSprite_setPosition(menu->buttons[i].img.sprite,
+    menu->buttons[i].pos_img);
+    sfSprite_setScale(menu->buttons[i].img.sprite, menu->scale);
+    sfRenderWindow_drawSprite(menu->window->window,
+    menu->buttons[i].img.sprite, NULL);
+    menu->buttons[i].pos_text.x = temppos.x - menu->buttons[i].rect.width;
+    if (i == 7)
+        menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 25;
+    else
+        menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 5;
+}
+
 static void display_buttons_menu_game(game_t *game, menu_t *menu)
 {
     sfVector2f temppos = {(game->character->pos.x + character_width / 2)
@@ -29,20 +47,7 @@ static void display_buttons_menu_game(game_t *game, menu_t *menu)
         sfSprite_setTextureRect(menu->buttons[i].img.sprite,
         menu->buttons[i].rect);
         menu->buttons[i].pos_img.x = temppos.x + 25;
-        if (i == 4)
-            menu->buttons[i].pos_img.y = temppos.y - 225 + (50 * i) + 5 - 20;
-        else
-            menu->buttons[i].pos_img.y = temppos.y - 225 + (50 * i) + 5;
-        sfSprite_setPosition(menu->buttons[i].img.sprite,
-        menu->buttons[i].pos_img);
-        sfSprite_setScale(menu->buttons[i].img.sprite, menu->scale);
-        sfRenderWindow_drawSprite(menu->window->window,
-        menu->buttons[i].img.sprite, NULL);
-        menu->buttons[i].pos_text.x = temppos.x - menu->buttons[i].rect.width;
-        if (i == 7)
-            menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 25;
-        else
-            menu->buttons[i].pos_text.y = temppos.y - 215 + (50 * i) + 5;
+        sub_display_buttons(menu, i, temppos);
         sfText_setPosition(menu->buttons[i].text.text,
         menu->buttons[i].pos_text);
         sfRenderWindow_drawText(menu->window->window,

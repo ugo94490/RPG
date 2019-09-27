@@ -45,6 +45,7 @@ SRC	=	src/main.c				\
 		src/basics/my_str_to_word_array.c	\
 		src/basics/my_getnbr.c			\
 		src/basics/word_array_fcts.c		\
+		src/basics/my_score.c			\
 		UGO/useful_fct.c			\
 		UGO/main_cbt.c				\
 		UGO/tools_two.c				\
