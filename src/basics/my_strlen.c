@@ -17,7 +17,7 @@ int my_strlen(char const *str)
     return (i);
 }
 
-char *my_strcat(char *str1, char *str2)
+char *my_strcat(char *str1, char const *str2)
 {
     int len = my_strlen(str1) + my_strlen(str2) + 1;
     int i = 0;

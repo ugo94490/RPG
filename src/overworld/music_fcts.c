@@ -35,6 +35,7 @@ void change_music(int index, sfMusic **music, int *actualmusic)
         return;
     sfMusic_stop(*music);
     sfMusic_destroy(*music);
+    *music = NULL;
     *music = sfMusic_createFromFile(musics[index-1]);
     sfMusic_setLoop(*music, sfTrue);
     sfMusic_play(*music);

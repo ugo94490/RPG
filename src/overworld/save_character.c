@@ -53,6 +53,7 @@ void save_character(char *path, character_t *character)
     fwrite(nbr, 1, my_strlen(nbr), file);
     fwrite("\n", 1, 1, file);
     save_pkmns((void *)(file), character->pkmns);
+    save_items((void *)(file), character->items);
     fclose(file);
     free(cpy);
 }

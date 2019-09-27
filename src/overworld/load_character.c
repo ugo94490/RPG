@@ -35,6 +35,7 @@ character_t *create_base_character(void)
     character->anim.rects = dawn_rects;
     character->anim.clock = create_clock();
     character->pkmns = NULL;
+    character->items = NULL;
     return (character);
 }
 
@@ -76,6 +77,8 @@ character_t *get_character(char *path, game_object_list_t **list)
         line[nread-1] = '\0';
         if (my_strcmp(line, "-pkmn") == 1)
             load_pkmn(file, line, &nread, &(character->pkmns));
+        if (my_strcmp(line, "-item") == 1)
+            load_item(file, line, &nread, &(character->items));
         analyse_line_character(line, character);
     } while (nread != -1);
     if (line != NULL)
