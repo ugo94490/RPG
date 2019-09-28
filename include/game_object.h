@@ -126,5 +126,9 @@ int check_if_draw(game_object_list_t *object,
 character_t *character, int level);
 void put_map_in_grounds(game_object_list_t **list,
 char **map, struct ground_info_s info);
+void sort_list(game_object_list_t **objects);
+float get_posy_obj(game_object_list_t *node);
+void push_in_other_list(game_object_list_t **list, game_object_list_t **dest);
+void reverse_first_two_elements(game_object_list_t **list);
 
 #endif

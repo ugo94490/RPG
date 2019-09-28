@@ -10,7 +10,7 @@
 static int condition_new(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("../assets/play.png");
+    sfSprite *exit = init_button("assets/play.png");
     sfVector2f position = {866 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
@@ -29,10 +29,10 @@ static int condition_new(window_t *window)
     return (0);
 }
 
-static int condition_actual(window_t *window)
+static int condition_actual(window_t *window, sfVector2f *scale, game_t *game)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("../assets/play.png");
+    sfSprite *play = init_button("assets/play.png");
     sfVector2f position = {94 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
@@ -41,6 +41,7 @@ static int condition_actual(window_t *window)
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(1);
+            temp_loop(window, scale, game);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -50,15 +51,15 @@ static int condition_actual(window_t *window)
     return (0);
 }
 
-int condition_save(window_t *window)
+int condition_save(window_t *window, sfVector2f *scale, game_t *game)
 {
-    menu_t *menu = init_menu("../assets/menu.jpg");
+    menu_t *menu = init_menu("assets/menu.jpg");
 
     sfSprite_setScale(menu->sprite, window->scale);
     while (sfRenderWindow_isOpen(window->window)) {
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
-        condition_actual(window);
+        condition_actual(window, scale, game);
         condition_new(window);
         menu_event(window);
         sfRenderWindow_display(window->window);

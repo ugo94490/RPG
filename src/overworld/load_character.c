@@ -87,6 +87,6 @@ character_t *load_character(char *path, game_object_list_t **list)
         return (NULL);
     character->anim.rects = characterRects[character->type];
     character->objective = character->pos;
-    put_object_in_objects(list, (void *)(character), PLAYER, 3);
+    put_object_in_objects(list, (void *)(character), PLAYER, 4);
     return (character);
 }

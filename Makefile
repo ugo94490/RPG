@@ -43,6 +43,8 @@ SRC	=	src/main.c					\
 		src/overworld/sub_save_evts.c			\
 		src/overworld/sub_draw_game.c			\
 		src/overworld/load_map.c			\
+		src/overworld/sort_objects.c			\
+		src/overworld/sub_sort_list.c			\
 		src/basics/my_strlen.c				\
 		src/basics/string_array_fcts.c			\
 		src/basics/my_strdup.c				\
@@ -66,6 +68,12 @@ SRC	=	src/main.c					\
 		src/feature/do_text.c				\
 		src/feature/set_text.c				\
 		src/feature/check_cpt.c				\
+		src/MENU/bouton_tools.c				\
+		src/MENU/condition_gender.c			\
+		src/MENU/condition_save.c			\
+		src/MENU/display_menu.c				\
+		src/MENU/menu_button.c				\
+		src/MENU/menu_tools.c				\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\

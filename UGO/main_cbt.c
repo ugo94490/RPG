@@ -13,7 +13,7 @@
 #include "overworld.h"
 #include "basics.h"
 
-int pause_time(float sec)
+static int pause_time(float sec)
 {
     sfTime time = sfTime_Zero;
     sfClock *clock = sfClock_create();

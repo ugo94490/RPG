@@ -6,11 +6,12 @@
 */
 
 #include "main_menu.h"
+#include "overworld.h"
 
 int condition_trophy(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("../assets/trophée.png");
+    sfSprite *play = init_button("assets/trophée.png");
     sfVector2f position = {1230 * window->scale.x, 886 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
@@ -31,7 +32,7 @@ int condition_trophy(window_t *window)
 int condition_exit(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("../assets/exit.png");
+    sfSprite *exit = init_button("assets/exit.png");
     sfVector2f position = {866 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
@@ -50,10 +51,10 @@ int condition_exit(window_t *window)
     return (0);
 }
 
-int condition_play(window_t *window)
+int condition_play(window_t *window, sfVector2f *scale, game_t *game)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("../assets/play.png");
+    sfSprite *play = init_button("assets/play.png");
     sfVector2f position = {94 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
@@ -62,7 +63,7 @@ int condition_play(window_t *window)
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(1);
-            condition_save(window);
+            condition_save(window, scale, game);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -75,7 +76,7 @@ int condition_play(window_t *window)
 int condition_howto(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("../assets/howto.png");
+    sfSprite *play = init_button("assets/howto.png");
     sfVector2f position = {487 * window->scale.x, 10 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
@@ -96,7 +97,7 @@ int condition_howto(window_t *window)
 int condition_gear(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("../assets/gear.png");
+    sfSprite *play = init_button("assets/gear.png");
     sfVector2f position = {0 * window->scale.x, 910 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
