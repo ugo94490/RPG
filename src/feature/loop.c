@@ -28,7 +28,7 @@ static char *get_all(char *str, char *tmp, int where)
 {
     int nb = 0;
     int cpt = 0;
-    char *new = malloc(sizeof(char) * my_strlen(str));
+    char *new = malloc(sizeof(char) * my_strlen(str) + 1);
 
     for (; tmp[cpt] != '\0'; ++cpt) {
         new[cpt] = tmp[cpt];
