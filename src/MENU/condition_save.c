@@ -30,7 +30,7 @@ static int condition_new(window_t *window)
     return (0);
 }
 
-static int condition_actual(window_t *window, sfVector2f *scale, game_t *game)
+static int condition_actual(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *play = init_button("assets/play.png");
@@ -43,7 +43,7 @@ static int condition_actual(window_t *window, sfVector2f *scale, game_t *game)
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(1);
-            temp_loop(window, scale, game);
+            temp_loop(window, scale, 1, 0);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -53,7 +53,7 @@ static int condition_actual(window_t *window, sfVector2f *scale, game_t *game)
     return (0);
 }
 
-int condition_save(window_t *window, sfVector2f *scale, game_t *game)
+int condition_save(window_t *window, sfVector2f *scale)
 {
     menu_t *menu = init_menu("assets/menu.jpg");
 
@@ -61,7 +61,7 @@ int condition_save(window_t *window, sfVector2f *scale, game_t *game)
     while (sfRenderWindow_isOpen(window->window)) {
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
-        condition_actual(window, scale, game);
+        condition_actual(window, scale);
         condition_new(window);
         if (condition_back(window) == 1)
             break;

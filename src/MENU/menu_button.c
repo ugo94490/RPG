@@ -53,7 +53,7 @@ int condition_exit(window_t *window)
     return (0);
 }
 
-int condition_play(window_t *window, sfVector2f *scale, game_t *game)
+int condition_play(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *play = init_button("assets/play.png");
@@ -66,7 +66,7 @@ int condition_play(window_t *window, sfVector2f *scale, game_t *game)
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(1);
-            condition_save(window, scale, game);
+            condition_save(window, scale);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else

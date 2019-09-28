@@ -37,7 +37,7 @@ typedef struct game_object
 sfSprite *init_button(char *buffer);
 int display_button(sfSprite *sprite, sfVector2f position, sfIntRect rect
 , window_t *window);
-int condition_play(window_t *window, sfVector2f *scale, game_t *game);
+int condition_play(window_t *window, sfVector2f *scale);
 int condition_gear(window_t *window);
 menu_t *init_menu(char *path);
 int free_menu(menu_t *menu);
@@ -47,8 +47,8 @@ int pause_time(float sec);
 int condition_trophy(window_t *window);
 int condition_exit(window_t *window);
 int condition_howto(window_t *window);
-int condition_save(window_t *window, sfVector2f *scale, game_t *game);
+int condition_save(window_t *window, sfVector2f *scale);
 int condition_gender(window_t *window);
 int menu_event(window_t *window);
-int display_menu(window_t *window, sfVector2f *scale, game_t *game);
+int display_menu(window_t *window, sfVector2f *scale);
 int condition_back(window_t *window);
