@@ -21,13 +21,15 @@ float get_posy_obj(game_object_list_t *node)
         return (((ground_t *)(node->object))->pos.y);
     if (node->type == NPC)
         return (((npc_t *)(node->object))->pos.y);
+    return (0);
 }
 
 void push_in_other_list(game_object_list_t **list, game_object_list_t **dest)
 {
     game_object_list_t *save = (*list)->next;
 
-    put_object_in_objects(dest, (*list)->object, (*list)->type, (*list)->height);
+    put_object_in_objects(dest, (*list)->object, (*list)->type,
+    (*list)->height);
     free(*list);
     *list = save;
 }

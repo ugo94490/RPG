@@ -33,7 +33,7 @@ void move_left(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x - ground_width,
-    game->character->pos.y};
+        game->character->pos.y};
 
     if (game->character->status != 0)
         return;

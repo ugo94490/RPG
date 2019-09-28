@@ -27,19 +27,19 @@ static void sort(game_object_list_t **la, game_object_list_t **lb)
 {
     while ((*la) != NULL) {
         if (*la != NULL && (*la)->next != NULL &&
-        get_posy_obj((*la)->next) < get_posy_obj(*la))
+            get_posy_obj((*la)->next) < get_posy_obj(*la))
             reverse_first_two_elements(la);
         if (*lb != NULL && (*lb)->next != NULL &&
-        get_posy_obj((*lb)->next) > get_posy_obj(*lb))
+            get_posy_obj((*lb)->next) > get_posy_obj(*lb))
             reverse_first_two_elements(lb);
         push_in_other_list(la, lb);
     }
     while ((*lb) != NULL) {
         if (*la != NULL && (*la)->next != NULL &&
-        get_posy_obj((*la)->next) < get_posy_obj(*la))
+            get_posy_obj((*la)->next) < get_posy_obj(*la))
             reverse_first_two_elements(la);
         if (*lb != NULL && (*lb)->next != NULL &&
-        get_posy_obj((*lb)->next) > get_posy_obj(*lb))
+            get_posy_obj((*lb)->next) > get_posy_obj(*lb))
             reverse_first_two_elements(lb);
         push_in_other_list(lb, la);
     }

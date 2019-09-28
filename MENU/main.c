@@ -123,7 +123,7 @@ int cinematic(window_t *window)
 int main(int ac, char **av, char **env)
 {
     sfVector2f scale = {1, 1};
-    window_t window = create_window(1280 * scale.x, 960 * scale.y, 32, "poukiman");
+    window_t window = create_window(1280 * scale.x, 960 * scale.y, 32, "RPG");
 
     (void) ac;
     (void) av;

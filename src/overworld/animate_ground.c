@@ -51,7 +51,7 @@ void anim_speherb(game_t *game, ground_t *ground, int *height)
         ground->anim.actual_rect = 0;
 }
 
-void noAnimGround(game_t *game, ground_t *ground, int *height)
+void noanimground(game_t *game, ground_t *ground, int *height)
 {
     (void)game;
     (void)ground;

@@ -24,7 +24,7 @@ static int nb_words(char *str, char *notinc)
             str += 1;
         if (*str != '\0' && check_if_inc(*str, notinc) == 1)
             nb_words++;
-        for (; *str != '\0'  && check_if_inc(*str, notinc) == 1; str += 1);
+        for (; *str != '\0' && check_if_inc(*str, notinc) == 1; str += 1);
     }
     return (nb_words);
 }

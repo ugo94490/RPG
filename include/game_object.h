@@ -101,7 +101,7 @@ int check_can_go(character_t *character,
 game_object_list_t *list, sfVector2f objective);
 int check_can_go_np(game_object_list_t *list, sfVector2f objective);
 void load_map(game_object_list_t **list, int arg);
-void noAnimGround(struct game_s *game, ground_t *ground, int *height);
+void noanimground(struct game_s *game, ground_t *ground, int *height);
 void anim_flower(struct game_s *game, ground_t *ground, int *height);
 void anim_door(struct game_s *game, ground_t *ground, int *height);
 void anim_speherb(struct game_s *game, ground_t *ground, int *height);

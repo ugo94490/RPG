@@ -15,7 +15,7 @@
 #include "game_object.h"
 #include "overworld_rects.h"
 
-static void sub_setGroundRect(ground_t *ground, ground_info_t info, int rect)
+static void sub_setgroundrect(ground_t *ground, ground_info_t info, int rect)
 {
     if (info.type == 1 && info.map == 1)
         ground->anim.rects = objRectsIn[rect];
@@ -25,7 +25,7 @@ static void sub_setGroundRect(ground_t *ground, ground_info_t info, int rect)
         ground->anim.rects = heightsRectsIn[rect];
 }
 
-static void setGroundRect(ground_t *ground, ground_info_t info, int rect)
+static void setgroundrect(ground_t *ground, ground_info_t info, int rect)
 {
     if (info.type == 0 && info.map == 0)
         ground->anim.rects = groundRectsOut[rect];
@@ -41,7 +41,7 @@ static void setGroundRect(ground_t *ground, ground_info_t info, int rect)
         ground->anim.rects = groundRectsIn[rect];
     if (info.type == 5)
         ground->anim.rects = nocolobjsRects[rect];
-    sub_setGroundRect(ground, info, rect);
+    sub_setgroundrect(ground, info, rect);
 }
 
 static ground_t *create_ground(int rect, ground_info_t info)
@@ -50,20 +50,20 @@ static ground_t *create_ground(int rect, ground_info_t info)
 
     if (ground == NULL)
         return (NULL);
-    ground->animfct = &noAnimGround;
+    ground->animfct = &noanimground;
     ground->type = info.type;
     ground->anim.nb_rects = 1;
     ground->anim.actual_rect = 0;
     ground->anim.time_anim = 0;
     ground->anim.clock.clock = NULL;
-    setGroundRect(ground, info, rect);
+    setgroundrect(ground, info, rect);
     ground->solid = info.solid;
     ground->pos = info.pos;
     return (ground);
 }
 
 static void create_ground_from_char(game_object_list_t **list,
-                                    char c, ground_info_t info)
+char c, ground_info_t info)
 {
     ground_t *ground = NULL;
     int nb = 0;
