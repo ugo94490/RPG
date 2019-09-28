@@ -16,36 +16,36 @@
 #include "overworld.h"
 #include "main_menu.h"
 
-void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
+void temp_loop(window_t *window, sfVector2f *scale, int flag, int gender)
 {
     clock_sf clock = create_clock();
+    game_t game = create_game(flag);
 
+    if (game.view == NULL || game.objects == NULL ||
+        game.sprites == NULL || game.character == NULL)
+        return;
+    game.window = window;
     sfRenderWindow_setFramerateLimit(window->window, 60);
     while (sfRenderWindow_isOpen(window->window)) {
         clock.time = sfClock_getElapsedTime(clock.clock);
         sfClock_restart(clock.clock);
-        animate_objects(game);
-        move_objects(game->objects, clock.time);
-        analyse_event(window, game);
-        set_view_params(window, game, *scale);
-        draw_game(window, game);
+        animate_objects(&game);
+        move_objects(game.objects, clock.time);
+        analyse_event(window, &game);
+        set_view_params(window, &game, *scale);
+        draw_game(window, &game);
     }
     destroy_clock(&clock);
+    destroy_game(&game);
 }
 
 void init_game(void)
 {
     sfVector2f scale = {0.5, 0.5};
     window_t window = create_window(1280*scale.x, 960*scale.y, 32, "MY_RPG");
-    game_t game = create_game(0);
 
-    if (game.view == NULL || game.objects == NULL ||
-        game.sprites == NULL || game.character == NULL)
-        return;
     window.scale = scale;
-    game.window = &window;
-    display_menu(&window, &scale, &game);
-    destroy_game(&game);
+    display_menu(&window, &scale);
     sfRenderWindow_destroy(window.window);
 }
 
