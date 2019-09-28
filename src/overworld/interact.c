@@ -23,12 +23,34 @@ void aggro(game_t *game, npc_t *npc)
     sfMusic_play(game->music);
 }
 
-void npc_interact(game_t *game, npc_t *npc)
+void set_npc_direction_interact(character_t *character, npc_t *npc)
+{
+    if (character->direction == 1)
+        npc->direction = 3;
+    if (character->direction == 2)
+        npc->direction = 4;
+    if (character->direction == 3)
+        npc->direction = 1;
+    if (character->direction == 4)
+        npc->direction = 2;
+}
+
+void basic_npc_interact(game_t *game, npc_t *npc)
 {
     if (npc->aggro == 1)
         aggro(game, npc);
     if (npc->aggro == 0 && npc->diag1)
         display_text_overworld(game->window, npc->diag1, game);
+}
+
+void npc_interact(game_t *game, npc_t *npc)
+{
+    void (*npc_interact_ptr[])(game_t *, npc_t *) = {basic_npc_interact};
+
+    set_npc_direction_interact(game->character, npc);
+    animate_npc(npc);
+    draw_game(game->window, game);
+    (*npc_interact_ptr[npc->interact])(game, npc);
 }
 
 void sub_interact(game_t *game, sfVector2f postry)
