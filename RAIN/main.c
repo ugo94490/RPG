@@ -35,7 +35,7 @@ void flocon(sfVertexArray *my_rain, sfVertex vertex, int x, int y)
     }
 }
 
-void change(sfVertexArray *my_rain, sfVector2f pos1, sfVector2f pos2)
+void change(sfVertexArray *my_rain, sfIntRect pos)
 {
     sfVertex *ver;
 
@@ -46,14 +46,14 @@ void change(sfVertexArray *my_rain, sfVector2f pos1, sfVector2f pos2)
         else
             ver->position.y += 8;
         ver->position.x += 0.5;
-        if (ver->position.y >= pos2.y)
-            ver->position.y -= pos2.y - pos1.y;
-        if (ver->position.x >= pos2.x)
-            ver->position.x -= pos2.x - pos1.x;
+        if (ver->position.y >= pos.height)
+            ver->position.y -= pos.height - pos.top;
+        if (ver->position.x >= pos.width)
+            ver->position.x -= pos.width - pos.left;
     }
 }
 
-void move_snow(sfVertexArray *my_rain, sfVector2f pos1, sfVector2f pos2)
+void move_snow(sfVertexArray *my_rain, sfIntRect pos)
 {
     sfVertex *ver;
 
@@ -61,49 +61,46 @@ void move_snow(sfVertexArray *my_rain, sfVector2f pos1, sfVector2f pos2)
         ver = sfVertexArray_getVertex(my_rain, i);
         ver->position.y += 5;
         ver->position.x += 1;
-        if (ver->position.y >= pos2.y)
-            ver->position.y -= pos2.y - pos1.y;
-        if (ver->position.x >= pos2.x)
-            ver->position.x -= pos2.x - pos1.x;
+        if (ver->position.y >= pos.height)
+            ver->position.y -= pos.height - pos.top;
+        if (ver->position.x >= pos.width)
+            ver->position.x -= pos.width - pos.left;
     }
 }
 
-int rain_misc(window_t window, sfVertexArray *my_rain, int ret,
-sfVector2f pos1, sfVector2f pos2)
+int rain_misc(window_t window, sfVertexArray *my_rain, int ret, sfIntRect pos)
 {
     sfRenderWindow_clear(window.window, sfYellow);
     sfRenderWindow_drawVertexArray(window.window, my_rain, NULL);
     if (ret == 2)
-        move_snow(my_rain, pos1, pos2);
+        move_snow(my_rain, pos);
     else
-        change(my_rain, pos1, pos2);
+        change(my_rain, pos);
     event(&window);
     sfRenderWindow_display(window.window);
     return (0);
 }
 
-void init_rain(sfVertexArray *my_rain, sfVertex vertex, sfVector2f pos1,
-sfVector2f pos2)
+void init_rain(sfVertexArray *my_rain, sfVertex vertex, sfIntRect pos)
 {
     for (int i = 0; i < 400; i++)
-        goutte(my_rain, vertex, rand() % (int)(pos2.x - pos1.x) + pos1.x,
-        (rand() % (int)(pos2.y - pos1.y)) + pos1.y);
+        goutte(my_rain, vertex, rand() % (int)(pos.width - pos.left) +
+        pos.left, (rand() % (int)(pos.height - pos.top)) + pos.top);
 }
 
-void init_snow(sfVertexArray *my_rain, sfVertex vertex, sfVector2f pos1,
-sfVector2f pos2)
+void init_snow(sfVertexArray *my_rain, sfVertex vertex, sfIntRect pos)
 {
     for (int i = 0; i < 400; i++)
-        flocon(my_rain, vertex, (rand() % (int)(pos2.x - pos1.x)) + pos1.x,
-        (rand() % (int)(pos2.y - pos1.y)) + pos1.y);
+        flocon(my_rain, vertex, (rand() % (int)(pos.width - pos.left)) +
+        pos.left, (rand() % (int)(pos.height - pos.top)) + pos.top);
 }
 
 int main(void)
 {
     window_t window = create_window(1280, 960, 32, "COMBAT RPG");
     sfVertexArray *my_rain = sfVertexArray_create();
-    sfVector2f pos1 = {100, 100};
-    sfVector2f pos2 = {1000, 800};
+    sfIntRect pos = {100, 100, 1000, 800};
+    sfVector2f pos1 = {0, 0};
     sfVertex vertex = {pos1, sfWhite, pos1};
     sfClock *clock = sfClock_create();
     sfTime tim;
@@ -115,13 +112,13 @@ int main(void)
         if (toggle == 0) {
             sfVertexArray_clear(my_rain);
             vertex.color = sfWhite;
-            init_snow(my_rain, vertex, pos1, pos2);
+            init_snow(my_rain, vertex, pos);
             toggle = 2;
         }
         if (toggle == 1) {
             sfVertexArray_clear(my_rain);
             vertex.color = sfBlue;
-            init_rain(my_rain, vertex, pos1, pos2);
+            init_rain(my_rain, vertex, pos);
             toggle = 3;
         }
         if (sfKeyboard_isKeyPressed(sfKeyR))
@@ -130,7 +127,7 @@ int main(void)
             toggle = 1;
         tim = sfClock_getElapsedTime(clock);
         if (tim.microseconds >= 10000) {
-            rain_misc(window, my_rain, toggle, pos1, pos2);
+            rain_misc(window, my_rain, toggle, pos);
             tim = sfClock_restart(clock);
         }
     }
