@@ -59,6 +59,8 @@ int condition_gender(window_t *window)
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_boy(window);
         condition_girl(window);
+        if (condition_back(window) == 1)
+            break;
         menu_event(window);
         sfRenderWindow_display(window->window);
     }
