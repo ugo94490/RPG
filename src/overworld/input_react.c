@@ -26,7 +26,7 @@ void move_right(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x + ground_width,
-    game->character->pos.y};
+        game->character->pos.y};
 
     if (game->character->status != 0)
         return;
@@ -34,7 +34,7 @@ void move_right(game_t *game)
     if (check_can_go(game->character, game->objects, newobjective) == 0)
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLShift) &&
-    check_has_shoes(game->character->items) == 1)
+        check_has_shoes(game->character->items) == 1)
         newstatus = 2;
     game->character->objective = newobjective;
     update_character_status(game->character, newstatus, 2);
@@ -44,7 +44,7 @@ void move_left(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x - ground_width,
-    game->character->pos.y};
+        game->character->pos.y};
 
     if (game->character->status != 0)
         return;
@@ -52,7 +52,7 @@ void move_left(game_t *game)
     if (check_can_go(game->character, game->objects, newobjective) == 0)
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLShift) &&
-    check_has_shoes(game->character->items) == 1)
+        check_has_shoes(game->character->items) == 1)
         newstatus = 2;
     game->character->objective = newobjective;
     update_character_status(game->character, newstatus, 4);
@@ -62,7 +62,7 @@ void move_up(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x,
-    game->character->pos.y - ground_height};
+        game->character->pos.y - ground_height};
 
     if (game->character->status != 0)
         return;
@@ -70,7 +70,7 @@ void move_up(game_t *game)
     if (check_can_go(game->character, game->objects, newobjective) == 0)
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLShift) &&
-    check_has_shoes(game->character->items) == 1)
+        check_has_shoes(game->character->items) == 1)
         newstatus = 2;
     game->character->objective = newobjective;
     update_character_status(game->character, newstatus, 3);
@@ -80,7 +80,7 @@ void move_down(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x,
-    game->character->pos.y + ground_height};
+        game->character->pos.y + ground_height};
 
     if (game->character->status != 0)
         return;
@@ -88,7 +88,7 @@ void move_down(game_t *game)
     if (check_can_go(game->character, game->objects, newobjective) == 0)
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLShift) &&
-    check_has_shoes(game->character->items) == 1)
+        check_has_shoes(game->character->items) == 1)
         newstatus = 2;
     game->character->objective = newobjective;
     update_character_status(game->character, newstatus, 1);
