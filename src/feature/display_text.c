@@ -14,13 +14,20 @@
 
 #define TEXT_COMBAT "assets/text_combat.png"
 
-static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window)
+static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window,
+int opt)
 {
     setting_t set;
 
-    set.size = 17 * (0.5 * window->scale.x);
-    set.pos.x = pos.x + 20 * (0.5 * window->scale.x);
-    set.pos.y = pos.y + 25 * (0.5 * window->scale.y);
+    if (opt == 1) {
+        set.size = 17 * (0.5 * window->scale.x);
+        set.pos.x = pos.x + 20 * (0.5 * window->scale.x);
+        set.pos.y = pos.y + 25 * (0.5 * window->scale.y);
+    } else {
+        set.size = 17 * window->scale.x;
+        set.pos.x = (pos.x + 20) * window->scale.x;
+        set.pos.y = (pos.y + 25) * window->scale.y;
+    }
     set.window = window->window;
     return set;
 }
@@ -50,7 +57,7 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
 {
     int flag = 0;
     sfVector2f scale = {0.50 * window->scale.x, 0.50 * window->scale.y};
-    setting_t set = set_setting(pos, scale, window);
+    setting_t set = set_setting(pos, scale, window, opt);
     game_object *spr = set_spr(spr, pos, window);
 
     set.sprite = spr->sprite;
