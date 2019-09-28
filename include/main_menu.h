@@ -51,3 +51,4 @@ int condition_save(window_t *window, sfVector2f *scale, game_t *game);
 int condition_gender(window_t *window);
 int menu_event(window_t *window);
 int display_menu(window_t *window, sfVector2f *scale, game_t *game);
+int condition_back(window_t *window);

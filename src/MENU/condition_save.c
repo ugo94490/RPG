@@ -61,6 +61,8 @@ int condition_save(window_t *window, sfVector2f *scale, game_t *game)
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_actual(window, scale, game);
         condition_new(window);
+        if (condition_back(window) == 1)
+            break;
         menu_event(window);
         sfRenderWindow_display(window->window);
     }
