@@ -38,6 +38,8 @@ typedef struct misc_s
     sfClock *clock;
     text_t *stat;
     int flag;
+    sfSprite *sprite;
+    sfTexture *texture;
 }misc_t;
 
 struct game_object *create_object(char *sprite, sfVector2f position, sfIntRect rect1, window_t *window);

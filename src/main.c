@@ -34,7 +34,7 @@ void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
 
 void init_game(void)
 {
-    sfVector2f scale = {1, 1};
+    sfVector2f scale = {0.5, 0.5};
     window_t window = create_window(1280*scale.x, 960*scale.y, 32, "MY_RPG");
     game_t game = create_game(0);
 

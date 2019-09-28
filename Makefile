@@ -89,7 +89,7 @@ CC			=	gcc
 
 CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I./src/feature
 
-CPPFLAGS	+=
+CPPFLAGS	+=	-g3
 
 TEST_FLAGS	=	-lcriterion --coverage
 

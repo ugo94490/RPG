@@ -128,27 +128,45 @@ int bag(game_object *sp, sfClock *clk, window_t *window)
     return (0);
 }
 
-int mode(window_t *window, int flag)
+int display_cursor(window_t *win, misc_t *misc)
 {
-    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    int ret = 0;
+    sfVector2i pos = sfMouse_getPositionRenderWindow(win->window);
+    sfVector2f pos1 = {pos.x, pos.y};
 
-    if (vct.x >= 343 && vct.x <= 936 && vct.y >= 537 && vct.y <= 812) {
-        ret = 1;
-        if (sfMouse_isButtonPressed(sfMouseLeft))
-            pause_time(0.3) == 0 ? ret = 6 : 0;
-    }
-    if (vct.x >= 340 && vct.x <= 522 && vct.y >= 823 && vct.y <= 929)
-        ret = 2;
-    if (vct.x >= 548 && vct.x <= 730 && vct.y >= 842 && vct.y <= 948) {
+    sfSprite_setPosition(misc->sprite, pos1);
+    sfRenderWindow_drawSprite(win->window, misc->sprite, NULL);
+    return (0);
+}
+
+int next_mode(window_t *win, int flag, int ret, sfVector2i vct)
+{
+    if (vct.x >= 548 * win->scale.x && vct.x <= 730 * win->scale.x
+    && vct.y >= 842 * win->scale.y && vct.y <= 948 * win->scale.y) {
         ret = 3;
         if (sfMouse_isButtonPressed(sfMouseLeft) && flag != 6) {
             pause_time(0.3);
             ret = 5;
         }
     }
-    if (vct.x >= 756 && vct.x <= 938 && vct.y >= 823 && vct.y <= 929)
-        ret = 4;
+    return (ret);
+}
+
+int mode(window_t *win, int flag)
+{
+    sfVector2i vct = sfMouse_getPositionRenderWindow(win->window);
+    int ret = 0;
+
+    if (vct.x >= 343 * win->scale.x && vct.x <= 936 * win->scale.x &&
+    vct.y >= 537 * win->scale.y && vct.y <= 812 * win->scale.x) {
+        ret = 1;
+        if (sfMouse_isButtonPressed(sfMouseLeft))
+            pause_time(0.3) == 0 ? ret = 6 : 0;
+    }
+    (vct.x >= 340 * win->scale.x && vct.x <= 522 * win->scale.x && vct.y >=
+    823 * win->scale.y && vct.y <= 929 * win->scale.y) ? ret = 2 : 0;
+    ret = next_mode(win, flag, ret, vct);
+    (vct.x >= 756 * win->scale.x && vct.x <= 938 * win->scale.x && vct.y >=
+    823 * win->scale.y && vct.y <= 929 * win->scale.y) ? ret = 4 : 0;
     return (ret);
 }
 
@@ -317,27 +335,51 @@ misc_t *misc, pkmn_list_t *npc)
     return (1);
 }
 
-int launch(window_t *window, pkmn_list_t *linked,
+int detect_one(window_t *window, pkmn_list_t *linked,
 misc_t *misc, pkmn_list_t *npc)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
 
-    if (linked->pokemon.atks[0].number != -1 && atk_pos[0].x <= vct.x &&
-        atk_pos[0].x + 293 >= vct.x && atk_pos[0].y <= vct.y && atk_pos[0].y
-        + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
+    if (linked->pokemon.atks[0].number != -1 && atk_pos[0].x *
+        window->scale.x<= vct.x && (atk_pos[0].x + 293) * window->scale.x >=
+        vct.x && atk_pos[0].y * window->scale.y <= vct.y && (atk_pos[0].y + 130)
+        * window->scale.y >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
         return (attack_one(window, linked, misc, npc));
-    if (linked->pokemon.atks[1].number != -1 && atk_pos[1].x <= vct.x &&
-        atk_pos[1].x + 293 >= vct.x && atk_pos[1].y <= vct.y && atk_pos[1].y
-        + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
+    if (linked->pokemon.atks[1].number != -1 && atk_pos[1].x *
+        window->scale.x<= vct.x && (atk_pos[1].x + 293) * window->scale.x >=
+        vct.x && atk_pos[1].y * window->scale.y <= vct.y && (atk_pos[1].y + 130)
+        * window->scale.y >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
         return (attack_two(window, linked, misc, npc));
-    if (linked->pokemon.atks[2].number != -1 && atk_pos[2].x <= vct.x &&
-        atk_pos[2].x + 293 >= vct.x && atk_pos[2].y <= vct.y && atk_pos[2].y
-        + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
+}
+
+int detect_two(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
+{
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
+
+    if (linked->pokemon.atks[2].number != -1 && atk_pos[2].x *
+        window->scale.x<= vct.x && (atk_pos[2].x + 293) * window->scale.x >=
+        vct.x && atk_pos[2].y * window->scale.y <= vct.y && (atk_pos[2].y + 130)
+        * window->scale.y >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
         return (attack_three(window, linked, misc, npc));
-    if (linked->pokemon.atks[3].number != -1 && atk_pos[3].x <= vct.x &&
-        atk_pos[3].x + 293 >= vct.x && atk_pos[3].y <= vct.y && atk_pos[3].y
-        + 130 >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
+    if (linked->pokemon.atks[3].number != -1 && atk_pos[3].x *
+        window->scale.x<= vct.x && (atk_pos[3].x + 293) * window->scale.x >=
+        vct.x && atk_pos[3].y * window->scale.y <= vct.y && (atk_pos[3].y + 130)
+        * window->scale.y >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
         return (attack_four(window, linked, misc, npc));
+}
+
+int launch(window_t *window, pkmn_list_t *linked,
+misc_t *misc, pkmn_list_t *npc)
+{
+    int ret = 0;
+
+    ret = detect_one(window, linked, misc, npc);
+    if (ret == 1)
+        return (ret);
+    ret = detect_two(window, linked, misc, npc);
+    if (ret == 1)
+        return (ret);
     return (0);
 }
 
@@ -379,13 +421,14 @@ int display_box(game_object **box, window_t *window)
     return (0);
 }
 
-int misc_atk(game_object **tab, game_object **box, window_t *window,
+int misc_atk(misc_t *misc, game_object **box, window_t *window,
 game_object *atk)
 {
     sfRenderWindow_clear(window->window, sfBlack);
     sfRenderWindow_drawSprite(window->window, atk->sprite, NULL);
-    display_game(tab, window, 7, 1);
+    display_game(misc->tab, window, 7, 1);
     display_box(box, window);
+    display_cursor(window, misc);
     event(window);
     return (0);
 }
@@ -442,7 +485,7 @@ misc_t *misc, pkmn_list_t *npc)
             mode = 0;
             break;
         }
-        misc_atk(misc->tab, box, window, atk);
+        misc_atk(misc, box, window, atk);
         disp_txt(window, misc->stat, name_pow);
         if (launch(window, linked, misc, npc) == 1) {
             ret = 12;
@@ -613,9 +656,10 @@ int disp_atk_mod(window_t *window, npc_t *npc, misc_t *misc, game_t *game)
     return (0);
 }
 
-int disp_txt_atk(window_t *window, text_t *stat)
+int disp_txt_atk(window_t *window, text_t *stat, misc_t *misc)
 {
     display_stat(window, stat, 8);
+    display_cursor(window, misc);
     sfRenderWindow_display(window->window);
     return (0);
 }
@@ -639,10 +683,15 @@ int destroy_all(misc_t *misc)
 misc_t *init_misc(window_t *window, game_t *game, npc_t *npc)
 {
     misc_t *misc = malloc(sizeof(misc_t));
+    sfVector2f pos = {0, 0};
 
     misc->tab = init_object(window, game->character->pkmns, npc->pkmns);
     misc->clock = sfClock_create();
     misc->stat = change_pos(game->character->pkmns, window, npc->pkmns);
+    misc->sprite = sfSprite_create();
+    misc->texture = sfTexture_createFromFile("assets/cursor.png", NULL);
+    sfSprite_setTexture(misc->sprite, misc->texture, sfTrue);
+    sfSprite_setOrigin(misc->sprite, pos);
     return (misc);
 }
 
@@ -680,7 +729,7 @@ int check_health(game_t *game, npc_t *npc)
 int display_combat(window_t *win, game_t *game, npc_t *npc, misc_t *misc)
 {
     misc->flag == 12 ? disp_atk_mod(win, npc, misc, game) : 0;
-    disp_txt_atk(win, misc->stat);
+    disp_txt_atk(win, misc->stat, misc);
     return (0);
 }
 
@@ -791,7 +840,9 @@ void main_cbt(window_t *window, game_t *game, npc_t *npc)
         toggle = 1;
     }
     sfRenderWindow_setView(window->window, default_view);
+    sfRenderWindow_setMouseCursorVisible(window->window, sfFalse);
     combat(window, game, npc);
+    sfRenderWindow_setMouseCursorVisible(window->window, sfTrue);
     sfRenderWindow_setView(window->window, game->view);
     if (toggle == 1)
         free_savage(npc);
