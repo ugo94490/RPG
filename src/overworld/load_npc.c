@@ -77,7 +77,7 @@ void load_npc(FILE *file, char *line, game_object_list_t **list, ssize_t *nread)
     } while (*nread != -1 && my_strcmp(line, "-npc") != 1);
     npc->anim.rects = pnjRects[npc->type];
     npc->objective = npc->pos;
-    put_object_in_objects(list, (void *)(npc), NPC, 3);
+    put_object_in_objects(list, (void *)(npc), NPC, 4);
     if (line != NULL)
         free(line);
 }
