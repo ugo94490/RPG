@@ -14,6 +14,7 @@
 #include "systems.h"
 #include "game_object.h"
 #include "overworld.h"
+#include "main_menu.h"
 
 void temp_loop(window_t *window, sfVector2f *scale, game_t *game)
 {
@@ -43,7 +44,7 @@ void init_game(void)
         return;
     window.scale = scale;
     game.window = &window;
-    temp_loop(&window, &scale, &game);
+    display_menu(&window, &scale, &game);
     destroy_game(&game);
     sfRenderWindow_destroy(window.window);
 }

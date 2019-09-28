@@ -7,9 +7,9 @@
 
 #include "main_menu.h"
 
-static int menu(window_t *window)
+static int menu(window_t *window, sfVector2f *scale, game_t *game)
 {
-    menu_t *menu = init_menu("../assets/menu.jpg");
+    menu_t *menu = init_menu("assets/menu.jpg");
 
     sfSprite_setScale(menu->sprite, window->scale);
     sfRenderWindow_setMouseCursorVisible(window->window, sfTrue);
@@ -17,7 +17,7 @@ static int menu(window_t *window)
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_howto(window);
-        condition_play(window);
+        condition_play(window, scale, game);
         condition_gear(window);
         condition_trophy(window);
         condition_exit(window);
@@ -50,7 +50,7 @@ static sfIntRect animation(menu_t *menu, sfClock *clock, sfIntRect rect)
 
 static int cinematic(window_t *window)
 {
-    menu_t *menu = init_menu("../assets/intro.png");
+    menu_t *menu = init_menu("assets/intro.png");
     sfClock *clock = sfClock_create();
     sfIntRect rect = {0, 0, 1280, 960};
 
@@ -68,9 +68,9 @@ static int cinematic(window_t *window)
     return (free_menu(menu));
 }
 
-int display_menu(window_t *window)
+int display_menu(window_t *window, sfVector2f *scale, game_t *game)
 {
     cinematic(window);
-    menu(window);
+    menu(window, scale, game);
     return 0;
 }

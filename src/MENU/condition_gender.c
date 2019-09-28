@@ -10,7 +10,7 @@
 static int condition_boy(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("../assets/exit.png");
+    sfSprite *play = init_button("assets/exit.png");
     sfVector2f position = {94 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
@@ -31,7 +31,7 @@ static int condition_boy(window_t *window)
 static int condition_girl(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("../assets/exit.png");
+    sfSprite *exit = init_button("assets/exit.png");
     sfVector2f position = {866 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
@@ -51,7 +51,7 @@ static int condition_girl(window_t *window)
 
 int condition_gender(window_t *window)
 {
-    menu_t *menu = init_menu("../assets/menu.jpg");
+    menu_t *menu = init_menu("assets/menu.jpg");
 
     sfSprite_setScale(menu->sprite, window->scale);
     while (sfRenderWindow_isOpen(window->window)) {

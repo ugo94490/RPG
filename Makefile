@@ -66,6 +66,12 @@ SRC	=	src/main.c					\
 		src/feature/do_text.c				\
 		src/feature/set_text.c				\
 		src/feature/check_cpt.c				\
+		src/MENU/bouton_tools.c				\
+		src/MENU/condition_gender.c			\
+		src/MENU/condition_save.c			\
+		src/MENU/display_menu.c				\
+		src/MENU/menu_button.c				\
+		src/MENU/menu_tools.c				\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\
@@ -89,7 +95,7 @@ CC			=	gcc
 
 CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I./src/feature
 
-CPPFLAGS	+=	-g3
+CPPFLAGS	+=	
 
 TEST_FLAGS	=	-lcriterion --coverage
 
