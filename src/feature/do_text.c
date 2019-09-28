@@ -59,6 +59,8 @@ static int update_cpt(txt_t *text, int cpt, int flag, int dif)
 
 static char *destroy_free(txt_t *text, char *save)
 {
+    if (save != NULL)
+        free(save);
     save = my_strdup(text->tmp);
     free(text->tmp);
     sfClock_destroy(text->clock);

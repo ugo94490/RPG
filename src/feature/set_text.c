@@ -50,6 +50,7 @@ static char *change_str(char *str)
     }
     new[where++] = '\n';
     new[where] = '\0';
+    free(str);
     return new;
 }
 

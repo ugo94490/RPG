@@ -30,6 +30,7 @@ static char *my_strappend(char *str, char c)
         new[cpt] = str[cpt];
     new[cpt++] = c;
     new[cpt] = '\0';
+    free(str);
     return new;
 }
 
