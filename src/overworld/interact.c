@@ -19,7 +19,7 @@ void aggro(game_t *game, npc_t *npc)
     if (npc && npc->diag2)
         display_text_overworld(game->window, npc->diag2, game);
     sfMusic_stop(game->music);
-    main_cbt(game->window, game, /*npc*/NULL);
+    main_cbt(game->window, game, NULL);
     sfMusic_play(game->music);
 }
 
@@ -38,13 +38,13 @@ void sub_interact(game_t *game, sfVector2f postry)
 
     while (evts) {
         if (evts->event.trigger == 3 && box_box_col(postry,
-        standardColRect, evts->event.pos, standardColRect) == 1)
+            standardColRect, evts->event.pos, standardColRect) == 1)
             activate_event(game, evts);
         evts = evts->next;
     }
     while (list) {
         if (list->type == NPC && box_box_col(((npc_t *)(list->object))->pos,
-        standardColRect, postry, standardColRect) == 1)
+            standardColRect, postry, standardColRect) == 1)
             npc_interact(game, (npc_t *)(list->object));
         list = list->next;
     }

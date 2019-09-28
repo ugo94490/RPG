@@ -42,10 +42,10 @@ npc_t *get_first_npc(game_object_list_t *list)
 void display_text_overworld(window_t *window, char *text, game_t *game)
 {
     sfVector2f temppos = {(game->character->pos.x+character_width/2)
-    *window->scale.x, (game->character->pos.y+
-    character_height/6)*window->scale.y};
+        *window->scale.x, (game->character->pos.y+
+        character_height/6)*window->scale.y};
     sfVector2f textpos = {temppos.x - 148 * window->scale.x,
-    temppos.y + 187 * (window->scale.y)};
+        temppos.y + 187 * (window->scale.y)};
 
     display_text(text, textpos, window, 1);
 }

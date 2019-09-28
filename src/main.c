@@ -39,7 +39,7 @@ void init_game(void)
     game_t game = create_game(0);
 
     if (game.view == NULL || game.objects == NULL ||
-    game.sprites == NULL || game.character == NULL)
+        game.sprites == NULL || game.character == NULL)
         return;
     window.scale = scale;
     game.window = &window;

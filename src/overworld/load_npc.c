@@ -43,22 +43,20 @@ npc_t *create_base_npc(void)
 
 void analyse_line_npc(char *line, npc_t *npc)
 {
-    char **words = my_str_to_word_array(line, ":\n");
+    char **ws = my_str_to_word_array(line, ":\n");
 
-    if (get_nb_words(words) < 2)
-        return (free_word_array(words));
-    my_strcmp(words[0], "type") == 1 ? npc->type = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "world") == 1 ? npc->world = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "diag1") == 1 ? npc->diag1 = my_strdup(words[1]) : 0;
-    my_strcmp(words[0], "diag2") == 1 ? npc->diag2 = my_strdup(words[1]) : 0;
-    my_strcmp(words[0], "aggro") == 1 ? npc->aggro = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "interact") == 1 ?
-    npc->interact = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "direction") == 1 ?
-    npc->direction = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "posx") == 1 ? npc->pos.x = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "posy") == 1 ? npc->pos.y = my_getnbr(words[1]) : 0;
-    free_word_array(words);
+    if (get_nb_words(ws) < 2)
+        return (free_word_array(ws));
+    my_strcmp(ws[0], "type") == 1 ? npc->type = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "world") == 1 ? npc->world = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "diag1") == 1 ? npc->diag1 = my_strdup(ws[1]) : 0;
+    my_strcmp(ws[0], "diag2") == 1 ? npc->diag2 = my_strdup(ws[1]) : 0;
+    my_strcmp(ws[0], "aggro") == 1 ? npc->aggro = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "interact") == 1 ? npc->interact = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "direction") == 1 ? npc->direction = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "posx") == 1 ? npc->pos.x = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "posy") == 1 ? npc->pos.y = my_getnbr(ws[1]) : 0;
+    free_word_array(ws);
 }
 
 void load_npc(FILE *file, char *line, game_object_list_t **list, ssize_t *nread)

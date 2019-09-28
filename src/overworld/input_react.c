@@ -16,7 +16,7 @@ void move_right(window_t *window, game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x + ground_width,
-    game->character->pos.y};
+        game->character->pos.y};
 
     if (game->character->status != 0)
         return;
@@ -33,12 +33,12 @@ void move_left(window_t *window, game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x - ground_width,
-    game->character->pos.y};
+        game->character->pos.y};
 
     if (game->character->status != 0)
         return;
     game->character->direction = 4;
-        if (check_can_go(game->character, game->objects, newobjective) == 0)
+    if (check_can_go(game->character, game->objects, newobjective) == 0)
         return;
     if (sfKeyboard_isKeyPressed(sfKeyLShift))
         newstatus = 2;
@@ -50,7 +50,7 @@ void move_up(window_t *window, game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x,
-    game->character->pos.y - ground_height};
+        game->character->pos.y - ground_height};
 
     if (game->character->status != 0)
         return;
@@ -67,7 +67,7 @@ void move_down(window_t *window, game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x,
-    game->character->pos.y + ground_height};
+        game->character->pos.y + ground_height};
 
     if (game->character->status != 0)
         return;

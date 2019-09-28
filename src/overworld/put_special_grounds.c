@@ -85,7 +85,7 @@ void spe_create_ground_from_char(game_object_list_t **list,
 char c, int posx, int posy)
 {
     ground_t *(*create_spe_ground[])(int *, int, int) =
-        {create_flower, create_mov_herb, create_door};
+    {create_flower, create_mov_herb, create_door};
     int height = 0;
     ground_t *ground = NULL;
     int nb = 0;

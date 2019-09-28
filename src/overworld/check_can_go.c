@@ -35,7 +35,7 @@ void check_can_go_character(sfVector2f objective,
 character_t *character, int *is_blocked)
 {
     if (box_box_col(character->pos, standardColRect,
-    objective, standardColRect))
+        objective, standardColRect))
         *is_blocked = 1;
 }
 
@@ -50,7 +50,7 @@ game_object_list_t *list, sfVector2f objective)
             check_can_go_ground(objective,
             (ground_t *)(list->object), &is_ground, &is_blocked);
         if (list->type == NPC &&
-        ((npc_t *)(list->object))->world == character->world)
+            ((npc_t *)(list->object))->world == character->world)
             check_can_go_npc(objective, (npc_t *)(list->object), &is_blocked);
         list = list->next;
     }

@@ -39,25 +39,20 @@ character_t *create_base_character(void)
     return (character);
 }
 
-void analyse_line_character(char *line, character_t *character)
+void analyse_line_character(char *line, character_t *chr)
 {
-    char **words = my_str_to_word_array(line, ": \n");
+    char **ws = my_str_to_word_array(line, ": \n");
 
-    if (get_nb_words(words) < 2)
-        return (free_word_array(words));
-    if (my_strcmp(words[0], "type") == 1 && my_getnbr(words[1]) <= 1)
-        character->type = my_getnbr(words[1]);
-    my_strcmp(words[0], "world") == 1 ?
-    character->world = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "music") == 1 ?
-    character->music = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "direction") == 1 ?
-    character->direction = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "posx") == 1 ?
-    character->pos.x = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "posy") == 1 ?
-    character->pos.y = my_getnbr(words[1]) : 0;
-    free_word_array(words);
+    if (get_nb_words(ws) < 2)
+        return (free_word_array(ws));
+    if (my_strcmp(ws[0], "type") == 1 && my_getnbr(ws[1]) <= 1)
+        chr->type = my_getnbr(ws[1]);
+    my_strcmp(ws[0], "world") == 1 ? chr->world = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "music") == 1 ? chr->music = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "direction") == 1 ? chr->direction = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "posx") == 1 ? chr->pos.x = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "posy") == 1 ? chr->pos.y = my_getnbr(ws[1]) : 0;
+    free_word_array(ws);
 }
 
 character_t *get_character(char *path, game_object_list_t **list)

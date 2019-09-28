@@ -42,7 +42,7 @@ void set_view_params(window_t *window, game_t *game, sfVector2f scale)
 {
     sfVector2f viewSize = {1280*scale.x/2, 960*scale.y/2};
     sfVector2f temppos = {(game->character->pos.x+character_width/4)*scale.x,
-    (game->character->pos.y+character_height/4)*scale.y};
+        (game->character->pos.y+character_height/4)*scale.y};
 
     sfView_setCenter(game->view, temppos);
     sfView_setSize(game->view, viewSize);

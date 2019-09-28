@@ -44,37 +44,31 @@ void put_event_in_list(evt_list_t **list, evt_t event, int perm)
     *list = element;
 }
 
-static void sub_analyse_line_evt(char *line, char **words, evt_t *evt)
+static void sub_analyse_line_evt(char *line, char **ws, evt_t *ev)
 {
-    my_strcmp(words[0], "destx") == 1 ? evt->dest.x = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "desty") == 1 ? evt->dest.y = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "destmap") == 1 ?
-        evt->destmap = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "direction") == 1 ?
-        evt->direction = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "height") == 1 ?
-        evt->colrect.height = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "width") == 1 ?
-        evt->colrect.width = my_getnbr(words[1]) : 0;
+    my_strcmp(ws[0], "destx") == 1 ? ev->dest.x = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "desty") == 1 ? ev->dest.y = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "destmap") == 1 ? ev->destmap = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "direction") == 1 ? ev->direction = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "height") == 1 ? ev->colrect.height = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "width") == 1 ? ev->colrect.width = my_getnbr(ws[1]) : 0;
 }
 
 void analyse_line_evt(char *line, evt_t *evt)
 {
-    char **words = my_str_to_word_array(line, ": \n");
+    char **ws = my_str_to_word_array(line, ": \n");
 
-    if (get_nb_words(words) < 2)
-        return (free_word_array(words));
-    my_strcmp(words[0], "type") == 1 ? evt->type = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "trigger") == 1 ?
-    evt->trigger = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "proba") == 1 ? evt->proba = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "item") == 1 ? evt->item = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "quantity") == 1 ?
-    evt->quantity = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "posx") == 1 ? evt->pos.x = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "posy") == 1 ? evt->pos.y = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "music") == 1 ? evt->music = my_getnbr(words[1]) : 0;
-    my_strcmp(words[0], "locmap") == 1 ? evt->locmap = my_getnbr(words[1]) : 0;
-    sub_analyse_line_evt(line, words, evt);
-    free_word_array(words);
+    if (get_nb_words(ws) < 2)
+        return (free_word_array(ws));
+    my_strcmp(ws[0], "type") == 1 ? evt->type = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "trigger") == 1 ? evt->trigger = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "proba") == 1 ? evt->proba = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "item") == 1 ? evt->item = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "quantity") == 1 ? evt->quantity = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "posx") == 1 ? evt->pos.x = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "posy") == 1 ? evt->pos.y = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "music") == 1 ? evt->music = my_getnbr(ws[1]) : 0;
+    my_strcmp(ws[0], "locmap") == 1 ? evt->locmap = my_getnbr(ws[1]) : 0;
+    sub_analyse_line_evt(line, ws, evt);
+    free_word_array(ws);
 }

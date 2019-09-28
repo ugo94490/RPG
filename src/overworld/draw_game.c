@@ -17,7 +17,7 @@ void draw_ground(window_t *window,
 sprite_t sprite, ground_t *ground)
 {
     sfVector2f temppos = {ground->pos.x * window->scale.x,
-    ground->pos.y * window->scale.y};
+        ground->pos.y * window->scale.y};
 
     sfSprite_setScale(sprite.sprite, window->scale);
     sfSprite_setTextureRect(sprite.sprite,
@@ -30,7 +30,7 @@ void draw_character(window_t *window,
 sprite_t sprite, character_t *character)
 {
     sfVector2f temppos = {character->pos.x * window->scale.x,
-    character->pos.y * window->scale.y};
+        character->pos.y * window->scale.y};
     sfVector2f vector0 = {0, 0};
     sfVector2f origin = {16, 32};
 
@@ -47,7 +47,7 @@ void draw_npc(window_t *window,
 sprite_t sprite, npc_t *npc, int world)
 {
     sfVector2f temppos = {npc->pos.x * window->scale.x,
-    npc->pos.y * window->scale.y};
+        npc->pos.y * window->scale.y};
     sfVector2f vector0 = {0, 0};
     sfVector2f origin = {16, 32};
 
@@ -68,7 +68,7 @@ void draw_objects(window_t *window, game_t *game, int level)
 
     while (game->objects != NULL) {
         while (game->objects->next != NULL && check_if_draw(game->objects,
-        game->character, level) == 0)
+            game->character, level) == 0)
             game->objects = game->objects->next;
         if (game->objects->height != level)
             break;

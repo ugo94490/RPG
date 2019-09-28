@@ -26,7 +26,7 @@ int check_if_draw(game_object_list_t *object, character_t *character, int level)
     if (object->type == PLAYER)
         return (1);
     if (pos.x > character->pos.x + 400 || pos.x < character->pos.x - 400 ||
-    pos.y > character->pos.y + 300 || pos.y < character->pos.y - 300)
+        pos.y > character->pos.y + 300 || pos.y < character->pos.y - 300)
         return (0);
     return (1);
 }

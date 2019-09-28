@@ -68,7 +68,8 @@ void move_snow(sfVertexArray *my_rain, sfVector2f pos1, sfVector2f pos2)
     }
 }
 
-int rain_misc(window_t window, sfVertexArray *my_rain, int ret, sfVector2f pos1, sfVector2f pos2)
+int rain_misc(window_t window, sfVertexArray *my_rain, int ret,
+sfVector2f pos1, sfVector2f pos2)
 {
     sfRenderWindow_clear(window.window, sfYellow);
     sfRenderWindow_drawVertexArray(window.window, my_rain, NULL);
@@ -81,14 +82,16 @@ int rain_misc(window_t window, sfVertexArray *my_rain, int ret, sfVector2f pos1,
     return (0);
 }
 
-void init_rain(sfVertexArray *my_rain, sfVertex vertex, sfVector2f pos1, sfVector2f pos2)
+void init_rain(sfVertexArray *my_rain, sfVertex vertex, sfVector2f pos1,
+sfVector2f pos2)
 {
     for (int i = 0; i < 400; i++)
         goutte(my_rain, vertex, rand() % (int)(pos2.x - pos1.x) + pos1.x,
         (rand() % (int)(pos2.y - pos1.y)) + pos1.y);
 }
 
-void init_snow(sfVertexArray *my_rain, sfVertex vertex, sfVector2f pos1, sfVector2f pos2)
+void init_snow(sfVertexArray *my_rain, sfVertex vertex, sfVector2f pos1,
+sfVector2f pos2)
 {
     for (int i = 0; i < 400; i++)
         flocon(my_rain, vertex, (rand() % (int)(pos2.x - pos1.x)) + pos1.x,
