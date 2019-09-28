@@ -84,7 +84,7 @@ char c, ground_info_t info)
 void put_map_in_grounds(game_object_list_t **list,
 char **map, ground_info_t info)
 {
-    for (int y = 0; map[y]; y++) {
+    for (int y = get_nb_words(map) - 1; y >= 0; y--) {
         for (int x = 0; map[y][x]; x++) {
             info.pos.x = x * ground_width;
             info.pos.y = y * ground_height;

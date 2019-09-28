@@ -43,6 +43,8 @@ SRC	=	src/main.c					\
 		src/overworld/sub_save_evts.c			\
 		src/overworld/sub_draw_game.c			\
 		src/overworld/load_map.c			\
+		src/overworld/sort_objects.c			\
+		src/overworld/sub_sort_list.c			\
 		src/basics/my_strlen.c				\
 		src/basics/string_array_fcts.c			\
 		src/basics/my_strdup.c				\

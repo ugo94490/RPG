@@ -89,6 +89,7 @@ void draw_objects(window_t *window, game_t *game, int level)
 void draw_game(window_t *window, game_t *game)
 {
     sfRenderWindow_clear(window->window, sfBlack);
+    sort_list(&(game->objects));
     for (int i = 0; i <= 5; i++)
         draw_objects(window, game, i);
     sfRenderWindow_display(window->window);
