@@ -48,7 +48,7 @@ int condition_trophy(window_t *window);
 int condition_exit(window_t *window);
 int condition_howto(window_t *window);
 int condition_save(window_t *window, sfVector2f *scale);
-int condition_gender(window_t *window);
+int condition_gender(window_t *window, sfVector2f *scale);
 int menu_event(window_t *window);
 int display_menu(window_t *window, sfVector2f *scale);
 int condition_back(window_t *window);

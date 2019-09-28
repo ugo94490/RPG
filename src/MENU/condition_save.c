@@ -7,7 +7,7 @@
 
 #include "main_menu.h"
 
-static int condition_new(window_t *window)
+static int condition_new(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *exit = init_button("assets/play.png");
@@ -20,7 +20,7 @@ static int condition_new(window_t *window)
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(1);
-            condition_gender(window);
+            condition_gender(window, scale);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -62,7 +62,7 @@ int condition_save(window_t *window, sfVector2f *scale)
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_actual(window, scale);
-        condition_new(window);
+        condition_new(window, scale);
         if (condition_back(window) == 1)
             break;
         menu_event(window);
