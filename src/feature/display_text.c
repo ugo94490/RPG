@@ -25,8 +25,8 @@ int opt)
         set.pos.y = pos.y + 25 * (0.5 * window->scale.y);
     } else {
         set.size = 17 * window->scale.x;
-        set.pos.x = (pos.x + 20) * window->scale.x;
-        set.pos.y = (pos.y + 25) * window->scale.y;
+        set.pos.x = pos.x + 20 * window->scale.x;
+        set.pos.y = pos.y + 25 * window->scale.y;
     }
     set.window = window->window;
     return set;
