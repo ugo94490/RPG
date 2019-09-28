@@ -10,7 +10,7 @@
 static int condition_new(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("assets/play.png");
+    sfSprite *exit = init_button("assets/skins.png");
     sfVector2f position = {866 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
