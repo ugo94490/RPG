@@ -14,7 +14,8 @@ static const char *itemnames[21] =
     "potion",
     "super potion",
     "hyper potion",
-    "potion max"
+    "max potion",
+    "running shoes"
 };
 
 static const item_t itemsdef[21] =
@@ -24,7 +25,7 @@ static const item_t itemsdef[21] =
     {2, 2, 50},
     {3, 3, 150},
     {4, 2, 100},
-    {5, 0, 0},
+    {5, 10, 0},
     {6, 0, 0},
     {7, 0, 0},
     {8, 0, 0},

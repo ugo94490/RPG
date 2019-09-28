@@ -316,7 +316,7 @@ static const sfIntRect solidRectsOut[8][1] =
     {{238, 102, 32, 32}}
 };
 
-static const sfIntRect objRectsOut[32][1] =
+static const sfIntRect objRectsOut[33][1] =
 {
     {{0, 0, 32, 32}},
     {{34, 0, 32, 32}},
@@ -347,7 +347,10 @@ static const sfIntRect objRectsOut[32][1] =
     {{884, 0, 32, 32}},
     {{918, 0, 32, 32}},
     {{952, 0, 32, 32}},
-    {{986, 0, 32, 32}}
+    {{986, 0, 32, 32}},
+    {{1020, 0, 32, 32}},
+    {{1054, 0, 32, 32}},
+    {{1088, 0, 32, 32}},
 };
 
 static const sfIntRect groundRectsOut[18][1] =
@@ -487,7 +490,7 @@ typedef struct ground_info_s
 static const ground_info_t infos[12] =
 {
     {0, 0, 0, 17, 0, {0, 0}},
-    {1, 1, 3, 32, 0, {0, 0}},
+    {1, 1, 3, 33, 0, {0, 0}},
     {2, 1, 2, 31, 0, {0, 0}},
     {3, 0, 5, 19, 0, {0, 0}},
     {4, 1, 1, 8, 0, {0, 0}},
