@@ -26,6 +26,7 @@ sfSprite *sprite)
         text->flag = 1;
         display(text->text, save, window, sprite);
     }
+    free(text->tmp);
     text->tmp = my_strdup(save);
     return save;
 }
@@ -44,6 +45,7 @@ static char *last_line(char *tmp)
     for (; tmp[len] != '\0'; ++len)
         new[cpt++] = tmp[len];
     new[cpt] = '\0';
+    free(tmp);
     return new;
 }
 

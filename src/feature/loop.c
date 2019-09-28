@@ -45,12 +45,12 @@ static char *get_all(char *str, char *tmp, int where)
     return new;
 }
 
-static char *draw_all(txt_t *text, char *tmp, setting_t set, int cpt)
+static char *draw_all(txt_t *text, setting_t set, int cpt)
 {
     text->flag = 2;
-    tmp = get_all(text->str, tmp, cpt);
-    display(text->text, tmp, set.window, set.sprite);
-    return tmp;
+    text->tmp = get_all(text->str, text->tmp, cpt);
+    display(text->text, text->tmp, set.window, set.sprite);
+    return text->tmp;
 }
 
 static int wait_event(txt_t *text, sfRenderWindow *window)
@@ -81,7 +81,7 @@ int loop(txt_t *text, setting_t set, int cpt, int opt)
         if (text->flag < 2 && text->str[cpt] != '\0')
             cpt = check_cpt(text, cpt, set.window, set.sprite);
         else
-            text->tmp = draw_all(text, text->tmp, set, cpt);
+            text->tmp = draw_all(text, set, cpt);
         if ((text->flag == 2 || text->str[cpt] == '\0') && opt != 0)
             while (wait_event(text, set.window) == 0);
         if ((text->flag == 2 || text->str[cpt] == '\0') && opt == 0)
