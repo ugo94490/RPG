@@ -37,7 +37,7 @@ void menu_game(game_t *game, window_t *window)
     menu_t *menu = create_menu_game(window);
 
     if (!menu)
-        return ;
+        return;
     menu_game_loop(game, menu);
     destroy_menu_game(menu);
 }

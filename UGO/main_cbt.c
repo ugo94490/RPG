@@ -676,6 +676,8 @@ int destroy_all(misc_t *misc)
     destroy_tab(misc->tab);
     destroy_font(misc->stat, 8);
     sfClock_destroy(misc->clock);
+    sfTexture_destroy(misc->texture);
+    sfSprite_destroy(misc->sprite);
     free(misc);
     return (0);
 }

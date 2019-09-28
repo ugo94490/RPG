@@ -56,7 +56,7 @@ static void create_menu(menu_t *menu)
     menu->scale.y = 1;
     menu->menu_w = create_sprite("assets/MenuSprite.png");
     if (!menu->menu_w.sprite)
-        return ;
+        return;
     menu->menu_rect.top = 0;
     menu->menu_rect.left = 294;
     menu->menu_rect.width = 202;
