@@ -234,7 +234,7 @@ int nb)
     if (nb_atk == -1)
         return (0);
     display_game(misc->tab, window, 8, 0);
-    display_stat(window, misc->stat, 6);
+    display_stat(window, misc->stat, 8);
     sprite = create_object(asset_atk[nb_atk], pos, rect, window);
     clock = sfClock_create();
     sfSprite_setTextureRect(sprite->sprite, rect);
@@ -250,7 +250,7 @@ int nb)
             sfRenderWindow_drawSprite(window->window, sprite->sprite, NULL);
             display_game(misc->tab, window, 5, 4);
             display_game(misc->tab, window, 8, 8);
-            display_stat(window, misc->stat, 6);
+            display_stat(window, misc->stat, 8);
             rect.top += 340;
             rect.top >= 2382 ? rect.left += 605 : 0;
             time = sfClock_restart(clock);
@@ -258,7 +258,7 @@ int nb)
         sfRenderWindow_display(window->window);
     }
     display_game(misc->tab, window, 8, 0);
-    display_stat(window, misc->stat, 6);
+    display_stat(window, misc->stat, 8);
     destroy_obj(sprite);
     sfClock_destroy(clock);
     return (0);
@@ -423,7 +423,7 @@ int flag)
 
 int disp_txt(window_t *window, text_t *stat, text_t *name_pow)
 {
-    display_stat(window, stat, 6);
+    display_stat(window, stat, 8);
     display_stat(window, name_pow, 9 - 1);
     return (0);
 }
@@ -497,11 +497,11 @@ pkmn_list_t *linked, pkmn_list_t *npc)
 
 text_t *init_txt(window_t *window)
 {
-    text_t *stat = malloc(sizeof(text_t) * 6);
+    text_t *stat = malloc(sizeof(text_t) * 8);
     int size = 15 * window->scale.x;
     sfVector2f tmp = {0, 0};
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 8; i++) {
         tmp.x = pos_txt[i].x * window->scale.x;
         tmp.y = pos_txt[i].y * window->scale.y;
         stat[i] = create_text("init", "assets/classic.ttf", size, tmp);
@@ -520,6 +520,8 @@ text_t *change_pos(pkmn_list_t *node, window_t *window, pkmn_list_t *npc)
     change_text(itoa_dup(npc->pokemon.level), &stat[3]);
     change_text(name[npc->pokemon.number], &stat[4]);
     change_text(name[node->pokemon.number], &stat[5]);
+    change_text(itoa_dup(npc->pokemon.health), &stat[6]);
+    change_text(itoa_dup(npc->pokemon.max_health), &stat[7]);
     return (stat);
 }
 
@@ -591,8 +593,9 @@ int riposte(npc_t *npc, window_t *window, game_t *game)
     str = my_strcat(str, phr[0]);
     str = my_strcat(str, atk_name[npc->pkmns->pokemon.atks[nb].number]);
     str = my_strcat(str, phr[1]);
-    game->character->pkmns->pokemon.health -=
-    npc->pkmns->pokemon.atks[nb].power;
+    game->character->pkmns->pokemon.health -= ((npc->pkmns->pokemon.level *
+    0.4 + 2) * npc->pkmns->pokemon.atks[3].power * npc->pkmns->pokemon.atq)
+    / (npc->pkmns->pokemon.def * 50) + 2;
     if (game->character->pkmns->pokemon.health <= 0)
         game->character->pkmns->pokemon.health = 0;
     pause_time(0.3);
@@ -605,14 +608,14 @@ int disp_atk_mod(window_t *window, npc_t *npc, misc_t *misc, game_t *game)
 {
     sfRenderWindow_clear(window->window, sfBlack);
     display_game(misc->tab, window, 7, 0);
-    display_stat(window, misc->stat, 6);
+    display_stat(window, misc->stat, 8);
     riposte(npc, window, game);
     return (0);
 }
 
 int disp_txt_atk(window_t *window, text_t *stat)
 {
-    display_stat(window, stat, 6);
+    display_stat(window, stat, 8);
     sfRenderWindow_display(window->window);
     return (0);
 }
@@ -627,7 +630,7 @@ int check_menu(window_t *window, int menu, game_object **tab)
 int destroy_all(misc_t *misc)
 {
     destroy_tab(misc->tab);
-    destroy_font(misc->stat, 6);
+    destroy_font(misc->stat, 8);
     sfClock_destroy(misc->clock);
     free(misc);
     return (0);
@@ -650,7 +653,7 @@ int death(window_t *window, misc_t *misc, npc_t *npc, game_t *game)
     int ret = 0;
 
     *str = 0;
-    display_stat(window, misc->stat, 6);
+    display_stat(window, misc->stat, 8);
     if (game->character->pkmns->pokemon.health <= 0) {
         str = my_strcat(str, name[game->character->pkmns->pokemon.number]);
         ret = 0;
@@ -681,6 +684,15 @@ int display_combat(window_t *win, game_t *game, npc_t *npc, misc_t *misc)
     return (0);
 }
 
+int reload(game_t *game, misc_t *misc, npc_t *npc)
+{
+    change_text(itoa_dup(game->character->pkmns->pokemon.health),
+    &misc->stat[1]);
+    change_text(itoa_dup(npc->pkmns->pokemon.health),
+    &misc->stat[6]);
+    return (0);
+}
+
 int combat(window_t *win, game_t *game, npc_t *npc)
 {
     misc_t *misc = init_misc(win, game, npc);
@@ -692,8 +704,7 @@ int combat(window_t *win, game_t *game, npc_t *npc)
         misc->flag = check_menu(win, misc->flag, misc->tab);
         misc->flag = check_flag(misc, win, game->character->pkmns, npc->pkmns);
         event(win);
-        change_text(itoa_dup(game->character->pkmns->pokemon.health),
-        &misc->stat[1]);
+        reload(game, misc, npc);
         if (misc->flag == 84)
             break;
         if (check_health(game, npc) == 1)
@@ -754,10 +765,9 @@ npc_t *init_rand(game_t *game)
     npc->pkmns->pokemon.xp_to_next_lvl = 0;
     npc->pkmns->pokemon.atq = 100 * (npc->pkmns->pokemon.level / 80) + 10;
     npc->pkmns->pokemon.def = 100 * (npc->pkmns->pokemon.level / 90) + 10;
-    npc->pkmns->pokemon.health = ((0.90 + 2) * 20 + (20 / 4) + 100)
-    * npc->pkmns->pokemon.level / 100 + 10;
     npc->pkmns->pokemon.max_health = ((0.90 + 2) * 60 + (20 / 4) + 100)
     * npc->pkmns->pokemon.level / 100 + 10;
+    npc->pkmns->pokemon.health = npc->pkmns->pokemon.max_health;
     for (int i = 0; i < 4; i++) {
         npc->pkmns->pokemon.atks[i] = atks[rand() % NB_ATK];
     }

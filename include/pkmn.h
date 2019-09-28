@@ -131,14 +131,16 @@ static sfVector2f atk_pos[4] =
     {645, 683}
 };
 
-static sfVector2f pos_txt[6] =
+static sfVector2f pos_txt[8] =
 {
     {880, 328},
     {815, 328},
     {885, 280},
     {535, 141},
     {340, 135},
-    {700, 275}
+    {700, 275},
+    {370, 170},
+    {435, 170}
 };
 
 static sfVector2f atk_txt[8] =
