@@ -14,8 +14,6 @@
 
 static void manage_button(game_t *game, menu_t *menu)
 {
-    sfVector2f pos = {800, 800};
-
     if (menu->n_button == QUIT)
         sfRenderWindow_close(game->window->window);
     if (menu->n_button == RELEASE)

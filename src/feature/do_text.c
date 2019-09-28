@@ -76,7 +76,7 @@ int do_text(char *base, setting_t set, window_t *window, int opt)
     static int cpt = 0;
     static char *save = NULL;
     int dif = cpt;
-    txt_t text = set_text(&text, set, base, opt);
+    txt_t text = set_text(&text, set, base);
     int flag = 0;
 
     save = set_save(save, &text, window->window, set.sprite);

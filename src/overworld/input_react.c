@@ -12,7 +12,7 @@
 #include "game_object.h"
 #include "overworld.h"
 
-void move_right(window_t *window, game_t *game)
+void move_right(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x + ground_width,
@@ -29,11 +29,11 @@ void move_right(window_t *window, game_t *game)
     update_character_status(game->character, newstatus, 2);
 }
 
-void move_left(window_t *window, game_t *game)
+void move_left(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x - ground_width,
-        game->character->pos.y};
+    game->character->pos.y};
 
     if (game->character->status != 0)
         return;
@@ -46,7 +46,7 @@ void move_left(window_t *window, game_t *game)
     update_character_status(game->character, newstatus, 4);
 }
 
-void move_up(window_t *window, game_t *game)
+void move_up(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x,
@@ -63,7 +63,7 @@ void move_up(window_t *window, game_t *game)
     update_character_status(game->character, newstatus, 3);
 }
 
-void move_down(window_t *window, game_t *game)
+void move_down(game_t *game)
 {
     int newstatus = 1;
     sfVector2f newobjective = {game->character->pos.x,

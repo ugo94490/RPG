@@ -76,7 +76,6 @@ pkmn_bag_t *create_pkmn_bag(window_t *window, game_t *game, int item)
 {
     pkmn_bag_t *pkmn_bag = malloc(sizeof(*pkmn_bag));
     pkmn_list_t *tmp = NULL;
-    pkmn_list_t *tmp_l = malloc(sizeof(pkmn_list_t));
 
     tmp = game->character->pkmns;
     pkmn_bag->window = window;

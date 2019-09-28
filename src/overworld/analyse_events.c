@@ -53,13 +53,13 @@ void display_text_overworld(window_t *window, char *text, game_t *game)
 void get_key_pressed(window_t *window, game_t *game)
 {
     if (sfKeyboard_isKeyPressed(sfKeyRight))
-        move_right(window, game);
+        move_right(game);
     if (sfKeyboard_isKeyPressed(sfKeyLeft))
-        move_left(window, game);
+        move_left(game);
     if (sfKeyboard_isKeyPressed(sfKeyDown))
-        move_down(window, game);
+        move_down(game);
     if (sfKeyboard_isKeyPressed(sfKeyUp))
-        move_up(window, game);
+        move_up(game);
     if (sfKeyboard_isKeyPressed(sfKeyP))
         printf("%f, %f\n", game->character->pos.x, game->character->pos.y);
     if (sfKeyboard_isKeyPressed(sfKeySpace))

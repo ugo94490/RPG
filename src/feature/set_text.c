@@ -54,7 +54,7 @@ static char *change_str(char *str)
     return new;
 }
 
-txt_t set_text(txt_t *text, setting_t set, char *base, int opt)
+txt_t set_text(txt_t *text, setting_t set, char *base)
 {
     text->tmp = NULL;
     text->tmp = set_tmp(text->tmp);

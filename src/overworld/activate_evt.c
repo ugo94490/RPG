@@ -28,7 +28,7 @@ void teleport(game_t *game, evt_t event)
     load_map(&(game->objects), event.destmap);
 }
 
-void heal_pkmns(game_t *game, evt_t event)
+void heal_pkmns(game_t *game)
 {
     pkmn_list_t *pkmns = game->character->pkmns;
 
@@ -45,7 +45,7 @@ void add_item(item_list_t **list, int qty, item_t item)
     item_list_t *cpy = *list;
 
     while (cpy) {
-        if (cpy->item.number = item.number) {
+        if (cpy->item.number == item.number) {
             cpy->quantity += qty;
             return;
         }
@@ -81,7 +81,7 @@ void activate_event(game_t *game, evt_list_t *evt)
     if (evt->event.type == 1)
         teleport(game, evt->event);
     if (evt->event.type == 2)
-        heal_pkmns(game, evt->event);
+        heal_pkmns(game);
     if (evt->event.type == 3)
         get_item(game, evt->event);
     if (evt->perm == 0) {

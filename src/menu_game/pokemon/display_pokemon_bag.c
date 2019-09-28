@@ -32,7 +32,6 @@ static void sub_display_slot(pkmn_bag_t *pkmn_bag, int i, sfVector2f temppos)
 
 static void display_slot(pkmn_bag_t *pkmn_bag, game_t *game)
 {
-    sfVector2f pos_txt;
     sfVector2f temppos = {(game->character->pos.x + character_width / 2)
         * game->window->scale.x, (game->character->pos.y +
         character_height / 6) * game->window->scale.y};

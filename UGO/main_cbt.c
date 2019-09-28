@@ -6,6 +6,8 @@
 */
 
 #include "my_rpg.h"
+#include "pkmn.h"
+#include "tab.h"
 #include "graphics.h"
 #include "game_object.h"
 #include "overworld.h"
@@ -350,6 +352,7 @@ misc_t *misc, pkmn_list_t *npc)
         vct.x && atk_pos[1].y * window->scale.y <= vct.y && (atk_pos[1].y + 130)
         * window->scale.y >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
         return (attack_two(window, linked, misc, npc));
+    return (0);
 }
 
 int detect_two(window_t *window, pkmn_list_t *linked,
@@ -367,6 +370,7 @@ misc_t *misc, pkmn_list_t *npc)
         vct.x && atk_pos[3].y * window->scale.y <= vct.y && (atk_pos[3].y + 130)
         * window->scale.y >= vct.y && sfMouse_isButtonPressed(sfMouseLeft))
         return (attack_four(window, linked, misc, npc));
+    return (0);
 }
 
 int launch(window_t *window, pkmn_list_t *linked,

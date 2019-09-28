@@ -21,7 +21,7 @@ npc_t *create_base_npc(void)
 {
     npc_t *npc = malloc(sizeof(npc_t));
     sfVector2f basevector = {0, 0};
-    anim_t baseanim = {16, 0, 0, 0, 0};
+    anim_t baseanim = {16, 0, 0, 0, 0, {0}, 0};
 
     if (npc == NULL)
         return (NULL);

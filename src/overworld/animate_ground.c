@@ -15,11 +15,14 @@
 
 void anim_flower(game_t *game, ground_t *ground, int *height)
 {
+    (void)game;
+    (void)height;
     sub_animate(&(ground->anim));
 }
 
 void anim_door(game_t *game, ground_t *ground, int *height)
 {
+    (void)height;
     ground->anim.endrect = 0;
     if (box_box_col(game->character->pos,
     standardColRect, ground->pos, standardColRect)) {
@@ -50,5 +53,8 @@ void anim_speherb(game_t *game, ground_t *ground, int *height)
 
 void noAnimGround(game_t *game, ground_t *ground, int *height)
 {
+    (void)game;
+    (void)ground;
+    (void)height;
     return;
 }

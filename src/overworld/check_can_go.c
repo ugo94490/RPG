@@ -59,8 +59,7 @@ game_object_list_t *list, sfVector2f objective)
     return (0);
 }
 
-int check_can_go_np(npc_t *npc,
-game_object_list_t *list, sfVector2f objective)
+int check_can_go_np(game_object_list_t *list, sfVector2f objective)
 {
     int is_ground = 0;
     int is_blocked = 0;

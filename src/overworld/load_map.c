@@ -11,9 +11,11 @@
 #include <SFML/System.h>
 #include "systems.h"
 #include "graphics.h"
+#include "other_path.h"
 #include "basics.h"
 #include "game_object.h"
 #include "overworld_rects.h"
+#include "map_path.h"
 
 char **read_map(char const *path)
 {

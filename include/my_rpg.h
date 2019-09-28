@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include "string.h"
 #include "pkmn.h"
+#include "graphics.h"
 #include "sounds.h"
 #include "systems.h"
 #include "game_object.h"

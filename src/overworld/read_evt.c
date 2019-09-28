@@ -44,7 +44,7 @@ void put_event_in_list(evt_list_t **list, evt_t event, int perm)
     *list = element;
 }
 
-static void sub_analyse_line_evt(char *line, char **ws, evt_t *ev)
+static void sub_analyse_line_evt(char **ws, evt_t *ev)
 {
     my_strcmp(ws[0], "destx") == 1 ? ev->dest.x = my_getnbr(ws[1]) : 0;
     my_strcmp(ws[0], "desty") == 1 ? ev->dest.y = my_getnbr(ws[1]) : 0;
@@ -69,6 +69,6 @@ void analyse_line_evt(char *line, evt_t *evt)
     my_strcmp(ws[0], "posy") == 1 ? evt->pos.y = my_getnbr(ws[1]) : 0;
     my_strcmp(ws[0], "music") == 1 ? evt->music = my_getnbr(ws[1]) : 0;
     my_strcmp(ws[0], "locmap") == 1 ? evt->locmap = my_getnbr(ws[1]) : 0;
-    sub_analyse_line_evt(line, ws, evt);
+    sub_analyse_line_evt(ws, evt);
     free_word_array(ws);
 }

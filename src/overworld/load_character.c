@@ -21,7 +21,7 @@ character_t *create_base_character(void)
 {
     character_t *character = malloc(sizeof(character_t));
     sfVector2f basevector = {0, 0};
-    anim_t baseanim = {32, 0, 0, 0, 0};
+    anim_t baseanim = {32, 0, 0, 0, 0, {0}, 0};
 
     if (character == NULL)
         return (NULL);
@@ -55,7 +55,7 @@ void analyse_line_character(char *line, character_t *chr)
     free_word_array(ws);
 }
 
-character_t *get_character(char *path, game_object_list_t **list)
+character_t *get_character(char *path)
 {
     FILE *file = fopen(path, "r");
     character_t *character = create_base_character();
@@ -81,7 +81,7 @@ character_t *get_character(char *path, game_object_list_t **list)
 
 character_t *load_character(char *path, game_object_list_t **list)
 {
-    character_t *character = get_character(path, list);
+    character_t *character = get_character(path);
 
     if (character == NULL)
         return (NULL);

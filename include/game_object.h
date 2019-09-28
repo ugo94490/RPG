@@ -99,7 +99,7 @@ void update_npc_status(npc_t *npc, int status, int direction);
 character_t *get_character_in_objects(game_object_list_t *objects);
 int check_can_go(character_t *character,
 game_object_list_t *list, sfVector2f objective);
-int check_can_go_np(npc_t *npc, game_object_list_t *list, sfVector2f objective);
+int check_can_go_np(game_object_list_t *list, sfVector2f objective);
 void load_map(game_object_list_t **list, int arg);
 void noAnimGround(struct game_s *game, ground_t *ground, int *height);
 void anim_flower(struct game_s *game, ground_t *ground, int *height);

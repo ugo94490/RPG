@@ -44,8 +44,7 @@ static void setGroundRect(ground_t *ground, ground_info_t info, int rect)
     sub_setGroundRect(ground, info, rect);
 }
 
-static ground_t *create_ground(game_object_list_t **list,
-int rect, ground_info_t info)
+static ground_t *create_ground(int rect, ground_info_t info)
 {
     ground_t *ground = malloc(sizeof(ground_t));
 
@@ -64,7 +63,7 @@ int rect, ground_info_t info)
 }
 
 static void create_ground_from_char(game_object_list_t **list,
-char c, ground_info_t info)
+                                    char c, ground_info_t info)
 {
     ground_t *ground = NULL;
     int nb = 0;
@@ -75,8 +74,8 @@ char c, ground_info_t info)
         nb = c-'a';
     if (c >= 'A' && c <= 'Z')
         nb = c-'A'+26;
-    if (nb <= info.limit);
-    ground = create_ground(list, nb, info);
+    if (nb <= info.limit)
+        ground = create_ground(nb, info);
     if (ground != NULL)
         put_object_in_objects(list, (void *)(ground), GROUND, info.height);
 }

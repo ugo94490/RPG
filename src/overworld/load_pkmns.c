@@ -15,6 +15,7 @@
 #include "overworld.h"
 #include "pkmn.h"
 #include "basics.h"
+#include "rect_atk.h"
 
 void put_pkmn_in_list(pkmn_list_t **list, pkmn_t pkmn)
 {
@@ -29,7 +30,7 @@ void put_pkmn_in_list(pkmn_list_t **list, pkmn_t pkmn)
 
 pkmn_t create_basic_pkmn(void)
 {
-    pkmn_t pkmn = {0, 1, 0, 0, 0, 0, 0};
+    pkmn_t pkmn = {0, 1, 0, 0, 0, 0, 0, {{0, 0}, {0, 0}, {0, 0}, {0, 0}}};
 
     pkmn.atks[0] = atks[0];
     pkmn.atks[1] = atks[0];
@@ -38,7 +39,7 @@ pkmn_t create_basic_pkmn(void)
     return (pkmn);
 }
 
-void sub_analyse_line_pkmn(char *line, char **words, pkmn_t *pkmn)
+void sub_analyse_line_pkmn(char **words, pkmn_t *pkmn)
 {
     if (my_strcmp(words[0], "xp_to_next_lvl") == 1)
         pkmn->xp_to_next_lvl = my_getnbr(words[1]);
@@ -70,7 +71,7 @@ void analyse_line_pkmn(char *line, pkmn_t *pkmn)
         pkmn->health = my_getnbr(words[1]);
     if (my_strcmp(words[0], "max_health") == 1)
         pkmn->max_health = my_getnbr(words[1]);
-    sub_analyse_line_pkmn(line, words, pkmn);
+    sub_analyse_line_pkmn(words, pkmn);
     free_word_array(words);
 }
 

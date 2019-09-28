@@ -8,14 +8,6 @@
 #ifndef OVERWORLD_RECTS_H
 #define OVERWORLD_RECTS_H
 
-static const char *mapspathsOut[6] = {"maps/outdoors/ground",
-    "maps/outdoors/objects", "maps/outdoors/buildings",
-    "maps/outdoors/heights", "maps/outdoors/solid", "maps/outdoors/nocolobjs"};
-static const char *mapspathsIn[6] = {"maps/interior/ground",
-    "maps/interior/objects", "maps/interior/walls",
-    "maps/interior/heights", "maps/interior/solid", "maps/interior/nocolobjs"};
-static const char **mapspaths[2] = {mapspathsOut, mapspathsIn};
-
 static const sfIntRect barry_rects[16] =
 {
     {320, 64, 64, 64},
@@ -453,18 +445,18 @@ typedef struct ground_info_s
 
 static const ground_info_t infos[12] =
 {
-    {0, 0, 0, 17, 0},
-    {1, 1, 3, 31, 0},
-    {2, 1, 2, 31, 0},
-    {3, 0, 5, 19, 0},
-    {4, 1, 1, 8, 0},
-    {5, 0, 3, 1, 0},
-    {0, 0, 0, 14, 1},
-    {1, 1, 3, 1, 1},
-    {2, 1, 2, 42, 1},
-    {3, 0, 5, 3, 1},
-    {4, 1, 1, 1, 1},
-    {5, 0, 3, 5, 1}
+    {0, 0, 0, 17, 0, {0, 0}},
+    {1, 1, 3, 31, 0, {0, 0}},
+    {2, 1, 2, 31, 0, {0, 0}},
+    {3, 0, 5, 19, 0, {0, 0}},
+    {4, 1, 1, 8, 0, {0, 0}},
+    {5, 0, 3, 1, 0, {0, 0}},
+    {0, 0, 0, 14, 1, {0, 0}},
+    {1, 1, 3, 1, 1, {0, 0}},
+    {2, 1, 2, 42, 1, {0, 0}},
+    {3, 0, 5, 3, 1, {0, 0}},
+    {4, 1, 1, 1, 1, {0, 0}},
+    {5, 0, 3, 5, 1, {0, 0}}
 };
 
 #endif

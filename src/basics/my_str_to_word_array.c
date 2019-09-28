@@ -21,10 +21,10 @@ static int nb_words(char *str, char *notinc)
 
     while (*str != '\0') {
         if (check_if_inc(*str, notinc) == 0)
-            *str++;
+            str += 1;
         if (*str != '\0' && check_if_inc(*str, notinc) == 1)
             nb_words++;
-        for (; *str != '\0'  && check_if_inc(*str, notinc) == 1; *str++);
+        for (; *str != '\0'  && check_if_inc(*str, notinc) == 1; str += 1);
     }
     return (nb_words);
 }
@@ -45,7 +45,7 @@ static char *sub_str_to_word_array(char *str, char *notinc, char **word)
         return (NULL);
     for (j = 0; *str && check_if_inc(*str, notinc) == 1; j++) {
         word[0][j] = *str;
-        *str++;
+        str += 1;
     }
     word[0][j] = '\0';
     return (str);
@@ -61,7 +61,7 @@ char **my_str_to_word_array(char *str, char *notinc)
         return (NULL);
     while (*str != '\0' && nb_word > 0) {
         if (check_if_inc(*str, notinc) == 0)
-            *str++;
+            str += 1;
         if (*str != '\0' && check_if_inc(*str, notinc) == 1) {
             words[i+=1] = malloc(sizeof(char) * word_len(str, notinc)+1);
             str = sub_str_to_word_array(str, notinc, &words[i]);

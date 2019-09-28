@@ -14,8 +14,7 @@
 
 #define TEXT_COMBAT "assets/text_combat.png"
 
-static setting_t set_setting(sfVector2f pos, sfVector2f scale, window_t *window,
-int opt)
+static setting_t set_setting(sfVector2f pos, window_t *window, int opt)
 {
     setting_t set;
 
@@ -32,11 +31,11 @@ int opt)
     return set;
 }
 
-static game_object *set_spr(game_object *spr, sfVector2f pos, window_t *window)
+static game_object *set_spr(sfVector2f pos, window_t *window)
 {
     sfIntRect rec = {0, 0, 0, 0};
+    game_object *spr = create_object(TEXT_COMBAT, pos, rec, window);
 
-    spr = create_object(TEXT_COMBAT, pos, rec, window);
     return spr;
 }
 
@@ -57,8 +56,8 @@ int display_text(char *base, sfVector2f pos, window_t *window, int opt)
 {
     int flag = 0;
     sfVector2f scale = {0.50 * window->scale.x, 0.50 * window->scale.y};
-    setting_t set = set_setting(pos, scale, window, opt);
-    game_object *spr = set_spr(spr, pos, window);
+    setting_t set = set_setting(pos, window, opt);
+    game_object *spr = set_spr(pos, window);
 
     set.sprite = spr->sprite;
     if (opt == 1)
