@@ -86,6 +86,7 @@ int do_text(char *base, setting_t set, window_t *window, int opt)
     save = destroy_free(&text, save);
     if (text.str[cpt] != '\0')
         return 0;
+    free(text.str);
     free(save);
     save = NULL;
     cpt = 0;
