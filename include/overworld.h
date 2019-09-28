@@ -52,7 +52,7 @@ void draw_game(window_t *window, game_t *game);
 void analyse_event(window_t *window, game_t *game);
 void read_evts(char *path, evt_list_t **list, int arg);
 int check_col_event(sfVector2f pos, int locmap, evt_t event);
-game_t create_game(int arg);
+game_t create_game(int arg, int gender);
 void unload_map(struct game_object_list_s **objects);
 void animate_objects(game_t *game);
 void destroy_game(game_t *game);

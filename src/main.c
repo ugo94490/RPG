@@ -19,7 +19,7 @@
 void temp_loop(window_t *window, sfVector2f *scale, int flag, int gender)
 {
     clock_sf clock = create_clock();
-    game_t game = create_game(flag);
+    game_t game = create_game(flag, gender);
 
     if (game.view == NULL || game.objects == NULL ||
         game.sprites == NULL || game.character == NULL)
