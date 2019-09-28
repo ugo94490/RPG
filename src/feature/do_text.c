@@ -77,15 +77,14 @@ int do_text(char *base, setting_t set, window_t *window, int opt)
 
     save = set_save(save, &text, window->window, set.sprite);
     flag = text.flag;
-    if (save == NULL || text.str == NULL || save == NULL)
-        return -1;
     cpt = loop(&text, set, cpt, opt);
-    if (cpt == -1)
+    if (save == NULL || cpt == -1 || save == NULL)
         return -1;
     cpt = update_cpt(&text, cpt, flag, dif);
     save = destroy_free(&text, save);
     if (text.str[cpt] != '\0')
         return 0;
+    free(save);
     save = NULL;
     cpt = 0;
     return 1;

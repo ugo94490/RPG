@@ -23,7 +23,7 @@ typedef struct menu
 {
     sfTexture *texture;
     sfSprite *sprite;
-}menu_t;
+} menu_t;
 
 typedef struct game_object
 {
@@ -31,7 +31,7 @@ typedef struct game_object
     sfTexture *texture;
     sfVector2f pos;
     sfIntRect rect;
-}game_object;
+} game_object;
 
 sfSprite *init_button(char *buffer);
 int display_button(sfSprite *sprite, sfVector2f position, sfIntRect rect
@@ -41,10 +41,12 @@ int condition_gear(window_t *window);
 menu_t *init_menu(char *path);
 int free_menu(menu_t *menu);
 int menu_event(window_t *window);
-int menu(window_t *window);
 sfIntRect set_rect(int top, int left, int width, int height);
 int pause_time(float sec);
 int condition_trophy(window_t *window);
 int condition_exit(window_t *window);
 int condition_howto(window_t *window);
 int condition_save(window_t *window);
+int condition_gender(window_t *window);
+int menu_event(window_t *window);
+int display_menu(window_t *window);

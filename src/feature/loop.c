@@ -72,6 +72,8 @@ static int wait_event(txt_t *text, sfRenderWindow *window)
 
 int loop(txt_t *text, setting_t set, int cpt, int opt)
 {
+    if (text->str == NULL)
+        return -1;
     while (text->flag < 3) {
         text->flag = check_event(text->event, text->flag, set.window);
         if (text->flag == -1)
