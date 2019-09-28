@@ -12,10 +12,11 @@ int condition_back(window_t *window)
     int flag = 0;
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *play = init_button("assets/back.png");
-    sfVector2f position = {487* window->scale.x, 800 * window->scale.y};
+    sfVector2f position = {487 * window->scale.x, 800 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
-    if (vct.x >= 487 && vct.x <= 825 && vct.y >= 800 && vct.y <= 874) {
+    if (vct.x >= position.x && vct.x <= 825 * window->scale.x
+    && vct.y >= position.y && vct.y <= 874 * window->scale.y) {
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);

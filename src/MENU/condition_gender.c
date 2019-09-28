@@ -14,7 +14,8 @@ static int condition_boy(window_t *window)
     sfVector2f position = {94 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
-    if (vct.x >= 94 && vct.x <= 414 && vct.y >= 480 && vct.y <= 584) {
+    if (vct.x >= position.x && vct.x <= 414 * window->scale.x
+    && vct.y >= position.y && vct.y <= 584 * window->scale.y) {
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
@@ -35,7 +36,8 @@ static int condition_girl(window_t *window)
     sfVector2f position = {866 * window->scale.x, 480 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
-    if (vct.x >= 866 && vct.x <= 1186 && vct.y >= 480 && vct.y <= 584) {
+    if (vct.x >= position.x && vct.x <= 1186 * window->scale.x
+    && vct.y >= position.y && vct.y <= 584 * window->scale.y) {
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
