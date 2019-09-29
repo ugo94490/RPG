@@ -53,6 +53,7 @@ SRC	=	src/main.c					\
 		src/basics/my_getnbr.c				\
 		src/basics/word_array_fcts.c			\
 		src/basics/my_score.c				\
+		src/basics/my_strcpy.c				\
 		UGO/useful_fct.c				\
 		UGO/main_cbt.c					\
 		UGO/tools_two.c					\
@@ -75,6 +76,9 @@ SRC	=	src/main.c					\
 		src/MENU/menu_button.c				\
 		src/MENU/menu_tools.c				\
 		src/MENU/condition_back.c			\
+		src/MENU/condition_left_right.c			\
+		src/MENU/condition_scale.c			\
+		src/MENU/config_option.c			\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\
@@ -85,8 +89,7 @@ SRC	=	src/main.c					\
 		src/menu_game/pokemon/destroy_pokemon_bag.c 	\
 		src/menu_game/pokemon/display_pokemon_bag.c 	\
 		src/menu_game/pokemon/fn_item.c 		\
-		src/menu_game/pokemon/menu_pokemon.c 		\
-		src/menu_game/pokemon/switch_pokemon.c
+		src/menu_game/pokemon/menu_pokemon.c
 
 SRC_T		=
 

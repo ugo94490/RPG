@@ -46,6 +46,8 @@ static void load_newsave(game_t *game, int gender)
     game->music = load_music(game->character->music);
     read_evts("save/newsave/tempevts", &(game->evts), 0);
     game->character->type = gender;
+    if (game->character->type < 4)
+        game->character->anim.rects = characterRects[gender];
 }
 
 game_t create_game(int arg, int gender)

@@ -47,7 +47,7 @@ typedef struct game_s
     window_t *window;
 } game_t;
 
-void set_view_params(window_t *window, game_t *game, sfVector2f scale);
+void set_view_params(window_t *window, game_t *game);
 void draw_game(window_t *window, game_t *game);
 void analyse_event(window_t *window, game_t *game);
 void read_evts(char *path, evt_list_t **list, int arg);
@@ -68,6 +68,6 @@ void analyse_line_evt(char *line, evt_t *evt);
 void put_event_in_list(evt_list_t **list, evt_t event, int perm);
 evt_t create_basic_event(void);
 void sub_save_evts(void *file, evt_list_t *evts);
-void temp_loop(window_t *window, sfVector2f *scale, int flag, int opt);
+void temp_loop(window_t *window, int flag, int opt);
 
 #endif

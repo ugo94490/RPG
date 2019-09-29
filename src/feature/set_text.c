@@ -65,7 +65,7 @@ txt_t set_text(txt_t *text, setting_t set, char *base)
     text->flag = 0;
     text->font = sfFont_createFromFile(FONT);
     text->text = sfText_create();
-    text->str = strcpy(text->str, base);
+    text->str = my_strcpy(text->str, base);
     text->str = change_str(text->str);
     sfText_setFont(text->text, text->font);
     sfText_setPosition(text->text, set.pos);

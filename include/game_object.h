@@ -91,7 +91,8 @@ typedef struct game_object_list_s
 
 void put_object_in_objects(game_object_list_t **list, void *object,
 int type, int height);
-void move_objects(game_object_list_t *objects, sfTime time);
+void move_objects(struct game_s *game,
+game_object_list_t *objects, sfTime time);
 void move_npc(npc_t *npc, sfTime time);
 character_t *create_character(game_object_list_t **list);
 void update_character_status(character_t *character, int status, int direction);

@@ -46,7 +46,10 @@ void analyse_menu_game(game_t *game, menu_t *menu)
 {
     sfEvent event;
 
-    while (sfRenderWindow_pollEvent(menu->window->window, &event))
+    while (sfRenderWindow_pollEvent(menu->window->window, &event)) {
         if (event.type == sfEvtKeyPressed)
             analyse_keyboard_menu_game(game, menu);
+        if (event.type == sfEvtClosed)
+            sfRenderWindow_close(game->window->window);
+    }
 }

@@ -1,5 +1,5 @@
 -npc
-type:0
+type:2
 posx:768
 posy:608
 world:0
@@ -34,4 +34,22 @@ atk2:2
 atk3:0
 atk4:0
 
+
+-npc
+type:18
+posx:960
+posy:96
+world:1
+direction:2
+aggro:0
+interact:0
+
+-npc
+type:24
+posx:224
+posy:64
+world:1
+direction:1
+aggro:0
+interact:0
 

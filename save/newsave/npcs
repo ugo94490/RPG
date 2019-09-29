@@ -36,10 +36,18 @@ atk3:0
 atk4:0
 
 -npc
-type:1
-posx:96
-posy:160
+type:18
+posx:960
+posy:96
 world:1
 direction:2
-diag1:Salut mec.
 interact:0
+
+-npc
+type:24
+posx:224
+posy:64
+world:1
+direction:1
+interact:0
+

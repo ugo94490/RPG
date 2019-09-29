@@ -16,7 +16,7 @@ int condition_back(window_t *window)
 
     sfSprite_setScale(play, window->scale);
     if (vct.x >= position.x && vct.x <= 825 * window->scale.x
-    && vct.y >= position.y && vct.y <= 874 * window->scale.y) {
+    && vct.y >= position.y && vct.y <= 904 * window->scale.y) {
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
