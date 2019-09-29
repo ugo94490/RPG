@@ -20,4 +20,5 @@ void save_game(game_t *game)
     save_character("save/actualsave/characterInfo", game->character);
     save_npcs("save/actualsave/npcs", game->objects);
     save_evts(game->evts);
+    save_quests(game->character->quests);
 }

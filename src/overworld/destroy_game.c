@@ -39,11 +39,23 @@ void destroy_item_list(item_list_t *list)
         free(list);
 }
 
+void destroy_quest_list(quest_list_t *quests)
+{
+    if (quests && quests->next)
+        destroy_quest_list(quests->next);
+    if (quests) {
+        if (quests->text)
+            free(quests->text);
+        free(quests);
+    }
+}
+
 void destroy_game(game_t *game)
 {
     for (int i = 0; i < 3; i++)
         destroy_sprite(&(game->sprites[i]));
     free(game->sprites);
+    destroy_quest_list(game->character->quests);
     destroy_item_list(game->character->items);
     destroy_object_list(game->objects);
     destroy_evt_list(game->evts);

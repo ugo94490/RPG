@@ -28,6 +28,8 @@ SRC	=	src/main.c					\
 		src/overworld/load_npc.c			\
 		src/overworld/destroy_game.c			\
 		src/overworld/sub_destroy_game.c		\
+		src/overworld/load_quests.c			\
+		src/overworld/save_quests.c			\
 		src/overworld/load_character.c			\
 		src/overworld/load_pkmns.c			\
 		src/overworld/save_character.c			\
