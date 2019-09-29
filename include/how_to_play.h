@@ -15,11 +15,11 @@
 static const int NBR_HELP_IMG = 3;
 static const int NBR_STRING = 7;
 
-static const char *PHRASE = {"Bonjour,\nJe m'appelle Professeur Sorbier!\n"
+static const char *PHRASE = {"Bonjour,\nJe m'appelle Professeur Sorbier!\n\n"
     "Je vais t'apprendre comment jouer a ce jeu merveilleux :)\n"
     "Tout d'abord pour te deplacer, utiliser les fleches directionnelles de"
     "de ton clavier.\n Ensuite, pour interagir avec les differentes"
-    "entitees utilise la touche ESPACE de ton claver.\n"
+    "entitees utilise la touche ESPACE de ton clavier.\n"
     "Pour finir, pour courir maintient la touche SHIFT de ton clavier.\n"
     "Bon jeu dans l'univers Pokemon!\n"};
 

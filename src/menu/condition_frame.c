@@ -28,7 +28,7 @@ static int more_frame(window_t *window, int frame)
 int condition_frame(window_t *win)
 {
     static int frame = 60;
-    sfSprite *exit = init_button("assets/options.png");
+    sfSprite *exit = init_button("assets/framerate.png");
     sfVector2f position = {487 * win->scale.x, 294 * win->scale.y};
     int flag = 0;
 
