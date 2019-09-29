@@ -18,7 +18,7 @@ static int menu(window_t *window, sfVector2f *scale)
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_howto(window);
         condition_play(window, scale);
-        condition_gear(window);
+        condition_option(window);
         condition_trophy(window);
         condition_exit(window);
         menu_event(window);

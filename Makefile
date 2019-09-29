@@ -76,6 +76,9 @@ SRC	=	src/main.c					\
 		src/MENU/menu_button.c				\
 		src/MENU/menu_tools.c				\
 		src/MENU/condition_back.c			\
+		src/MENU/condition_left_right.c			\
+		src/MENU/condition_scale.c			\
+		src/MENU/config_option.c			\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\

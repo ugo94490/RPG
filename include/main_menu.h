@@ -52,3 +52,8 @@ int condition_gender(window_t *window, sfVector2f *scale);
 int menu_event(window_t *window);
 int display_menu(window_t *window, sfVector2f *scale);
 int condition_back(window_t *window);
+int condition_scale(window_t *window);
+int condition_left(window_t *window, float x, float y);
+int condition_right(window_t *window, float x, float y);
+int config_option(window_t *window);
+int condition_option(window_t *window);
