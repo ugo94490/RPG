@@ -15,13 +15,13 @@
 static const int NBR_HELP_IMG = 3;
 static const int NBR_STRING = 7;
 
-static const char *PHRASE[7] = {"Bonjour,\nJe m'appelle Professeur Sorbier!\n",
-    "Je vais t'apprendre comment jouer à ce jeu merveilleux :)\n",
-    "Tout d'abord pour te déplacer, utiliser les flèches directionnelles de"
-    "de ton clavier.\n", "Ensuite, pour intéragir avec les différentes"
-    "entitées utilise la touche ESPACE de ton claver.\n", "Comme ceci\n",
-    "Pour finir, pour courir maintient la touche SHIFT de ton clavier.\n",
-    "Bon jeu dans l'univers Pokémon!\n"};
+static const char *PHRASE = {"Bonjour,\nJe m'appelle Professeur Sorbier!\n"
+    "Je vais t'apprendre comment jouer a ce jeu merveilleux :)\n"
+    "Tout d'abord pour te deplacer, utiliser les fleches directionnelles de"
+    "de ton clavier.\n Ensuite, pour interagir avec les differentes"
+    "entitees utilise la touche ESPACE de ton claver.\n"
+    "Pour finir, pour courir maintient la touche SHIFT de ton clavier.\n"
+    "Bon jeu dans l'univers Pokemon!\n"};
 
 enum STATE {
     START,
@@ -35,8 +35,10 @@ typedef struct how_to_s {
     sfIntRect rectProf;
     sfIntRect rectScreen;
     sfVector2f posProf;
+    text_t txt;
     int state;
     int nbr_where;
+    char *current_char;
 } how_to_t;
 
 #endif /* _HOW_TO_PLAY_H_ */

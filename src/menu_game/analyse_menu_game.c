@@ -12,6 +12,21 @@
 #include "game_object.h"
 #include "menu.h"
 
+static void sub_menu_button(game_t *game, menu_t *menu)
+{
+    const sfView *default_view = sfRenderWindow_getDefaultView(game->window->window);
+
+    if (menu->n_button == SETTINGS) {
+        sfRenderWindow_setView(game->window->window, default_view);
+        config_option(game->window);
+        set_view_params(game->window, game);
+    }
+    if (menu->n_button == SAVE) {
+        save_game(game);
+        display_text_overworld(game->window, "Game saved...", game);
+    }
+}
+
 static void manage_button(game_t *game, menu_t *menu)
 {
     if (menu->n_button == QUIT)
@@ -26,10 +41,7 @@ static void manage_button(game_t *game, menu_t *menu)
         menu->state = NONE;
         launch_quest(game->window, game);
     }
-    if (menu->n_button == SAVE) {
-        save_game(game);
-        display_text_overworld(game->window, "Game saved...", game);
-    }
+    sub_menu_button(game, menu);
 }
 
 static void analyse_keyboard_menu_game(game_t *game, menu_t *menu)
