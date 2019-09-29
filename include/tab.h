@@ -24,7 +24,7 @@ static atk_t atks[4] =
     {3, 70}
 };
 
-static char *name[13] =
+static char *name[21] =
 {
     "Ouisticram",
     "Tiplouf",
@@ -35,6 +35,14 @@ static char *name[13] =
     "Simiabraz",
     "Pingoleon",
     "Torterra",
+    "Etourmi",
+    "Etouraptor",
+    "Keunotor",
+    "Castorno",
+    "Lixy",
+    "Luxray",
+    "Charkos",
+    "Bastiodon",
     "Dialga",
     "Palkia",
     "Arceus",
@@ -54,7 +62,7 @@ static char *asset_atk[2] =
     "assets/ultralaser.png"
 };
 
-static char *front_pkm[12] =
+static char *front_pkm[20] =
 {
     "assets/front/ouisticram.png",
     "assets/front/tiplouf.png",
@@ -65,12 +73,20 @@ static char *front_pkm[12] =
     "assets/front/simiabraz.png",
     "assets/front/pingoleon.png",
     "assets/front/torterra.png",
+    "assets/front/etourmi.png",
+    "assets/front/etouraptor.png",
+    "assets/front/keunotor.png",
+    "assets/front/castorno.png",
+    "assets/front/lixy.png",
+    "assets/front/luxray.png",
+    "assets/front/charkos.png",
+    "assets/front/bastiodon.png",
     "assets/front/dialga.png",
     "assets/front/palkia.png",
     "assets/front/arceus.png"
 };
 
-static char *back_pkm[12] =
+static char *back_pkm[20] =
 {
     "assets/back/ouisticram.png",
     "assets/back/tiplouf.png",
@@ -81,6 +97,14 @@ static char *back_pkm[12] =
     "assets/back/simiabraz.png",
     "assets/back/pingoleon.png",
     "assets/back/torterra.png",
+    "assets/back/etourmi.png",
+    "assets/back/etouraptor.png",
+    "assets/back/keunotor.png",
+    "assets/back/castorno.png",
+    "assets/back/lixy.png",
+    "assets/back/luxray.png",
+    "assets/back/charkos.png",
+    "assets/back/bastiodon.png",
     "assets/back/dialga.png",
     "assets/back/palkia.png",
     "assets/back/arceus.png"

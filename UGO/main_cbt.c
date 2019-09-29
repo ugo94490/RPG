@@ -864,7 +864,7 @@ npc_t *init_rand(game_t *game)
     npc->type = -1;
     npc->pkmns = malloc(sizeof(pkmn_list_t));
     npc->pkmns->next = NULL;
-    npc->pkmns->pokemon.number = rand() % 9;
+    npc->pkmns->pokemon.number = rand() % 17;
     npc->pkmns->pokemon.level = choose_level(game);
     npc->pkmns->pokemon.xp_to_next_lvl = 0;
     npc->pkmns->pokemon.atq = 100 * (npc->pkmns->pokemon.level / 80) + 10;
