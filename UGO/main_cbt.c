@@ -586,11 +586,12 @@ game_object **init_player(window_t *window, int flag)
 }
 
 int disp_sprite(game_object **tab, window_t *window,
-game_object **character)
+game_object **character, npc_t *npc)
 {
     display_game(tab, window, 5, 0);
     sfRenderWindow_drawSprite(window->window, character[0]->sprite, NULL);
-    sfRenderWindow_drawSprite(window->window, character[1]->sprite, NULL);
+    if (npc->type != -1)
+        sfRenderWindow_drawSprite(window->window, character[1]->sprite, NULL);
     sfRenderWindow_display(window->window);
     return (0);
 }
@@ -603,13 +604,12 @@ int free_character(game_object **character)
     return (0);
 }
 
-int animation(window_t *window, game_object **tab, int flag)
+int animation(window_t *window, game_object **tab, int flag, npc_t *npc)
 {
     game_object **character = init_player(window, flag);
     sfClock *clock = sfClock_create();
     sfTime time;
     int count = 0;
-
     display_game(tab, window, 5, 0);
     while (count != 5) {
         time = sfClock_getElapsedTime(clock);
@@ -617,7 +617,7 @@ int animation(window_t *window, game_object **tab, int flag)
             sfRenderWindow_clear(window->window, sfBlack);
             character[0]->rect.left += 173;
             sfSprite_setTextureRect(character[0]->sprite, character[0]->rect);
-            disp_sprite(tab, window, character);
+            disp_sprite(tab, window, character, npc);
             time = sfClock_restart(clock);
             count++;
         }
@@ -776,7 +776,7 @@ int combat(window_t *win, game_t *game, npc_t *npc)
     misc_t *misc = init_misc(win, game, npc);
 
     misc->flag = 0;
-    animation(win, misc->tab, game->character->type);
+    animation(win, misc->tab, game->character->type, npc);
     while (sfRenderWindow_isOpen(win->window)) {
         sfRenderWindow_clear(win->window, sfBlack);
         misc->flag = check_menu(win, misc->flag, misc->tab);
@@ -836,7 +836,7 @@ npc_t *init_rand(game_t *game)
 
     if (npc == NULL)
         return (NULL);
-    npc->type = 0;
+    npc->type = -1;
     npc->pkmns = malloc(sizeof(pkmn_list_t));
     npc->pkmns->next = NULL;
     npc->pkmns->pokemon.number = rand() % 9;
