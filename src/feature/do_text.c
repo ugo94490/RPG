@@ -90,7 +90,7 @@ int do_text(char *base, setting_t set, window_t *window, int opt)
         free(text.str);
         return 0;
     }
-    save = set_to_base(text.str, save);;
+    save = set_to_base(text.str, save);
     cpt = 0;
     return 1;
 }

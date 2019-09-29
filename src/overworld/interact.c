@@ -38,7 +38,7 @@ void basic_npc_interact(game_t *game, npc_t *npc)
 void npc_interact(game_t *game, npc_t *npc)
 {
     void (*npc_interact_ptr[])(game_t *, npc_t *) = {basic_npc_interact,
-    get_quest_shoes, wait_quest_shoes};
+        get_quest_shoes, wait_quest_shoes};
 
     set_npc_direction_interact(game->character, npc);
     animate_npc(npc);

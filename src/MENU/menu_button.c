@@ -88,7 +88,8 @@ int condition_howto(window_t *window)
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
-            pause_time(1);
+            pause_time(0.5);
+            how_to_play(window);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -98,46 +99,25 @@ int condition_howto(window_t *window)
     return (0);
 }
 
-/* int condition_gear(window_t *window) */
-/* { */
-/*     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window); */
-/*     sfSprite *play = init_button("assets/gear.png"); */
-/*     sfVector2f position = {0 * window->scale.x, 910 * window->scale.y}; */
-
-/*     sfSprite_setScale(play, window->scale); */
-/*     if (vct.x >= 0 && vct.x <= 50 * window->scale.x */
-/*     && vct.y >= position.y && vct.y <= 960 * window->scale.y) { */
-/*         if (sfMouse_isButtonPressed(sfMouseLeft)) { */
-/*             display_button(play, position, set_rect(0, 50, 50, 50), window); */
-/*         } else */
-/*             display_button(play, position, set_rect(0, 50, 50, 50), window); */
-/*     } else */
-/*         display_button(play, position, set_rect(0, 0, 50, 50), window); */
-/*     sfTexture_destroy((sfTexture *)(sfSprite_getTexture(play))); */
-/*     sfSprite_destroy(play); */
-/*     return (0); */
-/* } */
-
-int condition_option(window_t *window)
+int condition_gear(window_t *window)
 {
-    int flag = 0;
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("assets/options.png");
-    sfVector2f position = {487 * window->scale.x, 800 * window->scale.y};
+    sfSprite *play = init_button("assets/gear.png");
+    sfVector2f position = {0 * window->scale.x, 910 * window->scale.y};
 
     sfSprite_setScale(play, window->scale);
-    if (vct.x >= position.x && vct.x <= 825 * window->scale.x
-    && vct.y >= position.y && vct.y <= 904 * window->scale.y) {
+    if (vct.x >= 0 && vct.x <= 50 * window->scale.x
+    && vct.y >= position.y && vct.y <= 960 * window->scale.y) {
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
-            display_button(play, position, set_rect(0, 870, 320, 104), window);
+            display_button(play, position, set_rect(0, 50, 50, 50), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);
             config_option(window);
         } else
-            display_button(play, position, set_rect(0, 435, 320, 104), window);
+            display_button(play, position, set_rect(0, 50, 50, 50), window);
     } else
-        display_button(play, position, set_rect(0, 0, 320, 104), window);
+        display_button(play, position, set_rect(0, 0, 50, 50), window);
     sfTexture_destroy((sfTexture *)(sfSprite_getTexture(play)));
     sfSprite_destroy(play);
-    return (flag);
+    return (0);
 }

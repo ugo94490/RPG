@@ -21,20 +21,20 @@ static void more_volume(window_t *window)
         window->volume = 100;
 }
 
-int condition_volume(window_t *window)
+int condition_volume(window_t *win)
 {
     sfSprite *volume = init_button("assets/exit.png");
-    sfVector2f position = {487 * window->scale.x, 494 * window->scale.y};
+    sfVector2f position = {487 * win->scale.x, 494 * win->scale.y};
     int flag = 0;
 
-    sfSprite_setScale(volume, window->scale);
-    display_button(volume, position, set_rect(0, 0, 320, 104), window);
-    flag = condition_left(window, position.x - 114 * window->scale.x, position.y);
+    sfSprite_setScale(volume, win->scale);
+    display_button(volume, position, set_rect(0, 0, 320, 104), win);
+    flag = condition_left(win, position.x - 114 * win->scale.x, position.y);
     if (flag == 1)
-        less_volume(window);
-    flag = condition_right(window, position.x + 330 * window->scale.x, position.y);
+        less_volume(win);
+    flag = condition_right(win, position.x + 330 * win->scale.x, position.y);
     if (flag == 1)
-        more_volume(window);
+        more_volume(win);
     sfTexture_destroy((sfTexture *)(sfSprite_getTexture(volume)));
     sfSprite_destroy(volume);
     return (0);
