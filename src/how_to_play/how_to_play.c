@@ -28,7 +28,8 @@ static void create_how_to_play(how_to_t *help)
     help->rectScreen.top = 0;
     help->rectScreen.left = 0;
     help->spriteHelp[0] = create_sprite("assets/ProfSprite.png");
-    help->txt = create_text(my_strdup((char *)PHRASE), "assets/classic.ttf", 23, pos);
+    help->txt = create_text(my_strdup((char *)PHRASE),
+    "assets/classic.ttf", 23, pos);
     sfText_setColor(help->txt.text, sfBlack);
 }
 

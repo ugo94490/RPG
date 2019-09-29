@@ -14,7 +14,8 @@
 
 static void sub_menu_button(game_t *game, menu_t *menu)
 {
-    const sfView *default_view = sfRenderWindow_getDefaultView(game->window->window);
+    const sfView *default_view =
+    sfRenderWindow_getDefaultView(game->window->window);
 
     if (menu->n_button == SETTINGS) {
         sfRenderWindow_setView(game->window->window, default_view);
