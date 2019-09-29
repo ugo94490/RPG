@@ -124,3 +124,4 @@ char *my_score(int);
 
 /* Heal Function */
 void fn_item(game_t *, pkmn_bag_t *);
+void pokedex(game_t *, window_t *);

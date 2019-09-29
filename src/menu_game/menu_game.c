@@ -27,6 +27,10 @@ static void menu_game_loop(game_t *game, menu_t *menu)
             menu_pokemon(menu->window, game, POTION);
             menu->state = NONE;
         }
+        if (menu->state == POKEDEX) {
+            pokedex(game, game->window);
+            menu->state = NONE;
+        }
         sfRenderWindow_display(menu->window->window);
     }
     sfClock_destroy(time_loop.clock);
