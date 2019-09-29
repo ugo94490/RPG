@@ -121,6 +121,7 @@ pkmn_bag_t *create_pkmn_bag(window_t *, game_t *, int);
 
 /* Helpfull Function */
 char *my_score(int);
+int config_option(window_t *window);
 
 /* Heal Function */
 void fn_item(game_t *, pkmn_bag_t *);
