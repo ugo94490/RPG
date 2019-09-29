@@ -27,7 +27,7 @@ text_t *init_text(window_t *window)
     sfVector2f pos = {70, 220 * window->scale.y};
 
     for (int i = 0; i < 20; i++) {
-        txt[i] = create_text(strdup(name[i]), "assets/classic.ttf",
+        txt[i] = create_text(my_strdup(name[i]), "assets/classic.ttf",
         15 * window->scale.x, pos);
         sfText_setFillColor(txt[i].text, sfBlack);
         pos.x += 240 * window->scale.x;

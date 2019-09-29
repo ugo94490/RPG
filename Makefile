@@ -100,7 +100,7 @@ SRC	=	src/main.c					\
 		src/pokedex/pokedex.c				\
 		src/pokedex/pokedex_name.c			\
 		src/how_to_play/how_to_play.c		\
-		src/combat/*.c
+		src/combat/main_cbt.c			\
 
 SRC_T		=
 

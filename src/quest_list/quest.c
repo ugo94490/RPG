@@ -6,6 +6,7 @@
 */
 
 #include "my_rpg.h"
+#include "basics.h"
 
 int destroy_back(game_object *back)
 {
@@ -36,7 +37,7 @@ text_t *init_tabtxt(game_t *game, int nb)
     sfVector2f pos = {100, 20};
 
     for (int i = 0; i < nb; i++) {
-        tab[i] = create_text(strdup(game->character->quests->text),
+        tab[i] = create_text(my_strdup(game->character->quests->text),
         "assets/classic.ttf", size, pos);
         pos.y += 40;
         sfText_setFillColor(tab[i].text, sfBlack);
