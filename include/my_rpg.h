@@ -41,6 +41,7 @@ typedef struct misc_s
     int flag;
     sfSprite *sprite;
     sfTexture *texture;
+    int nb;
 }misc_t;
 
 struct game_object *create_object(char *sprite, sfVector2f position,

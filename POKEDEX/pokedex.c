@@ -44,15 +44,14 @@ static char *front_pkm[12] =
 
 game_object **init_tab(window_t *window)
 {
-    game_object **tab = malloc(sizeof(game_object *) *
-    (get_nb_words(front_pkm) + 1));
+    game_object **tab = malloc(sizeof(game_object *) * 21);
     sfVector2f pos = {0, 0};
     sfIntRect rect = {0};
 
     rect.width = 1280;
     rect.height = 970;
     tab[0] = create_object("assets/pokedex.png", pos, rect, window);
-    for (int i = 0; i < get_nb_words(front_pkm) - 1; i++) {
+    for (int i = 0; i < 19; i++) {
         tab[i + 1] = create_object(front_pkm[i], pos, rect, window);
         rect.width = 173;
         rect.height = 176;
@@ -70,7 +69,7 @@ int display_pokedex(window_t *window, game_object **tab)
     const sfView *default_view = sfRenderWindow_getDefaultView(window->window);
 
     sfRenderWindow_setView(window->window, default_view);
-    for (int i = 0; i < get_nb_words(front_pkm); i++) {
+    for (int i = 0; i < 21; i++) {
         sfSprite_setTextureRect(tab[i]->sprite, tab[i]->rect);
         sfSprite_setScale(tab[i]->sprite, window->scale);
         sfSprite_setPosition(tab[i]->sprite, tab[i]->pos);
@@ -81,7 +80,7 @@ int display_pokedex(window_t *window, game_object **tab)
 
 int destroy(game_object **tab)
 {
-    for (int i = 0; i < get_nb_words(front_pkm); i++) {
+    for (int i = 0; i < 20; i++) {
         sfSprite_destroy(tab[i]->sprite);
         sfTexture_destroy(tab[i]->texture);
         free(tab[i]);
@@ -95,7 +94,7 @@ text_t *init_text(window_t *window)
     text_t *txt = malloc(sizeof(text_t) * 12);
     sfVector2f pos = {0, 0};
 
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 20; i++) {
         txt[i] = create_text(strdup(name[i]), "assets/classic.ttf",
         15 * window->scale.x, pos);
         sfText_setFillColor(txt[i].text, sfBlack);
@@ -110,14 +109,14 @@ text_t *init_text(window_t *window)
 
 int display_txt(window_t *window, text_t *txt)
 {
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i < 20; i++)
         sfRenderWindow_drawText(window->window, txt[i].text, NULL);
     return (0);
 }
 
 int destroy_txt(text_t *txt)
 {
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i < 20; i++)
         destroy_text(&txt[i]);
     free(txt);
     return (0);

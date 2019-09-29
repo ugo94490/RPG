@@ -220,8 +220,8 @@ int nb, game_object **tab)
     str = my_strcat(str, phr[1]);
     pause_time(0.1);
     display_text(str, pos, window, 0);
-    sfRenderWindow_clear(window->window, sfBlack);
     display_game(tab, window, 8, 0);
+    sfRenderWindow_display(window->window);
     free(str);
     return (0);
 }
@@ -232,7 +232,7 @@ int get_atk(pkmn_list_t *linked, int nb)
 
     for (int i = 0; atk[i]; i++)
         if (my_strcmp(atk[i], atk_name[linked->pokemon.atks[nb].number])
-            == 0)
+            == 1)
             ret = i;
     return (ret);
 }
@@ -244,46 +244,67 @@ int display_stat(window_t *window, text_t *stat, int lim)
     return (0);
 }
 
-int attack_anim(misc_t *misc, window_t *window, pkmn_list_t *linked,
-int nb)
+game_object *display_all(misc_t *misc, window_t *window, sfIntRect rect,
+pkmn_list_t *linked)
 {
-    sfIntRect rect = {0, 0, 605, 340};
-    sfVector2f pos = {340, 30};
-    int nb_atk = get_atk(linked, nb);
     game_object *sprite;
-    sfClock *clock;
-    sfTime time;
+    sfVector2f position = {340, 30};
+    int nb_atk = get_atk(linked, misc->nb);
 
-    if (nb_atk == -1)
-        return (0);
     display_game(misc->tab, window, 8, 0);
     display_stat(window, misc->stat, 8);
-    sprite = create_object(asset_atk[nb_atk], pos, rect, window);
-    clock = sfClock_create();
+    sprite = create_object(asset_atk[nb_atk], position, rect, window);
     sfSprite_setTextureRect(sprite->sprite, rect);
-    while (sfRenderWindow_isOpen(window->window)) {
-        time = sfClock_getElapsedTime(clock);
-        if (rect.left >= 1210)
-            break;
-        if (time.microseconds >= 400000) {
-            sfRenderWindow_clear(window->window, sfBlack);
-            display_game(misc->tab, window, 3, 0);
-            display_game(misc->tab, window, 7, 6);
-            sfSprite_setTextureRect(sprite->sprite, rect);
-            sfRenderWindow_drawSprite(window->window, sprite->sprite, NULL);
-            display_game(misc->tab, window, 5, 4);
-            display_game(misc->tab, window, 8, 8);
-            display_stat(window, misc->stat, 8);
-            rect.top += 340;
-            rect.top >= 2382 ? rect.left += 605 : 0;
-            time = sfClock_restart(clock);
-        }
-        sfRenderWindow_display(window->window);
-    }
+    return (sprite);
+}
+
+void destroy_anim(misc_t *misc, sfClock *clock, window_t *window,
+game_object *sprite)
+{
     display_game(misc->tab, window, 8, 0);
     display_stat(window, misc->stat, 8);
     destroy_obj(sprite);
     sfClock_destroy(clock);
+}
+
+sfIntRect display_end(misc_t *misc, window_t *window, game_object *sprite,
+sfIntRect rect)
+{
+    sfRenderWindow_clear(window->window, sfBlack);
+    display_game(misc->tab, window, 3, 0);
+    display_game(misc->tab, window, 7, 6);
+    sfSprite_setTextureRect(sprite->sprite, rect);
+    sfRenderWindow_drawSprite(window->window, sprite->sprite, NULL);
+    display_game(misc->tab, window, 5, 4);
+    display_game(misc->tab, window, 8, 8);
+    display_stat(window, misc->stat, 8);
+    rect.top += 340;
+    rect.top >= 2382 ? rect.left += 605 : 0;
+    return (rect);
+}
+
+int attack_anim(misc_t *misc, window_t *window, pkmn_list_t *linked)
+{
+    sfIntRect rect = {0, 0, 605, 340};
+    game_object *sprite;
+    sfClock *clock;
+    sfTime time;
+    if (get_atk(linked, misc->nb) == -1) {
+        printf("lol ntm pq tu marche pas");
+        return (0);
+    }
+    sprite = display_all(misc, window, rect, linked);
+    clock = sfClock_create();
+    while (sfRenderWindow_isOpen(window->window)) {
+        time = sfClock_getElapsedTime(clock);
+        if (rect.left >= 1210)
+            break;
+        if (time.microseconds >= 400000)
+            1 == 1 ? rect = display_end(misc, window, sprite, rect),
+            time = sfClock_restart(clock) : sfClock_restart(clock);
+        sfRenderWindow_display(window->window);
+    }
+    destroy_anim(misc, clock, window, sprite);
     return (0);
 }
 
@@ -303,7 +324,8 @@ misc_t *misc, pkmn_list_t *npc)
     linked->pokemon.atks[0].power * linked->pokemon.atq) /
     (linked->pokemon.def * 50) + 2;
     attack_box(linked, window, linked->pokemon.atks[0].number, misc->tab);
-    attack_anim(misc, window, linked, 0);
+    misc->nb = 0;
+    attack_anim(misc, window, linked);
     return (1);
 }
 
@@ -314,7 +336,8 @@ misc_t *misc, pkmn_list_t *npc)
     linked->pokemon.atks[1].power * linked->pokemon.atq) /
     (linked->pokemon.def * 50) + 2;
     attack_box(linked, window, linked->pokemon.atks[1].number, misc->tab);
-    attack_anim(misc, window, linked, 1);
+    misc->nb = 1;
+    attack_anim(misc, window, linked);
     return (1);
 }
 
@@ -325,7 +348,8 @@ misc_t *misc, pkmn_list_t *npc)
     linked->pokemon.atks[2].power * linked->pokemon.atq) /
     (linked->pokemon.def * 50) + 2;
     attack_box(linked, window, linked->pokemon.atks[2].number, misc->tab);
-    attack_anim(misc, window, linked, 2);
+    misc->nb = 2;
+    attack_anim(misc, window, linked);
     return (1);
 }
 
@@ -336,7 +360,8 @@ misc_t *misc, pkmn_list_t *npc)
     linked->pokemon.atks[3].power * linked->pokemon.atq) /
     (linked->pokemon.def * 50) + 2;
     attack_box(linked, window, linked->pokemon.atks[3].number, misc->tab);
-    attack_anim(misc, window, linked, 3);
+    misc->nb = 3;
+    attack_anim(misc, window, linked);
     return (1);
 }
 
