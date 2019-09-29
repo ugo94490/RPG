@@ -26,7 +26,7 @@ static void more_scale(window_t *window)
 int condition_scale(window_t *window)
 {
     sfSprite *exit = init_button("assets/play.png");
-    sfVector2f position = {487 * window->scale.x, 190 * window->scale.y};
+    sfVector2f position = {487 * window->scale.x, 95 * window->scale.y};
     int flag = 0;
 
     sfSprite_setScale(exit, window->scale);

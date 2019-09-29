@@ -7,38 +7,16 @@
 
 #include <SFML/Graphics.h>
 #include <SFML/System.h>
+#include <SFML/Audio.h>
 #include "graphics.h"
 #include "systems.h"
 #include "game_object.h"
 #include "overworld.h"
 #include "overworld_evt.h"
-#include "my_rpg.h"
 #include "overworld_sound.h"
+#include "my_rpg.h"
 #include "basics.h"
 #include "items.h"
-
-void teleport(game_t *game, evt_t event)
-{
-    unload_map(&(game->objects));
-    game->character->world = event.destmap;
-    game->character->objective = event.dest;
-    game->character->pos = event.dest;
-    if (event.direction > 0)
-        game->character->direction = event.direction;
-    load_map(&(game->objects), event.destmap);
-}
-
-void heal_pkmns(game_t *game)
-{
-    pkmn_list_t *pkmns = game->character->pkmns;
-
-    display_text_overworld(game->window,
-    "Vos pokemons ont ete soignes.", game);
-    while (pkmns) {
-        pkmns->pokemon.health = pkmns->pokemon.max_health;
-        pkmns = pkmns->next;
-    }
-}
 
 void add_item(item_list_t **list, int qty, item_t item)
 {
@@ -84,6 +62,8 @@ void activate_event(game_t *game, evt_list_t *evt)
         heal_pkmns(game);
     if (evt->event.type == 3)
         get_item(game, evt->event);
+    if (evt->event.type == 4)
+        aggro_evt(game, evt->event);
     if (evt->perm == 0) {
         evt->event.type = 0;
         evt->perm = 1;
