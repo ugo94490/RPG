@@ -95,7 +95,8 @@ SRC	=	src/main.c					\
 		src/menu_game/pokemon/destroy_pokemon_bag.c 	\
 		src/menu_game/pokemon/display_pokemon_bag.c 	\
 		src/menu_game/pokemon/fn_item.c 		\
-		src/menu_game/pokemon/menu_pokemon.c	\
+		src/menu_game/pokemon/menu_pokemon.c		\
+		src/QUEST_LIST/quest.c				\
 		POKEDEX/pokedex.c
 
 SRC_T		=

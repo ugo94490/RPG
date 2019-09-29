@@ -20,8 +20,11 @@ static void manage_button(game_t *game, menu_t *menu)
         menu->state = RELEASE;
     if (menu->n_button == POKEMON)
         menu->state = POKEMON;
-    if (menu->n_button == POKEDEX) {
+    if (menu->n_button == POKEDEX)
         menu->state = POKEDEX;
+    if (menu->n_button == BADGES) {
+        menu->state = NONE;
+        launch_quest(game->window, game);
     }
     if (menu->n_button == SAVE) {
         save_game(game);

@@ -56,3 +56,4 @@ int my_int(int nb);
 char* my_itoa(int nb, char *nbr);
 int display_text(char *base, sfVector2f pos, window_t *window, int opt);
 int my_strlen(char const *str);
+int launch_quest(window_t *window, game_t *game);
