@@ -17,7 +17,7 @@ int condition_left(window_t *window, float x, float y)
     sfSprite_setScale(left, window->scale);
     if (vct.x >= x && vct.x <= x + 104 * window->scale.x
     && vct.y >= y && vct.y <= y + 104 * window->scale.y) {
-	if (sfMouse_isButtonPressed(sfMouseLeft)) {
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(left, position, set_rect(0, 416, 104, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);
@@ -41,7 +41,7 @@ int condition_right(window_t *window, float x, float y)
     sfSprite_setScale(right, window->scale);
     if (vct.x >= x && vct.x <= x + 104 * window->scale.x
     && vct.y >= y && vct.y <= y + 104 * window->scale.y) {
-	if (sfMouse_isButtonPressed(sfMouseLeft)) {
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(right, position, set_rect(0, 416, 104, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);

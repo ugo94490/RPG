@@ -44,7 +44,8 @@ static char *front_pkm[12] =
 
 game_object **init_tab(game_t *game, window_t *window)
 {
-    game_object **tab = malloc(sizeof(game_object *) * (get_nb_words(front_pkm) + 1));
+    game_object **tab = malloc(sizeof(game_object *) *
+    (get_nb_words(front_pkm) + 1));
     sfVector2f temppos = {(game->character->pos.x + character_width / 2)
         * game->window->scale.x, (game->character->pos.y +
         character_height / 6) * game->window->scale.y};
@@ -70,7 +71,6 @@ game_object **init_tab(game_t *game, window_t *window)
 int display_pokedex(window_t *window, game_object **tab)
 {
     for (int i = 0; i < get_nb_words(front_pkm); i++) {
-        // sfSprite_setTextureRect(tab[i]->sprite, tab[i]->rect);
         sfSprite_setScale(tab[i]->sprite, window->scale);
         sfSprite_setPosition(tab[i]->sprite, tab[i]->pos);
         sfRenderWindow_drawSprite(window->window, tab[i]->sprite, NULL);
@@ -95,7 +95,8 @@ text_t *init_text(game_t *game, window_t *window)
         * game->window->scale.x, (game->character->pos.y +
         character_height / 6) * game->window->scale.y};
     text_t *txt = malloc(sizeof(text_t) * 12);
-    sfVector2f pos = {temppos.x - 110 * window->scale.x, temppos.y - 216 * window->scale.y};
+    sfVector2f pos = {temppos.x - 110 * window->scale.x,
+        temppos.y - 216 * window->scale.y};
 
     for (int i = 0; i < 12; i++) {
         txt[i] = create_text(strdup(name[i]), "assets/classic.ttf",
@@ -137,7 +138,6 @@ void pokedex(game_t *game, window_t *window)
         sfRenderWindow_display(window->window);
         if (sfKeyboard_isKeyPressed(sfKeyEscape))
             break;
-        // event(window);
     }
     destroy_txt(txt);
     destroy(tab);

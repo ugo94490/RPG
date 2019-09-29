@@ -24,7 +24,7 @@ TESTS_NAME	=	tests_run
 
 CC			=	gcc
 
-CFLAGS		=	-I../include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -g3 -I../lib_CSFML/include
+CFLAGS		=	-I../include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I../lib_CSFML/include
 
 CPPFLAGS	+=
 
