@@ -49,6 +49,7 @@ static void how_to_display(window_t *window, how_to_t *help)
         sfSprite_setPosition(help->spriteHelp[0].sprite, pos);
         sfSprite_setTextureRect(help->spriteHelp[0].sprite, help->rectProf);
         sfRenderWindow_drawSprite(window->window, help->spriteHelp[0].sprite, NULL);
+        help->nbr_where += 1;
     }
 }
 
@@ -70,6 +71,8 @@ void how_to_play(window_t *window)
         how_to_analyse_event(help);
         how_to_display(window, help);
         sfRenderWindow_display(window->window);
+        if (help->nbr_where == NBR_STRING - 1)
+            help->state = END;
     }
     destroy_how_to_play(help);
 }
