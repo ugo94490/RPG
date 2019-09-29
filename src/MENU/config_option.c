@@ -17,6 +17,7 @@ int config_option(window_t *window)
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_scale(window);
         condition_frame(window);
+        condition_volume(window);
         if (condition_back(window) == 1)
             break;
         menu_event(window);

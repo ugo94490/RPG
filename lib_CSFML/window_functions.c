@@ -21,6 +21,7 @@ window_t create_window(int resx, int resy, int colours, char *title)
     sfRenderWindow_setMouseCursorVisible(window.window, sfTrue);
     window.scale.x = 1;
     window.scale.y = 1;
+    window.volume = 100;
     return (window);
 }
 
