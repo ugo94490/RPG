@@ -64,7 +64,7 @@ void get_quest_shoes(game_t *game, npc_t *npc)
     free(npc->diag1);
     put_quest_in_list(my_strdup("trouver les chaussures de courses et parler"
     " au professeur sorbier"), 1, &(game->character->quests));
-    npc->diag1 = my_strdup("Va, comme dit le slogan, "
-    "allez plus vite avec LShift !");
+    npc->diag1 = my_strdup("Tu as fini le jeu, mais tu peux quand meme"
+    "experimenter ses fonctionnalités");
     npc->interact = 2;
 }
