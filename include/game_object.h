@@ -131,5 +131,6 @@ void sort_list(game_object_list_t **objects);
 float get_posy_obj(game_object_list_t *node);
 void push_in_other_list(game_object_list_t **list, game_object_list_t **dest);
 void reverse_first_two_elements(game_object_list_t **list);
+int check_has_shoes(item_list_t *items);
 
 #endif

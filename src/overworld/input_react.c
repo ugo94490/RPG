@@ -12,7 +12,7 @@
 #include "game_object.h"
 #include "overworld.h"
 
-static int check_has_shoes(item_list_t *items)
+int check_has_shoes(item_list_t *items)
 {
     while (items) {
         if (items->item.type == 10 && items->quantity > 0)

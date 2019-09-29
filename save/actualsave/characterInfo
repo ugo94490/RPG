@@ -1,8 +1,8 @@
 type:0
-posx:576
-posy:608
-world:0
-direction:1
+posx:224
+posy:160
+world:1
+direction:3
 music:3
 -pkmn
 number:1
@@ -10,7 +10,7 @@ level:20
 health:200
 max_health:200
 xp_to_next_lvl:100
-atq:100
+atq:100000
 def:200
 atk1:0
 atk2:0
@@ -23,7 +23,7 @@ level:20
 health:200
 max_health:200
 xp_to_next_lvl:100
-atq:200
+atq:200000
 def:100
 atk1:0
 atk2:0

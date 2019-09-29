@@ -13,6 +13,7 @@
 #include "systems.h"
 #include "game_object.h"
 #include "overworld.h"
+#include "basics.h"
 
 void aggro(game_t *game, npc_t *npc)
 {
@@ -33,6 +34,26 @@ void set_npc_direction_interact(character_t *character, npc_t *npc)
         npc->direction = 2;
 }
 
+void get_quest_shoes(game_t *game, npc_t *npc)
+{
+    if (npc->diag1)
+        display_text_overworld(game->window, npc->diag1, game);
+    free(npc->diag1);
+    npc->diag1 = my_strdup("Va, comme dit le slogan, "
+    "allez plus vite avec LShift !");
+    npc->interact = 2;
+}
+
+void wait_quest_shoes(game_t *game, npc_t *npc)
+{
+    if (!check_has_shoes(game->character->items)) {
+        if (npc->diag2)
+            display_text_overworld(game->window, npc->diag2, game);
+    }
+    else if (npc->diag1)
+        display_text_overworld(game->window, npc->diag1, game);
+}
+
 void basic_npc_interact(game_t *game, npc_t *npc)
 {
     if (npc->aggro == 1)
@@ -43,7 +64,8 @@ void basic_npc_interact(game_t *game, npc_t *npc)
 
 void npc_interact(game_t *game, npc_t *npc)
 {
-    void (*npc_interact_ptr[])(game_t *, npc_t *) = {basic_npc_interact};
+    void (*npc_interact_ptr[])(game_t *, npc_t *) = {basic_npc_interact,
+    get_quest_shoes, wait_quest_shoes};
 
     set_npc_direction_interact(game->character, npc);
     animate_npc(npc);

@@ -51,3 +51,12 @@ world:1
 direction:1
 interact:0
 
+-npc
+type:14
+posx:544
+posy:640
+world:0
+direction:1
+interact:1
+diag1:Bonjour, je te recommande d'aller chercher des chaussures de course, il y en a une paire pres d'ici que quelqu'un n'utilise plus.
+diag2:Allez, va donc chercher ces chaussures !
