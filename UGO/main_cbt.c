@@ -289,10 +289,9 @@ int attack_anim(misc_t *misc, window_t *window, pkmn_list_t *linked)
     game_object *sprite;
     sfClock *clock;
     sfTime time;
-    if (get_atk(linked, misc->nb) == -1) {
-        printf("lol ntm pq tu marche pas");
+
+    if (get_atk(linked, misc->nb) == -1)
         return (0);
-    }
     sprite = display_all(misc, window, rect, linked);
     clock = sfClock_create();
     while (sfRenderWindow_isOpen(window->window)) {
