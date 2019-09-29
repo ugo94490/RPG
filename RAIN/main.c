@@ -7,6 +7,7 @@
 
 #include "my_rpg.h"
 #include "graphics.h"
+#include "particule.h"
 
 void move_snow(sfVertexArray *my_rain, sfIntRect pos)
 {

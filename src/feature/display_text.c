@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "text.h"
 #include "my_rpg.h"
 #include "graphics.h"
