@@ -16,7 +16,7 @@
 #include "overworld.h"
 #include "main_menu.h"
 
-void temp_loop(window_t *window, sfVector2f *scale, int flag, int gender)
+void temp_loop(window_t *window, int flag, int gender)
 {
     clock_sf clock = create_clock();
     game_t game = create_game(flag, gender);
@@ -32,7 +32,7 @@ void temp_loop(window_t *window, sfVector2f *scale, int flag, int gender)
         animate_objects(&game);
         move_objects(game.objects, clock.time);
         analyse_event(window, &game);
-        set_view_params(window, &game, *scale);
+        set_view_params(window, &game);
         draw_game(window, &game);
     }
     destroy_clock(&clock);
@@ -41,11 +41,10 @@ void temp_loop(window_t *window, sfVector2f *scale, int flag, int gender)
 
 void init_game(void)
 {
-    sfVector2f scale = {0.5, 0.5};
+    sfVector2f scale = {1, 1};
     window_t window = create_window(1280*scale.x, 960*scale.y, 32, "MY_RPG");
 
-    window.scale = scale;
-    display_menu(&window, &scale);
+    display_menu(&window);
     sfRenderWindow_destroy(window.window);
 }
 

@@ -7,7 +7,7 @@
 
 #include "main_menu.h"
 
-static int condition_new(window_t *window, sfVector2f *scale)
+static int condition_new(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *exit = init_button("assets/new_save.png");
@@ -20,7 +20,7 @@ static int condition_new(window_t *window, sfVector2f *scale)
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.1);
-            condition_gender(window, scale);
+            condition_gender(window);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -30,7 +30,7 @@ static int condition_new(window_t *window, sfVector2f *scale)
     return (0);
 }
 
-static int condition_actual(window_t *window, sfVector2f *scale)
+static int condition_actual(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *play = init_button("assets/load_save.png");
@@ -43,7 +43,7 @@ static int condition_actual(window_t *window, sfVector2f *scale)
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.1);
-            temp_loop(window, scale, 1, 0);
+            temp_loop(window, 1, 0);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -53,16 +53,16 @@ static int condition_actual(window_t *window, sfVector2f *scale)
     return (0);
 }
 
-int condition_save(window_t *window, sfVector2f *scale)
+int condition_save(window_t *window)
 {
     menu_t *menu = init_menu("assets/menu.jpg");
 
-    sfSprite_setScale(menu->sprite, window->scale);
     while (sfRenderWindow_isOpen(window->window)) {
+        sfSprite_setScale(menu->sprite, window->scale);
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
-        condition_actual(window, scale);
-        condition_new(window, scale);
+        condition_actual(window);
+        condition_new(window);
         if (condition_back(window) == 1)
             break;
         menu_event(window);

@@ -38,11 +38,11 @@ void update_npc_status(npc_t *npc, int status, int direction)
     npc->status = status;
 }
 
-void set_view_params(window_t *window, game_t *game, sfVector2f scale)
+void set_view_params(window_t *window, game_t *game)
 {
-    sfVector2f viewSize = {1280*scale.x/2, 960*scale.y/2};
-    sfVector2f temppos = {(game->character->pos.x+character_width/4)*scale.x,
-        (game->character->pos.y+character_height/4)*scale.y};
+    sfVector2f viewSize = {1280 * window->scale.x / 2, 960 * window->scale.y / 2};
+    sfVector2f temppos = {(game->character->pos.x + character_width/4) * window->scale.x,
+        (game->character->pos.y + character_height / 4)* window->scale.y};
 
     sfView_setCenter(game->view, temppos);
     sfView_setSize(game->view, viewSize);

@@ -7,7 +7,7 @@
 
 #include "main_menu.h"
 
-static int condition_girl_one(window_t *window, sfVector2f *scale)
+static int condition_girl_one(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *exit = init_button("assets/skin_one.png");
@@ -20,7 +20,7 @@ static int condition_girl_one(window_t *window, sfVector2f *scale)
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);
-            temp_loop(window, scale, 0, 0);
+            temp_loop(window, 0, 0);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -30,7 +30,7 @@ static int condition_girl_one(window_t *window, sfVector2f *scale)
     return (0);
 }
 
-static int condition_girl_two(window_t *window, sfVector2f *scale)
+static int condition_girl_two(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *exit = init_button("assets/skin_two.png");
@@ -43,7 +43,7 @@ static int condition_girl_two(window_t *window, sfVector2f *scale)
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);
-            temp_loop(window, scale, 0, 1);
+            temp_loop(window, 0, 1);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -53,7 +53,7 @@ static int condition_girl_two(window_t *window, sfVector2f *scale)
     return (0);
 }
 
-static int condition_boy_one(window_t *window, sfVector2f *scale)
+static int condition_boy_one(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *play = init_button("assets/skin_three.png");
@@ -66,7 +66,7 @@ static int condition_boy_one(window_t *window, sfVector2f *scale)
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);
-            temp_loop(window, scale, 0, 2);
+            temp_loop(window, 0, 2);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -76,7 +76,7 @@ static int condition_boy_one(window_t *window, sfVector2f *scale)
     return (0);
 }
 
-static int condition_boy_two(window_t *window, sfVector2f *scale)
+static int condition_boy_two(window_t *window)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
     sfSprite *exit = init_button("assets/skin_four.png");
@@ -89,7 +89,7 @@ static int condition_boy_two(window_t *window, sfVector2f *scale)
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
             pause_time(0.15);
-            temp_loop(window, scale, 0, 3);
+            temp_loop(window, 0, 3);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
     } else
@@ -99,18 +99,18 @@ static int condition_boy_two(window_t *window, sfVector2f *scale)
     return (0);
 }
 
-int condition_gender(window_t *window, sfVector2f *scale)
+int condition_gender(window_t *window)
 {
     menu_t *menu = init_menu("assets/menu.jpg");
 
-    sfSprite_setScale(menu->sprite, window->scale);
     while (sfRenderWindow_isOpen(window->window)) {
+        sfSprite_setScale(menu->sprite, window->scale);
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
-        condition_boy_one(window, scale);
-        condition_girl_one(window, scale);
-        condition_boy_two(window, scale);
-        condition_girl_two(window, scale);
+        condition_boy_one(window);
+        condition_girl_one(window);
+        condition_boy_two(window);
+        condition_girl_two(window);
         if (condition_back(window) == 1)
             break;
         menu_event(window);

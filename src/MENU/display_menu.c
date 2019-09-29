@@ -7,17 +7,17 @@
 
 #include "main_menu.h"
 
-static int menu(window_t *window, sfVector2f *scale)
+static int menu(window_t *window)
 {
     menu_t *menu = init_menu("assets/menu.jpg");
 
-    sfSprite_setScale(menu->sprite, window->scale);
     sfRenderWindow_setMouseCursorVisible(window->window, sfTrue);
     while (sfRenderWindow_isOpen(window->window)) {
+        sfSprite_setScale(menu->sprite, window->scale);
         sfRenderWindow_clear(window->window, sfBlack);
         sfRenderWindow_drawSprite(window->window, menu->sprite, NULL);
         condition_howto(window);
-        condition_play(window, scale);
+        condition_play(window);
         condition_option(window);
         condition_trophy(window);
         condition_exit(window);
@@ -68,9 +68,9 @@ static int cinematic(window_t *window)
     return (free_menu(menu));
 }
 
-int display_menu(window_t *window, sfVector2f *scale)
+int display_menu(window_t *window)
 {
     cinematic(window);
-    menu(window, scale);
+    menu(window);
     return 0;
 }
