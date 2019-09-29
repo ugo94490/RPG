@@ -301,7 +301,7 @@ int attack_anim(misc_t *misc, window_t *window, pkmn_list_t *linked)
             break;
         if (time.microseconds >= 400000)
             1 == 1 ? rect = display_end(misc, window, sprite, rect),
-            time = sfClock_restart(clock) : sfClock_restart(clock);
+        time = sfClock_restart(clock) : sfClock_restart(clock);
         sfRenderWindow_display(window->window);
     }
     destroy_anim(misc, clock, window, sprite);
