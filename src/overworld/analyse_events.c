@@ -37,8 +37,6 @@ void get_key_pressed(window_t *window, game_t *game)
         move_down(game);
     if (sfKeyboard_isKeyPressed(sfKeyUp))
         move_up(game);
-    if (sfKeyboard_isKeyPressed(sfKeyP))
-        printf("%f, %f\n", game->character->pos.x, game->character->pos.y);
     if (sfKeyboard_isKeyPressed(sfKeySpace))
         interact(game);
     if (sfKeyboard_isKeyPressed(sfKeyTab))

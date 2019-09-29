@@ -58,3 +58,5 @@ char* my_itoa(int nb, char *nbr);
 int display_text(char *base, sfVector2f pos, window_t *window, int opt);
 int my_strlen(char const *str);
 int launch_quest(window_t *window, game_t *game);
+int destroy_back(game_object *back);
+int nb_quest(game_t *game);
