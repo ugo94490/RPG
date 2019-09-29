@@ -72,5 +72,9 @@ void temp_loop(window_t *window, int flag, int opt);
 void teleport(game_t *game, evt_t event);
 void aggro_evt(game_t *game, evt_t event);
 void heal_pkmns(game_t *game);
+void set_npc_direction_interact(struct character_s *character,
+struct npc_s *npc);
+void aggro(game_t *game, struct npc_s *npc);
+void get_quest_shoes(game_t *game, struct npc_s *npc);
 
 #endif

@@ -1,8 +1,8 @@
 type:0
-posx:544
+posx:576
 posy:672
 world:0
-direction:3
+direction:1
 music:0
 -pkmn
 number:1
@@ -29,4 +29,10 @@ atk1:0
 atk2:0
 atk3:0
 atk4:0
+
+-item
+quantity:1
+type:10
+number:5
+factor:0
 

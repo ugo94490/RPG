@@ -37,6 +37,7 @@ SRC	=	src/main.c					\
 		src/overworld/save_npc.c			\
 		src/overworld/save_game.c			\
 		src/overworld/interact.c			\
+		src/overworld/sub_interact.c			\
 		src/overworld/music_fcts.c			\
 		src/overworld/save_items.c			\
 		src/overworld/load_items.c			\
