@@ -72,6 +72,7 @@ menu_t *create_menu_game(window_t *window)
     if (!menu)
         return (NULL);
     menu->window = window;
+    menu->scale = window->scale;
     create_menu(menu);
     if (!menu->menu_w.sprite)
         return (NULL);
