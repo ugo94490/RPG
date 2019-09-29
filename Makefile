@@ -58,9 +58,8 @@ SRC	=	src/main.c					\
 		src/basics/word_array_fcts.c			\
 		src/basics/my_score.c				\
 		src/basics/my_strcpy.c				\
-		UGO/useful_fct.c				\
-		UGO/main_cbt.c					\
-		UGO/tools_two.c					\
+		src/basics/useful_fct.c				\
+		src/basics/tools_two.c					\
 		lib_CSFML/window_functions.c			\
 		lib_CSFML/clock_functions.c			\
 		lib_CSFML/sound_functions.c			\
@@ -100,7 +99,8 @@ SRC	=	src/main.c					\
 		src/quest_list/quest.c				\
 		src/pokedex/pokedex.c				\
 		src/pokedex/pokedex_name.c			\
-		src/how_to_play/how_to_play.c
+		src/how_to_play/how_to_play.c		\
+		src/combat/*.c
 
 SRC_T		=
 
