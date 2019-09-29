@@ -885,9 +885,16 @@ int free_savage(npc_t *npc)
     return (0);
 }
 
+void set_music(sfMusic *music)
+{
+    sfMusic_play(music);
+    sfMusic_setLoop(music, sfTrue);
+}
+
 void main_cbt(window_t *window, game_t *game, npc_t *npc)
 {
     const sfView *default_view = sfRenderWindow_getDefaultView(window->window);
+    sfMusic *music = sfMusic_createFromFile("assets/battle.ogg");
     int toggle = 0;
 
     if (npc == NULL) {
@@ -895,6 +902,7 @@ void main_cbt(window_t *window, game_t *game, npc_t *npc)
         toggle = 1;
     }
     sfMusic_stop(game->music);
+    set_music(music);
     sfRenderWindow_setView(window->window, default_view);
     sfRenderWindow_setMouseCursorVisible(window->window, sfFalse);
     combat(window, game, npc);
@@ -902,5 +910,7 @@ void main_cbt(window_t *window, game_t *game, npc_t *npc)
     sfRenderWindow_setView(window->window, game->view);
     if (toggle == 1)
         free_savage(npc);
+    sfMusic_stop(music);
+    sfMusic_destroy(music);
     sfMusic_play(game->music);
 }
