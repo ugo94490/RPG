@@ -44,7 +44,8 @@ static char *front_pkm[12] =
 
 game_object **init_tab(window_t *window)
 {
-    game_object **tab = malloc(sizeof(game_object *) * (get_nb_words(front_pkm) + 1));
+    game_object **tab = malloc(sizeof(game_object *) *
+    (get_nb_words(front_pkm) + 1));
     sfVector2f pos = {0, 0};
     sfIntRect rect = {0};
 
@@ -124,8 +125,8 @@ int destroy_txt(text_t *txt)
 
 void pokedex(game_t *game, window_t *window)
 {
-    game_object **tab = init_tab(game, window);
-    text_t *txt = init_text(game, window);
+    game_object **tab = init_tab(window);
+    text_t *txt = init_text(window);
 
     while (sfRenderWindow_isOpen(window->window)) {
         sfRenderWindow_clear(window->window, sfBlack);

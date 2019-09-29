@@ -34,8 +34,11 @@ static void load_save(game_t *game)
     load_npcs("save/actualsave/npcs", &(game->objects));
     game->character = load_character("save/actualsave/characterInfo",
     &(game->objects));
+    if (!(game->character))
+        return;
     game->music = load_music(game->character->music);
     read_evts("save/actualsave/tempevts", &(game->evts), 0);
+    load_quests("save/actualsave/quests", &(game->character->quests));
 }
 
 static void load_newsave(game_t *game, int gender)
@@ -43,11 +46,14 @@ static void load_newsave(game_t *game, int gender)
     load_npcs("save/newsave/npcs", &(game->objects));
     game->character = load_character("save/newsave/characterInfo",
     &(game->objects));
+    if (!(game->character))
+        return;
     game->music = load_music(game->character->music);
     read_evts("save/newsave/tempevts", &(game->evts), 0);
     game->character->type = gender;
     if (game->character->type < 4)
         game->character->anim.rects = characterRects[gender];
+    load_quests("save/newsave/quests", &(game->character->quests));
 }
 
 game_t create_game(int arg, int gender)

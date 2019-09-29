@@ -796,26 +796,26 @@ pkmn_list_t *npc_p(npc_t *npc, misc_t *misc, window_t *window)
     return (npc->pkmns->next);
 }
 
-int combat(window_t *win, game_t *game, npc_t *npc)
+int combat(window_t *win, game_t *gm, npc_t *npc)
 {
-    misc_t *misc = init_misc(win, game, npc);
+    misc_t *misc = init_misc(win, gm, npc);
 
     misc->flag = 0;
-    animation(win, misc->tab, game->character->type, npc);
+    animation(win, misc->tab, gm->character->type, npc);
     while (sfRenderWindow_isOpen(win->window)) {
         sfRenderWindow_clear(win->window, sfBlack);
         misc->flag = check_menu(win, misc->flag, misc->tab);
-        misc->flag = check_flag(misc, win, game->character->pkmns, npc->pkmns);
+        misc->flag = check_flag(misc, win, gm->character->pkmns, npc->pkmns);
         event(win);
-        reload(game, misc, npc);
+        reload(gm, misc, npc);
         if (misc->flag == 84)
             break;
-        if ((ck_hp(game, npc) == 1 && npc->pkmns->next == NULL) ||
-        (ck_hp(game, npc) == 2 && game->character->pkmns->next == NULL))
-            return (death(win, misc, npc, game));
-        ck_hp(game, npc) == 2 ? game->character->pkmns = nx_p(game, misc, win) : 0;
-        ck_hp(game, npc) == 1 ? npc->pkmns = npc_p(npc, misc, win) : 0;
-        display_combat(win, game, npc, misc);
+        if ((ck_hp(gm, npc) == 1 && npc->pkmns->next == NULL) ||
+            (ck_hp(gm, npc) == 2 && gm->character->pkmns->next == NULL))
+            return (death(win, misc, npc, gm));
+        ck_hp(gm, npc) == 2 ? gm->character->pkmns = nx_p(gm, misc, win) : 0;
+        ck_hp(gm, npc) == 1 ? npc->pkmns = npc_p(npc, misc, win) : 0;
+        display_combat(win, gm, npc, misc);
     }
     return (destroy_all(misc));
 }

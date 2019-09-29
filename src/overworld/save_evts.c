@@ -15,8 +15,8 @@ void save_evts(evt_list_t *evts)
 {
     FILE *file = fopen("save/actualsave/tempevts", "w");
 
-    sub_save_evts((void *)file, evts);
     if (file == NULL)
         return;
+    sub_save_evts((void *)file, evts);
     fclose(file);
 }

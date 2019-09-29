@@ -39,6 +39,8 @@ void get_quest_shoes(game_t *game, npc_t *npc)
     if (npc->diag1)
         display_text_overworld(game->window, npc->diag1, game);
     free(npc->diag1);
+    put_quest_in_list(my_strdup("trouver les chaussures de courses et parler"
+    " au professeur sorbier"), 1, &(game->character->quests));
     npc->diag1 = my_strdup("Va, comme dit le slogan, "
     "allez plus vite avec LShift !");
     npc->interact = 2;
@@ -65,7 +67,7 @@ void basic_npc_interact(game_t *game, npc_t *npc)
 void npc_interact(game_t *game, npc_t *npc)
 {
     void (*npc_interact_ptr[])(game_t *, npc_t *) = {basic_npc_interact,
-    get_quest_shoes, wait_quest_shoes};
+        get_quest_shoes, wait_quest_shoes};
 
     set_npc_direction_interact(game->character, npc);
     animate_npc(npc);

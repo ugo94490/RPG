@@ -23,20 +23,20 @@ static void more_scale(window_t *window)
     sfRenderWindow_setMouseCursorVisible(window->window, sfTrue);
 }
 
-int condition_scale(window_t *window)
+int condition_scale(window_t *win)
 {
     sfSprite *exit = init_button("assets/play.png");
-    sfVector2f position = {487 * window->scale.x, 95 * window->scale.y};
+    sfVector2f position = {487 * win->scale.x, 95 * win->scale.y};
     int flag = 0;
 
-    sfSprite_setScale(exit, window->scale);
-    display_button(exit, position, set_rect(0, 0, 320, 104), window);
-    flag = condition_left(window, position.x - 114 * window->scale.x, position.y);
+    sfSprite_setScale(exit, win->scale);
+    display_button(exit, position, set_rect(0, 0, 320, 104), win);
+    flag = condition_left(win, position.x - 114 * win->scale.x, position.y);
     if (flag == 1)
-        less_scale(window);
-    flag = condition_right(window, position.x + 330 * window->scale.x, position.y);
+        less_scale(win);
+    flag = condition_right(win, position.x + 330 * win->scale.x, position.y);
     if (flag == 1)
-        more_scale(window);
+        more_scale(win);
     sfTexture_destroy((sfTexture *)(sfSprite_getTexture(exit)));
     sfSprite_destroy(exit);
     return (0);

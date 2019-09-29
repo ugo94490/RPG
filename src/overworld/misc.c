@@ -40,8 +40,10 @@ void update_npc_status(npc_t *npc, int status, int direction)
 
 void set_view_params(window_t *window, game_t *game)
 {
-    sfVector2f viewSize = {1280 * window->scale.x / 2, 960 * window->scale.y / 2};
-    sfVector2f temppos = {(game->character->pos.x + character_width/4) * window->scale.x,
+    sfVector2f viewSize = {1280 * window->scale.x / 2, 960 *
+        window->scale.y / 2};
+    sfVector2f temppos = {(game->character->pos.x + character_width/4)
+        * window->scale.x,
         (game->character->pos.y + character_height / 4)* window->scale.y};
 
     sfView_setCenter(game->view, temppos);

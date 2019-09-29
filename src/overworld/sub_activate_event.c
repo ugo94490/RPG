@@ -40,7 +40,7 @@ void heal_pkmns(game_t *game)
     display_text_overworld(game->window,
     "Vos pokemons ont ete soignes.", game);
     while (pkmns) {
-	pkmns->pokemon.health = pkmns->pokemon.max_health;
+        pkmns->pokemon.health = pkmns->pokemon.max_health;
         pkmns = pkmns->next;
     }
 }
