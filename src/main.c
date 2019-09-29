@@ -30,7 +30,7 @@ void temp_loop(window_t *window, int flag, int gender)
         clock.time = sfClock_getElapsedTime(clock.clock);
         sfClock_restart(clock.clock);
         animate_objects(&game);
-        move_objects(game.objects, clock.time);
+        move_objects(&game, game.objects, clock.time);
         analyse_event(window, &game);
         set_view_params(window, &game);
         draw_game(window, &game);

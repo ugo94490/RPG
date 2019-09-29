@@ -14,30 +14,7 @@
 #include "overworld_evt.h"
 #include "my_rpg.h"
 #include "overworld_sound.h"
-
-void menu_game(game_t *game, window_t *window);
-
-void check_evt_trigger(game_t *game, sfVector2f pos, int locmap)
-{
-    evt_list_t *save = game->evts;
-
-    while (game->evts != NULL) {
-        if (check_col_event(pos, locmap, game->evts->event) == 1)
-            activate_event(game, game->evts);
-        game->evts = game->evts->next;
-    }
-    game->evts = save;
-}
-
-npc_t *get_first_npc(game_object_list_t *list)
-{
-    while (list != NULL) {
-        if (list->type == NPC)
-            return ((npc_t *)(list->object));
-        list = list->next;
-    }
-    return (NULL);
-}
+#include "menu.h"
 
 void display_text_overworld(window_t *window, char *text, game_t *game)
 {
@@ -78,8 +55,6 @@ void analyse_event(window_t *window, game_t *game)
     }
     if (sfKeyboard_isKeyPressed(sfKeyEscape))
         sfRenderWindow_close(window->window);
-    if (sfRenderWindow_isOpen(window->window) && game->character->status == 0) {
-        check_evt_trigger(game, game->character->pos, game->character->world);
+    if (sfRenderWindow_isOpen(window->window) && game->character->status == 0)
         get_key_pressed(window, game);
-    }
 }
