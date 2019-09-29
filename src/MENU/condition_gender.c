@@ -19,7 +19,7 @@ static int condition_boy_one(window_t *window, sfVector2f *scale)
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(play, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
-            pause_time(1);
+            pause_time(0.15);
             temp_loop(window, scale, 0, 2);
         } else
             display_button(play, position, set_rect(0, 435, 320, 104), window);
@@ -42,7 +42,7 @@ static int condition_boy_two(window_t *window, sfVector2f *scale)
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
-            pause_time(1);
+            pause_time(0.15);
             temp_loop(window, scale, 0, 3);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
@@ -65,7 +65,7 @@ static int condition_girl_one(window_t *window, sfVector2f *scale)
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
-            pause_time(1);
+            pause_time(0.15);
             temp_loop(window, scale, 0, 0);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
@@ -79,7 +79,7 @@ static int condition_girl_one(window_t *window, sfVector2f *scale)
 static int condition_girl_two(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("assets/exit.png");
+    sfSprite *exit = init_button("assets/skin_four.png");
     sfVector2f position = {866 * window->scale.x, 580 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
@@ -88,7 +88,7 @@ static int condition_girl_two(window_t *window, sfVector2f *scale)
         if (sfMouse_isButtonPressed(sfMouseLeft)) {
             display_button(exit, position, set_rect(0, 870, 320, 104), window);
             sfRenderWindow_display(window->window);
-            pause_time(1);
+            pause_time(0.15);
             temp_loop(window, scale, 0, 1);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
