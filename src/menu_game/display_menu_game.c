@@ -50,7 +50,7 @@ sfVector2f temppos)
         }
         sfSprite_setTextureRect(menu->buttons[i].img.sprite,
         menu->buttons[i].rect);
-        menu->buttons[i].pos_img.x = temppos.x + 25 * menu->window->scale.x;
+        menu->buttons[i].pos_img.x = temppos.x + 25 * game->window->scale.x;
         sub_display_buttons(menu, i, temppos);
         sfText_setPosition(menu->buttons[i].text.text,
         menu->buttons[i].pos_text);

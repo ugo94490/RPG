@@ -21,7 +21,7 @@ static void menu_pkmn_bag_loop(pkmn_bag_t *pkmn_bag, game_t *game)
         sfRenderWindow_clear(pkmn_bag->window->window, sfBlack);
         display_pokemon_bag(pkmn_bag, game);
         sfRenderWindow_display(pkmn_bag->window->window);
-        analyse_pokemon_bag(pkmn_bag);
+        analyse_pokemon_bag(game, pkmn_bag);
     }
     sfClock_destroy(time_loop.clock);
 }

@@ -115,6 +115,9 @@ menu_t *create_menu_game(window_t *);
 /* Menu Pokemon */
 void menu_pokemon(window_t *, game_t *, int);
 void display_pokemon_bag(pkmn_bag_t *, game_t *);
-void analyse_pokemon_bag(pkmn_bag_t *);
+void analyse_pokemon_bag(game_t *, pkmn_bag_t *);
 void destroy_pokemon_bag(pkmn_bag_t *);
 pkmn_bag_t *create_pkmn_bag(window_t *, game_t *, int);
+
+/* Heal Function */
+void fn_item(game_t *, pkmn_bag_t *);
