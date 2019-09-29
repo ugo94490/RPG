@@ -29,6 +29,7 @@ typedef struct window_s
     sfVideoMode mode;
     char *title;
     sfVector2f scale;
+    float volume;
 } window_t;
 
 sprite_t create_sprite(char *texturepath);
