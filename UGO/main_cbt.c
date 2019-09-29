@@ -98,11 +98,12 @@ int attack(game_object *sp, sfClock *clk, window_t *window)
     time = sfClock_getElapsedTime(clk);
     (prev.x <= 1 * window->scale.x) ? toggle = 0 : 0;
     (prev.x >= 1.04 * window->scale.x) ? toggle = 1 : 0;
-    if (time.microseconds >= 1000000) {
+    if (time.microseconds >= 50000) {
         if (toggle == 0)
             add_attack(&prev, &position, 0, window);
         if (toggle == 1)
             add_attack(&prev, &position, 1, window);
+        time = sfClock_restart(clk);
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
@@ -119,11 +120,12 @@ int bag(game_object *sp, sfClock *clk, window_t *window)
 
     (prev.x <= 1 * window->scale.x) ? toggle = 0 : 0;
     (prev.x >= 1.04 * window->scale.x) ? toggle = 1 : 0;
-    if (time.microseconds >= 1000000) {
+    if (time.microseconds >= 50000) {
         if (toggle == 0)
             add_bag(&prev, &position, 0, window);
         if (toggle == 1)
             add_bag(&prev, &position, 1, window);
+        time = sfClock_restart(clk);
     }
     sfSprite_setPosition(sp->sprite, position);
     sfSprite_setScale(sp->sprite, prev);
@@ -566,7 +568,7 @@ text_t *change_pos(pkmn_list_t *node, window_t *window, pkmn_list_t *npc)
     change_text(itoa_dup(node->pokemon.health), &stat[1]);
     change_text(itoa_dup(node->pokemon.level), &stat[2]);
     change_text(itoa_dup(npc->pokemon.level), &stat[3]);
-    change_text(name[npc->pokemon.number], &stat[4]);
+    change_text(my_strdup(name[npc->pokemon.number]), &stat[4]);
     change_text(my_strdup(name[node->pokemon.number]), &stat[5]);
     change_text(itoa_dup(npc->pokemon.health), &stat[6]);
     change_text(itoa_dup(npc->pokemon.max_health), &stat[7]);
@@ -725,7 +727,7 @@ int death(window_t *window, misc_t *misc, npc_t *npc, game_t *game)
     return (ret);
 }
 
-int check_health(game_t *game, npc_t *npc)
+int ck_hp(game_t *game, npc_t *npc)
 {
     if (game->character->pkmns->pokemon.health <= 0)
         return (2);
@@ -750,7 +752,7 @@ int reload(game_t *game, misc_t *misc, npc_t *npc)
     return (0);
 }
 
-pkmn_list_t *next_pkmn(game_t *game, misc_t *misc, window_t *window)
+pkmn_list_t *nx_p(game_t *game, misc_t *misc, window_t *window)
 {
     sfVector2f pos = {420, 218};
     sfIntRect rect = {0, 0, 0, 0};
@@ -772,6 +774,28 @@ pkmn_list_t *next_pkmn(game_t *game, misc_t *misc, window_t *window)
     return (game->character->pkmns->next);
 }
 
+pkmn_list_t *npc_p(npc_t *npc, misc_t *misc, window_t *window)
+{
+    sfVector2f pos = {720, 85};
+    sfIntRect rect = {0, 0, 0, 0};
+
+    sfSprite_destroy(misc->tab[6]->sprite);
+    sfTexture_destroy(misc->tab[6]->texture);
+    free(misc->tab[6]);
+    misc->tab[6] =
+    create_object(front_pkm[npc->pkmns->next->pokemon.number],
+    pos, rect, window);
+    change_text(my_strdup(name[npc->pkmns->next->pokemon.number]),
+    &misc->stat[4]);
+    change_text(itoa_dup(npc->pkmns->next->pokemon.max_health),
+    &misc->stat[7]);
+    change_text(itoa_dup(npc->pkmns->next->pokemon.health),
+    &misc->stat[6]);
+    change_text(itoa_dup(npc->pkmns->next->pokemon.level),
+    &misc->stat[3]);
+    return (npc->pkmns->next);
+}
+
 int combat(window_t *win, game_t *game, npc_t *npc)
 {
     misc_t *misc = init_misc(win, game, npc);
@@ -786,11 +810,11 @@ int combat(window_t *win, game_t *game, npc_t *npc)
         reload(game, misc, npc);
         if (misc->flag == 84)
             break;
-        if (check_health(game, npc) == 1 || (check_health(game, npc)
-            == 2 && game->character->pkmns->next == NULL))
+        if ((ck_hp(game, npc) == 1 && npc->pkmns->next == NULL) ||
+        (ck_hp(game, npc) == 2 && game->character->pkmns->next == NULL))
             return (death(win, misc, npc, game));
-        if (check_health(game, npc) == 2)
-            game->character->pkmns = next_pkmn(game, misc, win);
+        ck_hp(game, npc) == 2 ? game->character->pkmns = nx_p(game, misc, win) : 0;
+        ck_hp(game, npc) == 1 ? npc->pkmns = npc_p(npc, misc, win) : 0;
         display_combat(win, game, npc, misc);
     }
     return (destroy_all(misc));
