@@ -74,18 +74,18 @@ SRC	=	src/main.c					\
 		src/feature/set_text.c				\
 		src/feature/check_cpt.c				\
 		src/feature/set_to_base.c			\
-		src/MENU/bouton_tools.c				\
-		src/MENU/condition_gender.c			\
-		src/MENU/condition_save.c			\
-		src/MENU/display_menu.c				\
-		src/MENU/menu_button.c				\
-		src/MENU/menu_tools.c				\
-		src/MENU/condition_back.c			\
-		src/MENU/condition_left_right.c			\
-		src/MENU/condition_scale.c			\
-		src/MENU/condition_frame.c			\
-		src/MENU/condition_volume.c			\
-		src/MENU/config_option.c			\
+		src/menu/bouton_tools.c				\
+		src/menu/condition_gender.c			\
+		src/menu/condition_save.c			\
+		src/menu/display_menu.c				\
+		src/menu/menu_button.c				\
+		src/menu/menu_tools.c				\
+		src/menu/condition_back.c			\
+		src/menu/condition_left_right.c			\
+		src/menu/condition_scale.c			\
+		src/menu/condition_frame.c			\
+		src/menu/condition_volume.c			\
+		src/menu/config_option.c			\
 		src/menu_game/analyse_menu_game.c		\
 		src/menu_game/create_menu_game.c		\
 		src/menu_game/destroy_menu_game.c 		\
@@ -97,8 +97,9 @@ SRC	=	src/main.c					\
 		src/menu_game/pokemon/display_pokemon_bag.c 	\
 		src/menu_game/pokemon/fn_item.c 		\
 		src/menu_game/pokemon/menu_pokemon.c		\
-		src/QUEST_LIST/quest.c				\
-		POKEDEX/pokedex.c					\
+		src/quest_list/quest.c				\
+		src/pokedex/pokedex.c				\
+		src/pokedex/pokedex_name.c			\
 		src/how_to_play/how_to_play.c
 
 SRC_T		=
@@ -109,7 +110,7 @@ TESTS_NAME	=	tests_run
 
 CC			=	gcc
 
-CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include -I./src/feature
+CFLAGS		=	-I./include -l csfml-graphics -l csfml-window -l csfml-audio -l csfml-system -lm -I./lib_CSFML/include
 
 CPPFLAGS	+=	-Wall -Wextra
 

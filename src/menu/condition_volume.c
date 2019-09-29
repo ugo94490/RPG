@@ -23,7 +23,7 @@ static void more_volume(window_t *window)
 
 int condition_volume(window_t *win)
 {
-    sfSprite *volume = init_button("assets/exit.png");
+    sfSprite *volume = init_button("assets/volume.png");
     sfVector2f position = {487 * win->scale.x, 494 * win->scale.y};
     int flag = 0;
 
