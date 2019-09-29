@@ -143,5 +143,6 @@ int check_has_shoes(item_list_t *items);
 void load_quests(char *path, quest_list_t **quests);
 void put_quest_in_list(char *text, int number, quest_list_t **list);
 void save_quests(quest_list_t *quests);
+void destroy_quest(struct quest_list_s **quests, int nb);
 
 #endif

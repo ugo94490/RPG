@@ -15,45 +15,16 @@
 #include "overworld.h"
 #include "basics.h"
 
-void aggro(game_t *game, npc_t *npc)
-{
-    if (npc && npc->diag2)
-        display_text_overworld(game->window, npc->diag2, game);
-    main_cbt(game->window, game, npc);
-}
-
-void set_npc_direction_interact(character_t *character, npc_t *npc)
-{
-    if (character->direction == 1)
-        npc->direction = 3;
-    if (character->direction == 2)
-        npc->direction = 4;
-    if (character->direction == 3)
-        npc->direction = 1;
-    if (character->direction == 4)
-        npc->direction = 2;
-}
-
-void get_quest_shoes(game_t *game, npc_t *npc)
-{
-    if (npc->diag1)
-        display_text_overworld(game->window, npc->diag1, game);
-    free(npc->diag1);
-    put_quest_in_list(my_strdup("trouver les chaussures de courses et parler"
-    " au professeur sorbier"), 1, &(game->character->quests));
-    npc->diag1 = my_strdup("Va, comme dit le slogan, "
-    "allez plus vite avec LShift !");
-    npc->interact = 2;
-}
-
 void wait_quest_shoes(game_t *game, npc_t *npc)
 {
     if (!check_has_shoes(game->character->items)) {
         if (npc->diag2)
             display_text_overworld(game->window, npc->diag2, game);
     }
-    else if (npc->diag1)
+    else if (npc->diag1) {
+        destroy_quest(&(game->character->quests), 1);
         display_text_overworld(game->window, npc->diag1, game);
+    }
 }
 
 void basic_npc_interact(game_t *game, npc_t *npc)

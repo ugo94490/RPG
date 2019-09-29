@@ -2,7 +2,7 @@
 type:3
 posx:288
 posy:96
-locmap1
+locmap0
 direction:0
 width:0
 height:0
@@ -13,22 +13,5 @@ destmap:0
 proba:0
 item:1
 quantity:2
-music:0
-
--evt
-type:3
-posx:512
-posy:352
-locmap0
-direction:0
-width:0
-height:0
-trigger:3
-destx:0
-desty:0
-destmap:0
-proba:0
-item:5
-quantity:1
 music:0
 

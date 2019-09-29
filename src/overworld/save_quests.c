@@ -38,7 +38,7 @@ static void sub_save_quests(FILE *file, quest_list_t *quests)
 {
     if (quests && quests->next)
         sub_save_quests(file, quests->next);
-    if (quests)
+    if (quests && quests->number != 0)
         save_quest(file, quests);
 }
 
