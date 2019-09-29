@@ -17,6 +17,8 @@
 #include "overworld.h"
 #include "basics.h"
 
+int pause_time(float sec);
+
 game_object *init_hud(char *path, int x, int y, window_t *window);
 game_object *init_choice(char *path, window_t *window);
 game_object *init_little(char *path, int x, int y, window_t *window);
@@ -25,7 +27,8 @@ pkmn_list_t *linked);
 
 void destroy_anim(misc_t *misc, sfClock *clock, window_t *window,
 game_object *sprite);
-void add_bag(sfVector2f *prev, sfVector2f *position, int flag, window_t *window);
+void add_bag(sfVector2f *prev, sfVector2f *position,
+int flag, window_t *window);
 void add_attack(sfVector2f *prev, sfVector2f *position,
 int flag, window_t *window);
 
