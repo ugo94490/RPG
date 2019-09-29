@@ -31,5 +31,9 @@ void menu_pokemon(window_t *window, game_t *game, int item)
     pkmn_bag_t *pkmn_bag = create_pkmn_bag(window, game, item);
 
     menu_pkmn_bag_loop(pkmn_bag, game);
-    destroy_pokemon_bag(pkmn_bag);
+    if (pkmn_bag->state == QUIT) {
+        destroy_pokemon_bag(pkmn_bag);
+        sfRenderWindow_close(window->window);
+    } else
+        destroy_pokemon_bag(pkmn_bag);
 }

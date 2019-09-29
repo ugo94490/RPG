@@ -54,6 +54,8 @@ void analyse_pokemon_bag(pkmn_bag_t *pkmn_bag)
     while (sfRenderWindow_pollEvent(pkmn_bag->window->window, &event)) {
         if (event.type == sfEvtKeyPressed)
             analyse_keyboard_pkmn_bag_game(pkmn_bag);
+        if (event.type == sfEvtClosed)
+            pkmn_bag->state = QUIT;
         analyse_pos_mouse_pkmn_bag_game(pkmn_bag);
     }
 }
