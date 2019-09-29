@@ -35,19 +35,18 @@ static void sub_display_buttons(menu_t *menu, int i, sfVector2f temppos)
         + (50 * i * menu->window->scale.y) + 5 * menu->window->scale.y;
 }
 
-static void display_buttons_menu_game(game_t *game, menu_t *menu)
+static void display_buttons_menu_game(game_t *game, menu_t *menu,
+sfVector2f temppos)
 {
-    sfVector2f temppos = {(game->character->pos.x + character_width / 2)
-        * game->window->scale.x, (game->character->pos.y +
-        character_height / 6) * game->window->scale.y};
-
     for (int i = 0; i < NBR_BUTTON; i += 1) {
         if (menu->n_button == menu->buttons[i].n_button) {
             menu->buttons[i].rect.left = 75;
-            sfText_setCharacterSize(menu->buttons[i].text.text, 22 * menu->window->scale.x);
+            sfText_setCharacterSize(menu->buttons[i].text.text, 22
+            * menu->window->scale.x);
         } else {
             menu->buttons[i].rect.left = 0;
-            sfText_setCharacterSize(menu->buttons[i].text.text, 20 * menu->window->scale.x);
+            sfText_setCharacterSize(menu->buttons[i].text.text, 20
+            * menu->window->scale.x);
         }
         sfSprite_setTextureRect(menu->buttons[i].img.sprite,
         menu->buttons[i].rect);
@@ -72,5 +71,5 @@ void display_menu_game(game_t *game, menu_t *menu)
     menu->pos_menu.y = temppos.y - (225 * menu->window->scale.y);
     sfSprite_setPosition(menu->menu_w.sprite, menu->pos_menu);
     sfRenderWindow_drawSprite(menu->window->window, menu->menu_w.sprite, NULL);
-    display_buttons_menu_game(game, menu);
+    display_buttons_menu_game(game, menu, temppos);
 }
