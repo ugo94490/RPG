@@ -8,6 +8,7 @@
 #include "my_rpg.h"
 #include "pkmn.h"
 #include "tab.h"
+#include <SFML/Audio.h>
 #include "graphics.h"
 #include "game_object.h"
 #include "overworld.h"
@@ -869,6 +870,7 @@ void main_cbt(window_t *window, game_t *game, npc_t *npc)
         npc = init_rand(game);
         toggle = 1;
     }
+    sfMusic_stop(game->music);
     sfRenderWindow_setView(window->window, default_view);
     sfRenderWindow_setMouseCursorVisible(window->window, sfFalse);
     combat(window, game, npc);
@@ -876,4 +878,5 @@ void main_cbt(window_t *window, game_t *game, npc_t *npc)
     sfRenderWindow_setView(window->window, game->view);
     if (toggle == 1)
         free_savage(npc);
+    sfMusic_play(game->music);
 }

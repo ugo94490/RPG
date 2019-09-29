@@ -39,6 +39,7 @@ SRC	=	src/main.c					\
 		src/overworld/save_items.c			\
 		src/overworld/load_items.c			\
 		src/overworld/activate_evt.c			\
+		src/overworld/sub_activate_event.c		\
 		src/overworld/save_evts.c			\
 		src/overworld/sub_save_evts.c			\
 		src/overworld/sub_draw_game.c			\

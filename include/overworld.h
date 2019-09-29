@@ -69,5 +69,8 @@ void put_event_in_list(evt_list_t **list, evt_t event, int perm);
 evt_t create_basic_event(void);
 void sub_save_evts(void *file, evt_list_t *evts);
 void temp_loop(window_t *window, int flag, int opt);
+void teleport(game_t *game, evt_t event);
+void aggro_evt(game_t *game, evt_t event);
+void heal_pkmns(game_t *game);
 
 #endif

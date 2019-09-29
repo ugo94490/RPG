@@ -94,3 +94,12 @@ trigger:3
 posx:224
 posy:96
 locmap:1
+-evt
+type:4
+trigger:2
+proba:8
+posx:1024
+posy:448
+width:288
+height:128
+
