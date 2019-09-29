@@ -1,4 +1,15 @@
 -npc
+type:14
+posx:544
+posy:640
+world:0
+direction:3
+aggro:0
+diag1:Va, comme dit le slogan, allez plus vite avec LShift !
+diag2:Allez, va donc chercher ces chaussures !
+interact:2
+
+-npc
 type:2
 posx:768
 posy:608

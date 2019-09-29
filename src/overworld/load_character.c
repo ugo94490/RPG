@@ -36,6 +36,7 @@ character_t *create_base_character(void)
     character->anim.clock = create_clock();
     character->pkmns = NULL;
     character->items = NULL;
+    character->quests = NULL;
     return (character);
 }
 
