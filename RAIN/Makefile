@@ -6,7 +6,8 @@
 ##
 
 SRC	=	main.c				\
-		../UGO/useful_fct.c			\
+		sub_main.c			\
+		../src/basics/useful_fct.c			\
 		../lib_CSFML/clock_functions.c	\
 		../lib_CSFML/sound_functions.c	\
 		../lib_CSFML/text_functions.c	\
