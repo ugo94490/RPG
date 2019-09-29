@@ -20,6 +20,7 @@ char **my_str_to_word_array(char *str, char *notinc);
 int my_getnbr(char const *str);
 int get_nb_words(char **words);
 char *my_strcat(char *str1, char const *str2);
-char* my_itoa(int nb, char *nbr);
+char *my_itoa(int nb, char *nbr);
+char *my_strcpy(char *new, char *base);
 
 #endif
