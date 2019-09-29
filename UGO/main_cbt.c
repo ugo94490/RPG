@@ -228,7 +228,7 @@ int get_atk(pkmn_list_t *linked, int nb)
     int ret = -1;
 
     for (int i = 0; atk[i]; i++)
-        if (strcmp(atk[i], atk_name[linked->pokemon.atks[nb].number])
+        if (my_strcmp(atk[i], atk_name[linked->pokemon.atks[nb].number])
             == 0)
             ret = i;
     return (ret);
@@ -566,13 +566,13 @@ text_t *change_pos(pkmn_list_t *node, window_t *window, pkmn_list_t *npc)
     change_text(itoa_dup(node->pokemon.level), &stat[2]);
     change_text(itoa_dup(npc->pokemon.level), &stat[3]);
     change_text(name[npc->pokemon.number], &stat[4]);
-    change_text(name[node->pokemon.number], &stat[5]);
+    change_text(my_strdup(name[node->pokemon.number]), &stat[5]);
     change_text(itoa_dup(npc->pokemon.health), &stat[6]);
     change_text(itoa_dup(npc->pokemon.max_health), &stat[7]);
     return (stat);
 }
 
-game_object **init_player(window_t *window)
+game_object **init_player(window_t *window, int flag)
 {
     game_object **tmp = malloc(sizeof(game_object *) * 2);
     sfIntRect rect = {0, 0, 170, 148};
@@ -580,7 +580,7 @@ game_object **init_player(window_t *window)
     sfVector2f pos = {380, 226};
     sfVector2f pos2 = {740, 30};
 
-    tmp[0] = create_object("assets/back_train.png", pos, rect, window);
+    tmp[0] = create_object(player[flag], pos, rect, window);
     tmp[1] = create_object("assets/rival_two.png", pos2, rect2, window);
     return (tmp);
 }
@@ -603,9 +603,9 @@ int free_character(game_object **character)
     return (0);
 }
 
-int animation(window_t *window, game_object **tab)
+int animation(window_t *window, game_object **tab, int flag)
 {
-    game_object **character = init_player(window);
+    game_object **character = init_player(window, flag);
     sfClock *clock = sfClock_create();
     sfTime time;
     int count = 0;
@@ -726,8 +726,9 @@ int death(window_t *window, misc_t *misc, npc_t *npc, game_t *game)
 
 int check_health(game_t *game, npc_t *npc)
 {
-    if (game->character->pkmns->pokemon.health <= 0 ||
-        npc->pkmns->pokemon.health <= 0)
+    if (game->character->pkmns->pokemon.health <= 0)
+        return (2);
+    if (npc->pkmns->pokemon.health <= 0)
         return (1);
     return (0);
 }
@@ -748,12 +749,34 @@ int reload(game_t *game, misc_t *misc, npc_t *npc)
     return (0);
 }
 
+pkmn_list_t *next_pkmn(game_t *game, misc_t *misc, window_t *window)
+{
+    sfVector2f pos = {420, 218};
+    sfIntRect rect = {0, 0, 0, 0};
+
+    sfSprite_destroy(misc->tab[7]->sprite);
+    sfTexture_destroy(misc->tab[7]->texture);
+    free(misc->tab[7]);
+    misc->tab[7] =
+    create_object(back_pkm[game->character->pkmns->next->pokemon.number],
+    pos, rect, window);
+    change_text(my_strdup(name[game->character->pkmns->next->pokemon.number]),
+    &misc->stat[5]);
+    change_text(itoa_dup(game->character->pkmns->next->pokemon.max_health),
+    &misc->stat[0]);
+    change_text(itoa_dup(game->character->pkmns->next->pokemon.health),
+    &misc->stat[1]);
+    change_text(itoa_dup(game->character->pkmns->next->pokemon.level),
+    &misc->stat[2]);
+    return (game->character->pkmns->next);
+}
+
 int combat(window_t *win, game_t *game, npc_t *npc)
 {
     misc_t *misc = init_misc(win, game, npc);
 
     misc->flag = 0;
-    animation(win, misc->tab);
+    animation(win, misc->tab, game->character->type);
     while (sfRenderWindow_isOpen(win->window)) {
         sfRenderWindow_clear(win->window, sfBlack);
         misc->flag = check_menu(win, misc->flag, misc->tab);
@@ -762,11 +785,12 @@ int combat(window_t *win, game_t *game, npc_t *npc)
         reload(game, misc, npc);
         if (misc->flag == 84)
             break;
-        if (check_health(game, npc) == 1)
+        if (check_health(game, npc) == 1 || (check_health(game, npc)
+            == 2 && game->character->pkmns->next == NULL))
             return (death(win, misc, npc, game));
+        if (check_health(game, npc) == 2)
+            game->character->pkmns = next_pkmn(game, misc, win);
         display_combat(win, game, npc, misc);
-        if (check_health(game, npc) == 1)
-            return (death(win, misc, npc, game));
     }
     return (destroy_all(misc));
 }

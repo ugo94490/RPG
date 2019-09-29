@@ -8,6 +8,14 @@
 #ifndef TAB_H
 #define TAB_H
 
+static char *player[4] =
+{
+    "assets/back_train2.png",
+    "assets/back_train2.png",
+    "assets/back_train.png",
+    "assets/back_train.png"
+};
+
 static atk_t atks[4] =
 {
     {0, 20},
