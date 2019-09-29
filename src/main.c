@@ -25,7 +25,6 @@ void temp_loop(window_t *window, int flag, int gender)
         game.sprites == NULL || game.character == NULL)
         return;
     game.window = window;
-    sfRenderWindow_setFramerateLimit(window->window, 60);
     while (sfRenderWindow_isOpen(window->window)) {
         clock.time = sfClock_getElapsedTime(clock.clock);
         sfClock_restart(clock.clock);
