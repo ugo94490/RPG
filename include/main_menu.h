@@ -56,6 +56,5 @@ int condition_scale(window_t *window);
 int condition_left(window_t *window, float x, float y);
 int condition_right(window_t *window, float x, float y);
 int config_option(window_t *window);
-int condition_option(window_t *window);
 int condition_frame(window_t *window);
 int condition_volume(window_t *window);
