@@ -29,7 +29,7 @@ static void create_how_to_play(how_to_t *help)
     help->rectScreen.left = 0;
     help->spriteHelp[0] = create_sprite("assets/ProfSprite.png");
     help->txt = create_text(my_strdup((char *)PHRASE),
-    "assets/classic.ttf", 23, pos);
+    "assets/classic.ttf", 15, pos);
     sfText_setColor(help->txt.text, sfBlack);
 }
 
@@ -45,7 +45,7 @@ static void how_to_display(window_t *window, how_to_t *help)
 {
     sfVector2f pos = {0};
     sfVector2f tmp = {3 * window->scale.x, 3 * window->scale.y};
-    sfVector2f pos_tmp = {40 * window->scale.x, 0};
+    sfVector2f pos_tmp = {10 * window->scale.x, 0};
 
     pos.x = (1280 - help->rectProf.width * 3) / 2 * window->scale.x;
     pos.y = (960 - help->rectProf.height * 3) / 2 * window->scale.y;
@@ -57,6 +57,7 @@ static void how_to_display(window_t *window, how_to_t *help)
         help->spriteHelp[0].sprite, NULL);
     }
     sfText_setPosition(help->txt.text, pos_tmp);
+    sfText_setCharacterSize(help->txt.text, 15 * window->scale.x);
     sfRenderWindow_drawText(window->window, help->txt.text, NULL);
 }
 
