@@ -12,8 +12,6 @@
 #include "game_object.h"
 #include "menu.h"
 
-char *my_score(int);
-
 static int my_linklen(pkmn_list_t *linked)
 {
     int i = 0;
