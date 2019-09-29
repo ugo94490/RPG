@@ -70,6 +70,7 @@ SRC	=	src/main.c					\
 		src/feature/do_text.c				\
 		src/feature/set_text.c				\
 		src/feature/check_cpt.c				\
+		src/feature/set_to_base.c			\
 		src/MENU/bouton_tools.c				\
 		src/MENU/condition_gender.c			\
 		src/MENU/condition_save.c			\

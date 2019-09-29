@@ -40,4 +40,6 @@ txt_t set_text(txt_t *text, setting_t set, char *base);
 
 void display(sfText *text, char *str, sfRenderWindow *window, sfSprite *sprite);
 
+char *set_to_base(char *str, char *save);
+
 #endif

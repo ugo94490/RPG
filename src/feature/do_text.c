@@ -86,11 +86,11 @@ int do_text(char *base, setting_t set, window_t *window, int opt)
         return -1;
     cpt = update_cpt(&text, cpt, flag, dif);
     save = destroy_free(&text, save);
-    if (text.str[cpt] != '\0')
+    if (text.str[cpt] != '\0') {
+        free(text.str);
         return 0;
-    free(text.str);
-    free(save);
-    save = NULL;
+    }
+    save = set_to_base(text.str, save);;
     cpt = 0;
     return 1;
 }
