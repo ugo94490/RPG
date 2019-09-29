@@ -7,56 +7,10 @@
 
 #include "main_menu.h"
 
-static int condition_boy_one(window_t *window, sfVector2f *scale)
-{
-    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *play = init_button("assets/skin_one.png");
-    sfVector2f position = {94 * window->scale.x, 280 * window->scale.y};
-
-    sfSprite_setScale(play, window->scale);
-    if (vct.x >= position.x && vct.x <= 414 * window->scale.x
-    && vct.y >= position.y && vct.y <= 384 * window->scale.y) {
-        if (sfMouse_isButtonPressed(sfMouseLeft)) {
-            display_button(play, position, set_rect(0, 870, 320, 104), window);
-            sfRenderWindow_display(window->window);
-            pause_time(0.15);
-            temp_loop(window, scale, 0, 2);
-        } else
-            display_button(play, position, set_rect(0, 435, 320, 104), window);
-    } else
-        display_button(play, position, set_rect(0, 0, 320, 104), window);
-    sfTexture_destroy((sfTexture *)(sfSprite_getTexture(play)));
-    sfSprite_destroy(play);
-    return (0);
-}
-
-static int condition_boy_two(window_t *window, sfVector2f *scale)
-{
-    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("assets/skin_two.png");
-    sfVector2f position = {94 * window->scale.x, 580 * window->scale.y};
-
-    sfSprite_setScale(exit, window->scale);
-    if (vct.x >= position.x && vct.x <= 414 * window->scale.x
-    && vct.y >= position.y && vct.y <= 684 * window->scale.y) {
-        if (sfMouse_isButtonPressed(sfMouseLeft)) {
-            display_button(exit, position, set_rect(0, 870, 320, 104), window);
-            sfRenderWindow_display(window->window);
-            pause_time(0.15);
-            temp_loop(window, scale, 0, 3);
-        } else
-            display_button(exit, position, set_rect(0, 435, 320, 104), window);
-    } else
-        display_button(exit, position, set_rect(0, 0, 320, 104), window);
-    sfTexture_destroy((sfTexture *)(sfSprite_getTexture(exit)));
-    sfSprite_destroy(exit);
-    return (0);
-}
-
 static int condition_girl_one(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("assets/skin_three.png");
+    sfSprite *exit = init_button("assets/skin_one.png");
     sfVector2f position = {866 * window->scale.x, 280 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
@@ -79,7 +33,7 @@ static int condition_girl_one(window_t *window, sfVector2f *scale)
 static int condition_girl_two(window_t *window, sfVector2f *scale)
 {
     sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
-    sfSprite *exit = init_button("assets/skin_four.png");
+    sfSprite *exit = init_button("assets/skin_two.png");
     sfVector2f position = {866 * window->scale.x, 580 * window->scale.y};
 
     sfSprite_setScale(exit, window->scale);
@@ -90,6 +44,52 @@ static int condition_girl_two(window_t *window, sfVector2f *scale)
             sfRenderWindow_display(window->window);
             pause_time(0.15);
             temp_loop(window, scale, 0, 1);
+        } else
+            display_button(exit, position, set_rect(0, 435, 320, 104), window);
+    } else
+        display_button(exit, position, set_rect(0, 0, 320, 104), window);
+    sfTexture_destroy((sfTexture *)(sfSprite_getTexture(exit)));
+    sfSprite_destroy(exit);
+    return (0);
+}
+
+static int condition_boy_one(window_t *window, sfVector2f *scale)
+{
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
+    sfSprite *play = init_button("assets/skin_three.png");
+    sfVector2f position = {94 * window->scale.x, 280 * window->scale.y};
+
+    sfSprite_setScale(play, window->scale);
+    if (vct.x >= position.x && vct.x <= 414 * window->scale.x
+    && vct.y >= position.y && vct.y <= 384 * window->scale.y) {
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+            display_button(play, position, set_rect(0, 870, 320, 104), window);
+            sfRenderWindow_display(window->window);
+            pause_time(0.15);
+            temp_loop(window, scale, 0, 2);
+        } else
+            display_button(play, position, set_rect(0, 435, 320, 104), window);
+    } else
+        display_button(play, position, set_rect(0, 0, 320, 104), window);
+    sfTexture_destroy((sfTexture *)(sfSprite_getTexture(play)));
+    sfSprite_destroy(play);
+    return (0);
+}
+
+static int condition_boy_two(window_t *window, sfVector2f *scale)
+{
+    sfVector2i vct = sfMouse_getPositionRenderWindow(window->window);
+    sfSprite *exit = init_button("assets/skin_four.png");
+    sfVector2f position = {94 * window->scale.x, 580 * window->scale.y};
+
+    sfSprite_setScale(exit, window->scale);
+    if (vct.x >= position.x && vct.x <= 414 * window->scale.x
+    && vct.y >= position.y && vct.y <= 684 * window->scale.y) {
+        if (sfMouse_isButtonPressed(sfMouseLeft)) {
+            display_button(exit, position, set_rect(0, 870, 320, 104), window);
+            sfRenderWindow_display(window->window);
+            pause_time(0.15);
+            temp_loop(window, scale, 0, 3);
         } else
             display_button(exit, position, set_rect(0, 435, 320, 104), window);
     } else
