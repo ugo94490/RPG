@@ -65,7 +65,6 @@ static void destroy_how_to_play(how_to_t *help)
 {
     destroy_sprite(&help->spriteHelp[0]);
     destroy_text(&help->txt);
-    free(help->current_char);
     free(help->spriteHelp);
     free(help);
 }
